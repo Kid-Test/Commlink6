@@ -41,6 +41,7 @@
 	    <selreq>
 			<valuereq type="ITEM_ATTRIBUTE" ref="ITEMTYPE" value="WEAPON_FIREARMS"/>
 			<valuereq type="ITEM_ATTRIBUTE" ref="ITEMTYPE" value="WEAPON_SPECIAL"/>
+	    	<valuereq type="ITEM_ATTRIBUTE" ref="ITEMSUBTYPE" value="CROSSBOWS"/>
 	    </selreq>
 	  </requires>
 	  <modifications>
@@ -61,6 +62,7 @@
 	    <selreq>
 	    	<valuereq type="ITEM_ATTRIBUTE" ref="ITEMTYPE" value="WEAPON_FIREARMS"/>
 			<valuereq type="ITEM_ATTRIBUTE" ref="ITEMTYPE" value="WEAPON_SPECIAL"/>
+	    	<valuereq type="ITEM_ATTRIBUTE" ref="ITEMSUBTYPE" value="CROSSBOWS"/>
 	    </selreq>
 	  </requires>
 	  <modifications>
@@ -187,6 +189,7 @@
 	    <selreq>
 	    	<valuereq type="ITEM_ATTRIBUTE" ref="ITEMTYPE" value="WEAPON_FIREARMS"/>
 	    	<valuereq type="ITEM_ATTRIBUTE" ref="ITEMTYPE" value="WEAPON_SPECIAL"/>
+	    	<valuereq type="ITEM_ATTRIBUTE" ref="ITEMTYPE" value="WEAPON_RANGED"/>
 	    </selreq>
 	  </requires>
 	  <modifications>
@@ -266,6 +269,7 @@
 	    <selreq>
 	    	<valuereq type="ITEM_ATTRIBUTE" ref="ITEMTYPE" value="WEAPON_FIREARMS"/>
 			<valuereq type="ITEM_ATTRIBUTE" ref="ITEMTYPE" value="WEAPON_SPECIAL"/>
+	    	<valuereq type="ITEM_ATTRIBUTE" ref="ITEMSUBTYPE" value="CROSSBOWS"/>
 	    </selreq>
 	  </requires>
 	  <modifications>
@@ -290,6 +294,7 @@
 	    <selreq>
 	    	<valuereq type="ITEM_ATTRIBUTE" ref="ITEMTYPE" value="WEAPON_FIREARMS"/>
 			<valuereq type="ITEM_ATTRIBUTE" ref="ITEMTYPE" value="WEAPON_SPECIAL"/>
+	    	<valuereq type="ITEM_ATTRIBUTE" ref="ITEMSUBTYPE" value="CROSSBOWS"/>
 	    </selreq>
 	  </requires>
 	  <modifications>
@@ -313,6 +318,7 @@
 	    <selreq>
 			<valuereq type="ITEM_ATTRIBUTE" ref="ITEMTYPE" value="WEAPON_FIREARMS"/>
 			<valuereq type="ITEM_ATTRIBUTE" ref="ITEMTYPE" value="WEAPON_SPECIAL"/>
+	    	<valuereq type="ITEM_ATTRIBUTE" ref="ITEMSUBTYPE" value="CROSSBOWS"/>
 	    </selreq>
 	  </requires>
 	  <modifications>
@@ -343,6 +349,7 @@
 	    <selreq>
 			<valuereq type="ITEM_ATTRIBUTE" ref="ITEMTYPE" value="WEAPON_FIREARMS"/>
 			<valuereq type="ITEM_ATTRIBUTE" ref="ITEMTYPE" value="WEAPON_SPECIAL"/>
+	    	<valuereq type="ITEM_ATTRIBUTE" ref="ITEMSUBTYPE" value="CROSSBOWS"/>
 	    </selreq>
 	  </requires>
 	  <modifications>
@@ -355,6 +362,7 @@
 	    <selreq>
 	    	<valuereq type="ITEM_ATTRIBUTE" ref="ITEMTYPE" value="WEAPON_FIREARMS"/>
 	    	<valuereq type="ITEM_ATTRIBUTE" ref="ITEMTYPE" value="WEAPON_SPECIAL"/>
+	    	<valuereq type="ITEM_ATTRIBUTE" ref="ITEMSUBTYPE" value="CROSSBOWS"/>
 	    </selreq>
 	  </requires>
 	</itemenhancement>
