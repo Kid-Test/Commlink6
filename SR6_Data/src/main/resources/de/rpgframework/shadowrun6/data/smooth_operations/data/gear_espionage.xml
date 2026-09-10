@@ -12,6 +12,9 @@
       <choices>
          <choice uuid="c2d17c87-1cfe-4355-9877-a20fe09c170d" type="ITEM_ATTRIBUTE" ref="RATING" options="1,2,3,4,5,6"/>
       </choices>
+		<usage mode="EMBEDDED" slot="OPTICAL" value="1"/>
+  		<usage mode="EMBEDDED" slot="HELMET_ACCESSORY" value="1"/>
+	  	<usage mode="EMBEDDED" slot="AUDIO" value="1"/>
       <attrdef id="PRICE" value="$RATING*500"/>
    </item>
    <item id="explosive_lipstick" avail="6I" price="800" type="AMMUNITION" subtype="EXPLOSIVES" count="y"/>
