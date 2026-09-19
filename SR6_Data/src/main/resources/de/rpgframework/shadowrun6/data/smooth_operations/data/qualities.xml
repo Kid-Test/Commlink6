@@ -3,7 +3,7 @@
    <quality id="air_pf_superiority" karma="5" pos="true" type="NORMAL" />
    <quality id="combat_commander"   karma="8" pos="true" type="NORMAL" >
      <requires>
-       <datareq type="SKILL" ref="knowledge"/>
+		<!-- ToDo: <datareq type="SKILL" ref="knowledge" id="Small Unit Tactics"/> requires knowledge skill SUT, however that is a free text field and called 'Taktik kleiner Einheiten' in DE -->
      </requires>
    </quality>
    <quality id="damage_control" karma="11" pos="true" type="NORMAL" />
