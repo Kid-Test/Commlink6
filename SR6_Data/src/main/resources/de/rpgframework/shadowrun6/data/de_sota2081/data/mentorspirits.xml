@@ -66,8 +66,8 @@
 		<checkmod type="SPELL" ref="ILLUSION" value="-1" what="EDGE_BOOST" />
     </magician>
     <adept>
-		<valmod type="ADEPT_POWER" ref="improved_sense" value="1" />
-		<valmod type="ADEPT_POWER" ref="improved_sense" value="1" />
+		<itemmod type="ADEPT_POWER" ref="improved_sense" />
+		<itemmod type="ADEPT_POWER" ref="improved_sense" />
     </adept>
   </mentorspirit>
 
@@ -190,7 +190,7 @@
 		<checkmod type="SPELL" ref="DETECTION" value="-1" what="EDGE_BOOST" />
     </magician>
     <adept>
-		<valmod type="ADEPT_POWER" ref="enhanced_perception" value="1" />
+		<itemmod type="ADEPT_POWER" ref="enhanced_perception" />
     </adept>
   </mentorspirit>
 
