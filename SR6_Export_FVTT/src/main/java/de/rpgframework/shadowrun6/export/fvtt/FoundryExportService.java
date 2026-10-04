@@ -16,6 +16,8 @@ import de.rpgframework.genericrpg.data.PageReference;
 import de.rpgframework.genericrpg.data.SkillSpecialization;
 import de.rpgframework.genericrpg.data.SkillSpecializationValue;
 import de.rpgframework.genericrpg.items.CarriedItem;
+import de.rpgframework.genericrpg.requirements.Requirement;
+import de.rpgframework.genericrpg.requirements.ValueRequirement;
 import de.rpgframework.shadowrun.AdeptPowerValue;
 import de.rpgframework.shadowrun.ComplexFormValue;
 import de.rpgframework.shadowrun.Contact;
@@ -42,6 +44,7 @@ import de.rpgframework.shadowrun6.Shadowrun6Character;
 import de.rpgframework.shadowrun6.TechniqueValue;
 import de.rpgframework.shadowrun6.foundry.ActionSkills.ActionSkillValue;
 import de.rpgframework.shadowrun6.foundry.FVTTAdeptPower;
+import de.rpgframework.shadowrun6.foundry.FVTTAmmunition;
 import de.rpgframework.shadowrun6.foundry.FVTTArmor;
 import de.rpgframework.shadowrun6.foundry.FVTTBodyware;
 import de.rpgframework.shadowrun6.foundry.FVTTComplexForm;
@@ -63,6 +66,7 @@ import de.rpgframework.shadowrun6.foundry.FVTTWeapon;
 import de.rpgframework.shadowrun6.foundry.GenericFVTT;
 import de.rpgframework.shadowrun6.foundry.Shadowrun6FoundryCharacter;
 import de.rpgframework.shadowrun6.foundry.Shadowrun6FoundryCharacter.SpecialTraits;
+import de.rpgframework.shadowrun6.items.AmmunitionClass;
 import de.rpgframework.shadowrun6.items.Damage;
 import de.rpgframework.shadowrun6.items.ItemSubType;
 import de.rpgframework.shadowrun6.items.ItemTemplate;
@@ -70,6 +74,7 @@ import de.rpgframework.shadowrun6.items.ItemType;
 import de.rpgframework.shadowrun6.items.OnRoadOffRoadValue;
 import de.rpgframework.shadowrun6.items.SR6ItemAttribute;
 import de.rpgframework.shadowrun6.items.VehicleData.VehicleType;
+import de.rpgframework.shadowrun6.modifications.ShadowrunReference;
 import de.rpgframework.shadowrun6.persist.WeaponDamageConverter;
 
 public class FoundryExportService {
@@ -461,6 +466,19 @@ public class FoundryExportService {
 						AmmunitionSlot slot = (AmmunitionSlot)( (obj instanceof List)?((List<?>)obj).get(0):obj );
 						((FVTTWeapon)gear).ammocap = slot.getAmount();
 					}
+					if (item.hasAttribute(SR6ItemAttribute.AMMUNITION_CLASS))
+						((FVTTWeapon)gear).ammoClass = ((AmmunitionClass)item.getAsObject(SR6ItemAttribute.AMMUNITION_CLASS).getModifiedValue()).name();
+
+					break;
+				case AMMUNITION:
+					gear = new FVTTAmmunition();
+					if (item.hasAttribute(SR6ItemAttribute.DAMAGE)) ((FVTTAmmunition)gear).dmg=((Damage)item.getAsObject(SR6ItemAttribute.DAMAGE).getModifiedValue()).getValue();
+					if (item.hasAttribute(SR6ItemAttribute.ATTACK_RATING)) ((FVTTAmmunition)gear).attackRating=item.getAsObject(SR6ItemAttribute.ATTACK_RATING).getModifiedValue();
+					for (Requirement req : item.getResolved().getRequirements()) {
+						if (req.getType()==ShadowrunReference.ITEM_ATTRIBUTE && SR6ItemAttribute.AMMUNITION_CLASS.name().equals(req.getKey()) && req instanceof ValueRequirement vReq ) {
+							((FVTTAmmunition)gear).ammoClass = vReq.getRawValue();
+						}
+					}
 					break;
 				case ARMOR:
 					gear = new FVTTArmor();
@@ -606,7 +624,13 @@ public class FoundryExportService {
 						((FVTTVehicle)gear).vtype = ((VehicleType)item.getAsObject(SR6ItemAttribute.VEHICLE_TYPE).getModifiedValue()).name();
 				}
 
-				ItemData<FVTTGear> foundry = new ItemData<FVTTGear>(item.getNameWithoutRating(), "gear", gear);
+				String name = item.getNameWithoutRating();
+				if (name.endsWith("(10x)")) {
+					name = name.substring(0, name.indexOf("(10x)")-1);
+					gear.count *=10;
+				}
+
+				ItemData<FVTTGear> foundry = new ItemData<FVTTGear>(name, "gear", gear);
 				return foundry;
 	}
 
