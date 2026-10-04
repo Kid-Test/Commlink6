@@ -1,6 +1,5 @@
 package de.rpgframework.foundry;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,7 +13,7 @@ public class DocumentData {
 	/** The _id of a Folder which contains this Item */
 	public String folder;
 	/** The numeric sort value which orders this Item relative to its siblings */
-	public int sort = 0;
+	public Integer sort ;
 	private Object permission;
 	private Map<String,?> flags;
 

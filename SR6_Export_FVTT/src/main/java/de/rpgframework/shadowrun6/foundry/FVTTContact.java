@@ -6,5 +6,7 @@ public class FVTTContact {
 	public int loyalty;
 	public String type;
 	public String description;
+	public String occupation;
+	public int favors;
 
 }

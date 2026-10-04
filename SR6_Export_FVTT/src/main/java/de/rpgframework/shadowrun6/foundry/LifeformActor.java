@@ -28,6 +28,8 @@ public class LifeformActor extends GeneralActor {
 	public ActionSkills skills;
 	public String metatype;
 	public String gender;
+	public String realName;
+	public String appearance;
 	public Movement movement;
 
 	//-------------------------------------------------------------------

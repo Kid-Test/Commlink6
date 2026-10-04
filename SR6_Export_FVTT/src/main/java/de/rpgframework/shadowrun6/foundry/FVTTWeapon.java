@@ -15,4 +15,5 @@ public class FVTTWeapon extends FVTTGear{
 	public boolean stun;
 	public int[]   attackRating;
 	public FireMode  modes;
+	public int ammocap;
 }
