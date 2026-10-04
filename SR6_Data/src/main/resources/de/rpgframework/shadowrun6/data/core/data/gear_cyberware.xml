@@ -663,7 +663,7 @@
       	<itemmod type="HOOK" ref="IMPLANT_SMG"/>
       </modifications>
    </item>
-   <item avail="5L" price="4800" id="cyber_shotgun" type="CYBERWARE" subtype="CYBER_IMPLANT_WEAPON">
+   <item avail="5L" price="8500" id="cyber_shotgun" type="CYBERWARE" subtype="CYBER_IMPLANT_WEAPON">
 		<usage mode="EMBEDDED" slot="CYBERLIMB_IMPLANT" value="10"/>
 		<usage mode="IMPLANTED" value="1.25"/>
  		<flags><flag>AUGMENTATION</flag></flags>
