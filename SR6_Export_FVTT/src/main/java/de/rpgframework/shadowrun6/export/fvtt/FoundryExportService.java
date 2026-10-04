@@ -625,8 +625,8 @@ public class FoundryExportService {
 				}
 
 				String name = item.getNameWithoutRating();
-				if (name.endsWith("(10x)")) {
-					name = name.substring(0, name.indexOf("(10x)")-1);
+				if (name.contains("(10x)")) {
+					name = name.replace("(10x)", "");
 					gear.count *=10;
 				}
 
