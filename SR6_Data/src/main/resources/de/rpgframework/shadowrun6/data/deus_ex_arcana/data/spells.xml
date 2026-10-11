@@ -8,7 +8,7 @@
    <spell id="ku" cat="COMBAT" range="LINE_OF_SIGHT" type="PHYSICAL" dur="INSTANTANEOUS" drain="5">
       <spellfeature ref="direct"/>
    </spell>
-   <spell id="malos_aires" cat="COMBAT" range="LINE_OF_SIGHT_AREA" type="PHYSICAL" dur="SUSTAINED" drain="9" dmg="PHYSICAL_SPECIAL">
+   <spell id="malos_aires" cat="COMBAT" range="LINE_OF_SIGHT_AREA" type="PHYSICAL" dur="SUSTAINED" drain="3" dmg="PHYSICAL_SPECIAL">
       <spellfeature ref="indirect"/>
       <spellfeature ref="area"/>
    </spell>
@@ -21,6 +21,7 @@
    <spell id="spatial_sense_tactical" cat="DETECTION" range="TOUCH" type="PHYSICAL" dur="SUSTAINED" drain="6" />
 
    <spell id="find_scanners" cat="DETECTION" range="LINE_OF_SIGHT_AREA" type="PHYSICAL" dur="SUSTAINED" drain="3" />
+   <spell id="find_scanners" cat="DETECTION" range="TOUCH" type="PHYSICAL" dur="SUSTAINED" drain="3" lang="de"/>
    <spell id="mind_jammer_touch" cat="DETECTION" range="TOUCH" type="PHYSICAL" dur="SUSTAINED" drain="4" />
    <spell id="mind_jammer_los" cat="DETECTION" range="LINE_OF_SIGHT_AREA" type="PHYSICAL" dur="SUSTAINED" drain="5" />
    <spell id="messenger" cat="DETECTION" range="TOUCH" type="MANA" dur="INSTANTANEOUS" drain="4" />

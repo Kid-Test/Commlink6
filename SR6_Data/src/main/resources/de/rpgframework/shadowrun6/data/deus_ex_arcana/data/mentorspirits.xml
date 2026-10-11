@@ -164,7 +164,7 @@
 
 	<mentorspirit id="mutation">
 		<choices>
-			<choice type="SKILL" uuid="da192302-8f07-41a6-8b7c-e795aff64fcd" options="athletics,close_combat,exotic_weapons,firearms,stealth"/>
+			<choice type="SKILL" uuid="da192302-8f07-41a6-8b7c-e795aff64fcd" options="athletics,close_combat,exotic_weapons,firearms,piloting,stealth"/>
 		</choices>
 		<modifications>
 			<checkmod type="SKILL" ref="CHOICE" choice="da192302-8f07-41a6-8b7c-e795aff64fcd" value="-1" what="EDGE_BOOST" />
@@ -173,7 +173,7 @@
 			<checkmod type="SPELL" ref="HEALTH" value="-1" what="EDGE_BOOST" />
 		</magician>
 		<adept>
-			<valmod type="ADEPT_POWER" ref="improved_physical_attribute" value="2"/>
+			<valmod type="ADEPT_POWER" ref="improved_physical_attribute" choice="05054102-0183-482a-9e2b-84bc8d5f153f" options="AGILITY,BODY,REACTION,STRENGTH" value="2" />
 		</adept>
 	</mentorspirit>
 

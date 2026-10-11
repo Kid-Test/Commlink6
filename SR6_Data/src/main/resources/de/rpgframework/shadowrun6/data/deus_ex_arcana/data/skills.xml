@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <skills>
 
-    <skill id="pattern_craft"  attr="MAGIC" type="MAGIC" untr="n" restrict="y">
+    <skill id="pattern_craft"  attr="MAGIC" type="MAGIC" untr="n" restrict="n"> <!-- potentially this skill is meant for awakened only, but A) that is not clearly stated in the rules and B) restricting it means it needs to be allowed with <allowmod in the magicOrResonance.xml in core, which creates an error as the skill is not yet known then -->
         <skillspec id="readings"/>
         <skillspec id="pattern_itemcraft"/>
     </skill>
