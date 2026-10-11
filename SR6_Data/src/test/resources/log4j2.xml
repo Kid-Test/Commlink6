@@ -12,8 +12,8 @@
         <Logger name="xml" level="WARN" />
         <Logger name="prelle.jfx" level="WARN" />
         <Logger name="rpgframework" level="WARN" />
-        <Logger name="de.rpgframework.random" level="WARN"/>
-        <Logger name="rpgframework.random" level="WARN"/>
-        <Logger name="shadowrun.rungen" level="WARN" />
+        <Logger name="de.rpgframework.genericrpg" level="ERROR" />
+        <Logger name="de.rpgframework.shadowrun6" level="WARN" />
+        <Logger name="de.rpgframework.shadowrun" level="WARN"/>
     </Loggers>
 </Configuration>
