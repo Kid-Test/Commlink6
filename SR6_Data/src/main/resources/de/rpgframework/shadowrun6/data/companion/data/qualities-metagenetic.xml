@@ -451,7 +451,7 @@
      <modifications>
      	<valmod type="ATTRIBUTE" ref="MOVEMENT" value="3/6/1" set="NATURAL" />
      	<!-- +2 AR in combat when kicking -->
-       <checkmod ref="athletics" type="SKILL" what="DICE" value="4"/>
+       <checkmod ref="athletics" type="SKILL" what="DICE" value="4" cond="y"/> <!-- bonus is only for jumping -->
      </modifications>
    </quality>
    <quality id="setae" karma="5" pos="true" type="METAGENIC" cat="METAGENIC_MORPHISMS">

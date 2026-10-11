@@ -11,18 +11,18 @@ public class ItemData<T> extends DocumentData {
 	
 	public String type;
 	public String img;
-	private T data;
+	private T system;
 	private List<Object> effects;
 
 	//-------------------------------------------------------------------
 	public ItemData(String name, String type, T data) {
 		this.name = name;
 		this.type = type;
-		this.data = data;
+		this.system = data;
 		effects = new ArrayList<>();
 	}
 
 	//-------------------------------------------------------------------
-	public T getData() { return data; }
+	public T getData() { return system; }
 
 }
