@@ -97,7 +97,7 @@ public class PriorityMagicOrResonanceController extends MagicOrResonanceControll
 					ValueModification mod = (ValueModification) tmp;
 					if (mod.getReferenceType() == ShadowrunReference.MAGIC_RESO) {
 						MagicOrResonanceType type = mod.getResolvedKey();
-						if (forbidden.contains(type) || !type.isModOnly()) {
+						if (forbidden.contains(type) || type.isModOnly()) {
 							logger.log(Level.ERROR, "Would allow {0}, but it has been forbidden",mod.getKey() );
 						} else {
 							available.put(type, mod.getValue());

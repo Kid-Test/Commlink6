@@ -13,6 +13,7 @@ import de.rpgframework.shadowrun.AdeptPowerValue;
 import de.rpgframework.shadowrun.BodyForm;
 import de.rpgframework.shadowrun.BodyType;
 import de.rpgframework.shadowrun.LicenseValue;
+import de.rpgframework.shadowrun.MagicOrResonanceType;
 import de.rpgframework.shadowrun.MetamagicOrEchoValue;
 import de.rpgframework.shadowrun.Movement;
 import de.rpgframework.shadowrun.Movement.MovementType;
@@ -22,6 +23,7 @@ import de.rpgframework.shadowrun.ShadowrunAttribute;
 import de.rpgframework.shadowrun.SpellValue;
 import de.rpgframework.shadowrun6.SR6SkillValue;
 import de.rpgframework.shadowrun6.SR6Spell;
+import de.rpgframework.shadowrun6.Shadowrun6Core;
 import de.rpgframework.shadowrun6.Shadowrun6Character;
 import de.rpgframework.shadowrun6.items.ItemTemplate;
 
@@ -133,6 +135,14 @@ public class ResetModifications implements ProcessingStep {
 					logger.log(Level.DEBUG, "Remove spell"+val);
 					model.removeSpell(val);
 				}
+			}
+
+			// Magic/resonance types only granted by modifications (e.g. minor_awakened)
+			// fall back to mundane - a still selected quality sets them again
+			MagicOrResonanceType mor = model.getMagicOrResonanceType();
+			if (mor!=null && mor.isModOnly()) {
+				logger.log(Level.DEBUG, "Reset mod-only magic/resonance type {0} to mundane", mor.getId());
+				model.setMagicOrResonanceType(Shadowrun6Core.getItem(MagicOrResonanceType.class, "mundane"));
 			}
 
 			// Prepare minimal body modifications

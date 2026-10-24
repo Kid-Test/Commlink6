@@ -150,6 +150,15 @@ public class SR6KarmaAttributeGenerator extends CommonAttributeGenerator impleme
 	}
 
 	//-------------------------------------------------------------------
+	private void resetDistributed(ShadowrunAttribute key) {
+		AttributeValue<ShadowrunAttribute> val = getModel().getAttribute(key);
+		if (val.getDistributed()!=0) {
+			logger.log(Level.INFO, "Reset {0} from {1} to 0, since magic/resonance type does not use it", key, val.getDistributed());
+			val.setDistributed(0);
+		}
+	}
+
+	//-------------------------------------------------------------------
 	private void ensureMaximumSet() {
 		for (ShadowrunAttribute key : ShadowrunAttribute.primaryAndSpecialValues()) {
 			AttributeValue<ShadowrunAttribute> val = getModel().getAttribute(key);
@@ -209,6 +218,11 @@ public class SR6KarmaAttributeGenerator extends CommonAttributeGenerator impleme
 				allowedAdjust.add(ShadowrunAttribute.MAGIC);
 			else if (mor!=null && mor.usesResonance())
 				allowedAdjust.add(ShadowrunAttribute.RESONANCE);
+			// Remove bought points the magic/resonance type does not use (anymore)
+			if (mor==null || !mor.usesMagic())
+				resetDistributed(ShadowrunAttribute.MAGIC);
+			if (mor==null || !mor.usesResonance())
+				resetDistributed(ShadowrunAttribute.RESONANCE);
 
 			ensureMaximumSet();
 			ensureMaximumNotExceeded();
