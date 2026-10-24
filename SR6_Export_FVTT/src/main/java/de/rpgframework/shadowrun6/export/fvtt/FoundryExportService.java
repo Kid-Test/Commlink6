@@ -5,6 +5,8 @@ import java.lang.System.Logger.Level;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import com.google.gson.Gson;
@@ -552,7 +554,14 @@ public class FoundryExportService {
 				if (!accList.isEmpty()) {
 					gear.accessories = String.join(", ", accList);
 					// New: ItemsInItem
+					// getEffectiveAccessories() also lists the accessories of accessories (e.g. the weapon in a weapon mount),
+					// which convertToFVTTGear() already adds to their own parent - so skip them here to avoid duplicates
+					Set<UUID> nestedInAccessory = item.getEffectiveAccessories().stream()
+							.flatMap(acc -> acc.getEffectiveAccessories().stream())
+							.map(CarriedItem::getUuid)
+							.collect(Collectors.toSet());
 					for (CarriedItem<ItemTemplate> acc : item.getEffectiveAccessories()) {
+						if (nestedInAccessory.contains(acc.getUuid())) continue;
 						gear.itemsInItem.add(convertToFVTTGear(acc));
 					}
 				}
