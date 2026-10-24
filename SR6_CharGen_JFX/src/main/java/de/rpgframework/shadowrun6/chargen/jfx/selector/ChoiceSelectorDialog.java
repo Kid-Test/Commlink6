@@ -16,7 +16,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
-import java.util.function.BiFunction;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -35,6 +34,7 @@ import de.rpgframework.genericrpg.Possible;
 import de.rpgframework.genericrpg.ToDoElement;
 import de.rpgframework.genericrpg.ToDoElement.Severity;
 import de.rpgframework.genericrpg.chargen.CharacterController;
+import de.rpgframework.genericrpg.chargen.ChoiceCallback;
 import de.rpgframework.genericrpg.chargen.ComplexDataItemController;
 import de.rpgframework.genericrpg.chargen.OperationResult;
 import de.rpgframework.genericrpg.data.Choice;
@@ -107,7 +107,7 @@ import javafx.util.StringConverter;
  * @author prelle
  *
  */
-public class ChoiceSelectorDialog<T extends ComplexDataItem, V extends ComplexDataItemValue<T> > extends ManagedDialog implements BiFunction<T, List<Choice>, Decision[]> {
+public class ChoiceSelectorDialog<T extends ComplexDataItem, V extends ComplexDataItemValue<T> > extends ManagedDialog implements ChoiceCallback<T> {
 
 	private final static PropertyResourceBundle RES = (PropertyResourceBundle) ResourceBundle.getBundle(ChoiceSelectorDialog.class.getPackageName()+".Selectors");
 
@@ -336,11 +336,11 @@ public class ChoiceSelectorDialog<T extends ComplexDataItem, V extends ComplexDa
 
 	//-------------------------------------------------------------------
 	/**
-	 * @see java.util.function.BiFunction#apply(java.lang.Object, java.lang.Object)
+	 * @see de.rpgframework.genericrpg.chargen.ChoiceCallback#apply(java.lang.Object, java.util.List, java.util.List)
 	 */
 	@Override
-	public Decision[] apply(T item, List<Choice> choices) {
-		logger.log(Level.WARNING, "ENTER apply({0}, {1}) for container {2}", item, choices, context);
+	public Decision[] apply(T item, List<Choice> choices, List<ModificationChoice> selections) {
+		logger.log(Level.WARNING, "ENTER apply({0}, {1}, {2}) for container {3}", item, choices, selections, context);
 		this.item = item;
 		this.choices = choices;
 		CloseType closed = null;
@@ -371,6 +371,9 @@ public class ChoiceSelectorDialog<T extends ComplexDataItem, V extends ComplexDa
 				if (choice.getUUID().equals(ItemTemplate.UUID_CHEMICAL_CHOICE)) forceTitle=ResourceI18N.get(RES, "label.chemical");
 				if (choice.getI18nKey()!=null) forceTitle=null;
 				processChoice(item,choice, forceTitle);
+			}
+			for (ModificationChoice selection : selections) {
+				processModificationChoice(item.getName(), selection);
 			}
 
 			if (item instanceof ItemTemplate) {
@@ -665,6 +668,18 @@ public class ChoiceSelectorDialog<T extends ComplexDataItem, V extends ComplexDa
 			public String toString(Modification mod) { return Shadowrun6Tools.getModificationString(mod, Locale.getDefault()); }
 			public Modification fromString(String string) { return null; }
 		});
+		// Decision references the selected modification by its ID
+		Choice asChoice = new Choice(choice.getUUID(), null);
+		cbChoices.getSelectionModel().selectedItemProperty().addListener( (ov,o,n) -> {
+			logger.log(Level.DEBUG, "Chose {0} for {1}", n, choice.getUUID());
+			if (n instanceof DataItemModification) {
+				decisions.put(asChoice, new Decision(choice.getUUID(), ((DataItemModification)n).getId()));
+			} else {
+				decisions.remove(asChoice);
+			}
+			updateButtons();
+		 });
+		content.getChildren().add(cbChoices);
 		ret.add(cbChoices);
 		return ret;
 	}
