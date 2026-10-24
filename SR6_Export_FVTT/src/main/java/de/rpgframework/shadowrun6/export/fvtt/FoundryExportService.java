@@ -5,6 +5,8 @@ import java.lang.System.Logger.Level;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import com.google.gson.Gson;
@@ -24,6 +26,7 @@ import de.rpgframework.shadowrun.Contact;
 import de.rpgframework.shadowrun.DamageType;
 import de.rpgframework.shadowrun.FocusValue;
 import de.rpgframework.shadowrun.Lifestyle;
+import de.rpgframework.shadowrun.MagicOrResonanceType;
 import de.rpgframework.shadowrun.MetamagicOrEcho;
 import de.rpgframework.shadowrun.MetamagicOrEchoValue;
 import de.rpgframework.shadowrun.QualityValue;
@@ -111,6 +114,10 @@ public class FoundryExportService {
 
 	//-------------------------------------------------------------------
 	private void setAttributes(Shadowrun6FoundryCharacter json, Shadowrun6Character model) {
+		// Mundane characters must not export Magic or Resonance
+		MagicOrResonanceType mor = model.getMagicOrResonanceType();
+		boolean usesMagic     = mor!=null && mor.usesMagic();
+		boolean usesResonance = mor!=null && mor.usesResonance();
 		for (ShadowrunAttribute attribute : ShadowrunAttribute.values()) {
 			switch (attribute) {
 			case CHARISMA :
@@ -162,12 +169,16 @@ public class FoundryExportService {
 				json.attributes.wil.modString = model.getAttribute(attribute).getPool().toExplainString();
 				break;
 			case MAGIC:
+				if (!usesMagic)
+					break;
 				json.attributes.mag.base = model.getAttribute(attribute).getDistributed();
 				json.attributes.mag.mod   = model.getAttribute(attribute).getModifier();
 				json.attributes.mag.pool = model.getAttribute(attribute).getModifiedValue();
 				json.attributes.mag.modString = model.getAttribute(attribute).getPool().toExplainString();
 				break;
 			case RESONANCE:
+				if (!usesResonance)
+					break;
 				json.attributes.res.base = model.getAttribute(attribute).getDistributed();
 				json.attributes.res.mod   = model.getAttribute(attribute).getModifier();
 				json.attributes.res.pool = model.getAttribute(attribute).getModifiedValue();
@@ -552,7 +563,14 @@ public class FoundryExportService {
 				if (!accList.isEmpty()) {
 					gear.accessories = String.join(", ", accList);
 					// New: ItemsInItem
+					// getEffectiveAccessories() also lists the accessories of accessories (e.g. the weapon in a weapon mount),
+					// which convertToFVTTGear() already adds to their own parent - so skip them here to avoid duplicates
+					Set<UUID> nestedInAccessory = item.getEffectiveAccessories().stream()
+							.flatMap(acc -> acc.getEffectiveAccessories().stream())
+							.map(CarriedItem::getUuid)
+							.collect(Collectors.toSet());
 					for (CarriedItem<ItemTemplate> acc : item.getEffectiveAccessories()) {
+						if (nestedInAccessory.contains(acc.getUuid())) continue;
 						gear.itemsInItem.add(convertToFVTTGear(acc));
 					}
 				}

@@ -550,11 +550,7 @@ public class ItemTemplate extends PieceOfGear<SR6VariantMode,SR6UsageMode,SR6Pie
 			}
 			break;
 		case WEAPON_SPECIAL:
-			if (subtype==ItemSubType.LAUNCHERS) {
-				setAttribute(SR6ItemAttribute.MODIFICATION_SLOTS, 0);
-			} else {
-				setAttribute(SR6ItemAttribute.MODIFICATION_SLOTS, 2);
-			}
+			setAttribute(SR6ItemAttribute.MODIFICATION_SLOTS, 2);
 			break;
 		case CYBERWARE: // CYBER_IMPLANT_WEAPON to allow installation of 'ergonomic_optimization' from Deadly Arts 31, CYBER_LIMBS to allow installation of 'bulk modification' from Body Shop 44
 			if (subtype==ItemSubType.CYBER_IMPLANT_WEAPON||subtype==ItemSubType.CYBER_LIMBS) {

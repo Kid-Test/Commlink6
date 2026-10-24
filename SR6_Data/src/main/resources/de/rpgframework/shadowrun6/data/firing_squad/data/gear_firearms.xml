@@ -413,6 +413,7 @@
 
    <item id="narcojet_hornet" avail="3" price="500" type="WEAPON_SPECIAL" subtype="DART">
       <attrdef id="MODIFICATION_SLOTS" value="3"/>
+		<attrdef id="WEAPON_SIZE" value="SMALL"/>
       <weapon dmg="0P" mode="SS" attack="6,8,10,," ammo="9(m)" skill="exotic_weapons" spec="exotic_weapons/air"/>
       <modifications>
          <itemmod type="HOOK" ref="TOP"/>

@@ -1,38 +1,94 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <foci>
 	<focus id="alchemical_focus" karma="3" cost="5000" hasLevel="true">
+		<requires>
+			<selreq>
+				<datareq type="MAGIC_RESO" ref="magician" apply="CHARACTER" />
+				<datareq type="MAGIC_RESO" ref="adept" apply="CHARACTER"/>
+				<datareq type="MAGIC_RESO" ref="mysticadept" apply="CHARACTER"/>
+				<datareq type="MAGIC_RESO" ref="aspectedmagician" apply="CHARACTER"/>
+			</selreq>
+		</requires>
 		<modifications>
 			<checkmod type="SKILL" ref="enchanting" value="$LEVEL" what="DICE"/>
 		</modifications>
 	</focus>
 	<focus id="disenchanting_focus" karma="3" cost="5000" hasLevel="true">
+		<requires>
+			<selreq>
+				<datareq type="MAGIC_RESO" ref="magician" apply="CHARACTER" />
+				<datareq type="MAGIC_RESO" ref="adept" apply="CHARACTER"/>
+				<datareq type="MAGIC_RESO" ref="mysticadept" apply="CHARACTER"/>
+				<datareq type="MAGIC_RESO" ref="aspectedmagician" apply="CHARACTER"/>
+			</selreq>
+		</requires>
 		<modifications>
 			<checkmod type="SKILL" ref="enchanting" value="$LEVEL" what="DICE"/>
 		</modifications>
 	</focus>
 	<focus id="centering_focus" karma="3" cost="9000" hasLevel="true">
+		<requires>
+			<selreq>
+				<datareq type="MAGIC_RESO" ref="magician" apply="CHARACTER" />
+				<datareq type="MAGIC_RESO" ref="adept" apply="CHARACTER"/>
+				<datareq type="MAGIC_RESO" ref="mysticadept" apply="CHARACTER"/>
+				<datareq type="MAGIC_RESO" ref="aspectedmagician" apply="CHARACTER"/>
+			</selreq>
+		</requires>
 		<modifications>
 			<relevancemod topic="MAGICAL" />
 			<valmod type="ATTRIBUTE" ref="RESIST_DRAIN" value="$LEVEL" />
 		</modifications>
 	</focus>
 	<focus id="flexible_signature_focus" karma="3" cost="9000" hasLevel="true">
+		<requires>
+			<selreq>
+				<datareq type="MAGIC_RESO" ref="magician" apply="CHARACTER" />
+				<datareq type="MAGIC_RESO" ref="adept" apply="CHARACTER"/>
+				<datareq type="MAGIC_RESO" ref="mysticadept" apply="CHARACTER"/>
+				<datareq type="MAGIC_RESO" ref="aspectedmagician" apply="CHARACTER"/>
+			</selreq>
+		</requires>
 		<modifications>
 			<relevancemod topic="MAGICAL" />
 		</modifications>
 	</focus>
 	<focus id="masking_focus" karma="3" cost="9000" hasLevel="true">
+		<requires>
+			<selreq>
+				<datareq type="MAGIC_RESO" ref="magician" apply="CHARACTER" />
+				<datareq type="MAGIC_RESO" ref="adept" apply="CHARACTER"/>
+				<datareq type="MAGIC_RESO" ref="mysticadept" apply="CHARACTER"/>
+				<datareq type="MAGIC_RESO" ref="aspectedmagician" apply="CHARACTER"/>
+			</selreq>
+		</requires>
 		<modifications>
 			<relevancemod topic="MAGICAL" />
 		</modifications>
 	</focus>
 	<focus id="spell_shaping_focus" karma="3" cost="9000" hasLevel="true">
+		<requires>
+			<selreq>
+				<datareq type="MAGIC_RESO" ref="magician" apply="CHARACTER" />
+				<datareq type="MAGIC_RESO" ref="adept" apply="CHARACTER"/>
+				<datareq type="MAGIC_RESO" ref="mysticadept" apply="CHARACTER"/>
+				<datareq type="MAGIC_RESO" ref="aspectedmagician" apply="CHARACTER"/>
+			</selreq>
+		</requires>
 		<modifications>
 			<relevancemod topic="MAGICAL" />
 		</modifications>
 	</focus>
 
 	<focus id="power_focus" karma="6" cost="18000" avail="3" hasLevel="true">
+		<requires>
+			<selreq>
+				<datareq type="MAGIC_RESO" ref="magician" apply="CHARACTER" />
+				<datareq type="MAGIC_RESO" ref="adept" apply="CHARACTER"/>
+				<datareq type="MAGIC_RESO" ref="mysticadept" apply="CHARACTER"/>
+				<datareq type="MAGIC_RESO" ref="aspectedmagician" apply="CHARACTER"/>
+			</selreq>
+		</requires>
 		<modifications>
 			<checkmod type="SKILL" ref="sorcery" value="$LEVEL" what="DICE" unlimited="true"/>
          <checkmod type="SKILL" ref="conjuring" value="$LEVEL" what="DICE" unlimited="true"/>
@@ -40,6 +96,12 @@
 		</modifications>
 	</focus>
 	<focus id="qi_focus" karma="2" cost="3000" hasLevel="true" >
+		<requires>
+			<selreq>
+				<datareq type="MAGIC_RESO" ref="adept" apply="CHARACTER"/>
+				<datareq type="MAGIC_RESO" ref="mysticadept" apply="CHARACTER"/>
+			</selreq>
+		</requires>
 		<choices>
 			<choice uuid="37026c81-d5a0-44fe-8fa9-9263acb6059f" type="ADEPT_POWER" />
 		</choices>
@@ -48,6 +110,14 @@
 		</modifications>
 	</focus>
 	<focus id="counterspelling_focus" karma="2" cost="4000" hasLevel="true">
+		<requires>
+			<selreq>
+				<datareq type="MAGIC_RESO" ref="magician" apply="CHARACTER" />
+				<datareq type="MAGIC_RESO" ref="adept" apply="CHARACTER"/>
+				<datareq type="MAGIC_RESO" ref="mysticadept" apply="CHARACTER"/>
+				<datareq type="MAGIC_RESO" ref="aspectedmagician" apply="CHARACTER"/>
+			</selreq>
+		</requires>
 		<choices>
 			<choice uuid="37026c81-d5a0-44fe-8fa9-9263acb6059f" type="SPELL_CATEGORY" />
 		</choices>
@@ -56,6 +126,14 @@
 		</modifications>
 	</focus>
 	<focus id="spellcasting_focus" karma="2" cost="4000" hasLevel="true">
+		<requires>
+			<selreq>
+				<datareq type="MAGIC_RESO" ref="magician" apply="CHARACTER" />
+				<datareq type="MAGIC_RESO" ref="adept" apply="CHARACTER"/>
+				<datareq type="MAGIC_RESO" ref="mysticadept" apply="CHARACTER"/>
+				<datareq type="MAGIC_RESO" ref="aspectedmagician" apply="CHARACTER"/>
+			</selreq>
+		</requires>
 		<choices>
 			<choice uuid="37026c81-d5a0-44fe-8fa9-9263acb6059f" type="SPELL_CATEGORY" />
 		</choices>
@@ -64,6 +142,14 @@
 		</modifications>
 	</focus>
 	<focus id="ritualspellcasting_focus" karma="2" cost="4000" hasLevel="true">
+		<requires>
+			<selreq>
+				<datareq type="MAGIC_RESO" ref="magician" apply="CHARACTER" />
+				<datareq type="MAGIC_RESO" ref="adept" apply="CHARACTER"/>
+				<datareq type="MAGIC_RESO" ref="mysticadept" apply="CHARACTER"/>
+				<datareq type="MAGIC_RESO" ref="aspectedmagician" apply="CHARACTER"/>
+			</selreq>
+		</requires>
 		<choices>
 			<choice uuid="37026c81-d5a0-44fe-8fa9-9263acb6059f" type="SPELL_CATEGORY" />
 		</choices>
@@ -72,6 +158,14 @@
 		</modifications>
 	</focus>
 	<focus id="sustaining_focus" karma="2" cost="4000" hasLevel="true">
+		<requires>
+			<selreq>
+				<datareq type="MAGIC_RESO" ref="magician" apply="CHARACTER" />
+				<datareq type="MAGIC_RESO" ref="adept" apply="CHARACTER"/>
+				<datareq type="MAGIC_RESO" ref="mysticadept" apply="CHARACTER"/>
+				<datareq type="MAGIC_RESO" ref="aspectedmagician" apply="CHARACTER"/>
+			</selreq>
+		</requires>
 		<choices>
 			<choice uuid="37026c81-d5a0-44fe-8fa9-9263acb6059f" type="SPELL_CATEGORY" />
 		</choices>
@@ -80,6 +174,14 @@
 		</modifications>
 	</focus>
 	<focus id="summoning_focus" karma="2" cost="4000" hasLevel="true">
+		<requires>
+			<selreq>
+				<datareq type="MAGIC_RESO" ref="magician" apply="CHARACTER" />
+				<datareq type="MAGIC_RESO" ref="adept" apply="CHARACTER"/>
+				<datareq type="MAGIC_RESO" ref="mysticadept" apply="CHARACTER"/>
+				<datareq type="MAGIC_RESO" ref="aspectedmagician" apply="CHARACTER"/>
+			</selreq>
+		</requires>
 		<choices>
 			<choice uuid="809f9d8e-e97f-49e7-a937-0c9582bd40fd" type="SPIRIT" />
 		</choices>
@@ -88,6 +190,14 @@
 		</modifications>
 	</focus>
 	<focus id="banishing_focus" karma="2" cost="4000" hasLevel="true">
+		<requires>
+			<selreq>
+				<datareq type="MAGIC_RESO" ref="magician" apply="CHARACTER" />
+				<datareq type="MAGIC_RESO" ref="adept" apply="CHARACTER"/>
+				<datareq type="MAGIC_RESO" ref="mysticadept" apply="CHARACTER"/>
+				<datareq type="MAGIC_RESO" ref="aspectedmagician" apply="CHARACTER"/>
+			</selreq>
+		</requires>
 		<choices>
 			<choice uuid="809f9d8e-e97f-49e7-a937-0c9582bd40fd" type="SPIRIT" />
 		</choices>
@@ -96,6 +206,16 @@
 		</modifications>
 	</focus>
 	<focus id="weapon_focus" karma="3" cost="7000" avail="3" hasLevel="true">
+		<requires>
+			<selreq>
+				<datareq type="MAGIC_RESO" ref="magician" apply="CHARACTER" />
+				<datareq type="MAGIC_RESO" ref="adept" apply="CHARACTER"/>
+				<datareq type="MAGIC_RESO" ref="mysticadept" apply="CHARACTER"/>
+				<datareq type="MAGIC_RESO" ref="aspectedmagician" apply="CHARACTER"/>
+				<datareq type="QUALITY" ref="astral_sensitive" apply="CHARACTER"/>
+				<datareq type="QUALITY" ref="astral_explorer" apply="CHARACTER"/>
+			</selreq>
+		</requires>
 		<choices>
 			<choice uuid="de69a2e0-1d0a-4a14-8c88-08f5b3377dad" type="CARRIED" ref="MELEE" />
 		</choices>
