@@ -16,8 +16,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
+import java.util.UUID;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.prelle.javafx.CloseType;
 import org.prelle.javafx.FlexibleApplication;
@@ -970,8 +972,8 @@ public class ChoiceSelectorDialog<T extends ComplexDataItem, V extends ComplexDa
 				List<Node> added = processModificationChoice(ResourceI18N.get(RES,"choice.magician"), mc);
 				logger.log(Level.ERROR, "Added for modification choice: "+added);
 				added.forEach(node -> {
-					node.visibleProperty().bind(chooseAdeptAdvantages.or(useBothAdvantages));
-					node.managedProperty().bind(chooseAdeptAdvantages.or(useBothAdvantages));
+					node.visibleProperty().bind(chooseAdeptAdvantages.not().or(useBothAdvantages));
+					node.managedProperty().bind(chooseAdeptAdvantages.not().or(useBothAdvantages));
 				});
 			} else {
 				DataItemModification mod = (DataItemModification)tmp;
@@ -1130,7 +1132,15 @@ public class ChoiceSelectorDialog<T extends ComplexDataItem, V extends ComplexDa
 			// Clear content from previous mentor spirit selection
 			if (o!=null && !o.getChoices().isEmpty()) {
 				choices.removeAll(o.getChoices());
-				o.getChoices().forEach(c -> decisions.remove(o));
+				o.getChoices().forEach(c -> decisions.remove(c));
+			}
+			if (o!=null) {
+				// Forget decisions for <selmod>s of the previous mentor spirit
+				List<UUID> selmods = Stream.concat(o.getMagicianModifications().stream(), o.getAdeptModifications().stream())
+					.filter(m -> m instanceof ModificationChoice)
+					.map(m -> ((ModificationChoice)m).getUUID())
+					.toList();
+				decisions.keySet().removeIf(c -> selmods.contains(c.getUUID()));
 			}
 			content.getChildren().removeAll(toDeleteOnMentorSpirit);
 

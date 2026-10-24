@@ -8,8 +8,10 @@ import java.util.List;
 import de.rpgframework.character.ProcessingStep;
 import de.rpgframework.genericrpg.data.Choice;
 import de.rpgframework.genericrpg.data.Decision;
+import de.rpgframework.genericrpg.data.GenericRPGTools;
 import de.rpgframework.genericrpg.modification.DataItemModification;
 import de.rpgframework.genericrpg.modification.Modification;
+import de.rpgframework.genericrpg.modification.ModificationChoice;
 import de.rpgframework.shadowrun.MagicOrResonanceType;
 import de.rpgframework.shadowrun.MentorSpirit;
 import de.rpgframework.shadowrun.Quality;
@@ -66,6 +68,18 @@ public class GetModificationsFromMentorSpirits implements ProcessingStep {
 						// Adept modifications
 						if (type.usesPowers() || (type.usesSpells() && model.hasRuleFlag(SR6RuleFlag.MENTOR_SPIRIT_BOTH))) {
 							allMods.addAll(mentor.getAdeptModifications());
+						}
+
+						// Replace decided <selmod>s with the chosen option
+						for (Modification tmp : new ArrayList<>(allMods)) {
+							if (!(tmp instanceof ModificationChoice selMod))
+								continue;
+							List<Modification> chosen = GenericRPGTools.resolveModificationChoice(selMod, val);
+							if (chosen!=null) {
+								int idx = allMods.indexOf(selMod);
+								allMods.remove(idx);
+								allMods.addAll(idx, chosen);
+							}
 						}
 
 						for (Modification tmp : allMods) {
