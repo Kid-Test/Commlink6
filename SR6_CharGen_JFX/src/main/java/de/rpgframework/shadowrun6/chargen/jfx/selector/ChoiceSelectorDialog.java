@@ -889,6 +889,20 @@ public class ChoiceSelectorDialog<T extends ComplexDataItem, V extends ComplexDa
 		} else {
 			throw new IllegalArgumentException("Only use this method with choice options");
 		}
+		// Options may have names, e.g. lifestyles for ratings (COM6-277)
+		// <choice ... options="1,2,3" i18n="lifestyle"/>  ->  item.<id>.choice.lifestyle.<option>
+		if (choice.getI18nKey()!=null) {
+			String prefix = item.getTypeString()+"."+item.getId().toLowerCase()+".choice."+choice.getI18nKey()+".";
+			cbSub.setConverter(new StringConverter<String>() {
+				public String fromString(String value) { return null;}
+				public String toString(String value) {
+					if (value==null) return "-";
+					String name = item.getLocalizedString(Locale.getDefault(), prefix+value);
+					// Missing keys return the item ID
+					return (name==null || name.equals(item.getId()) || name.equals(prefix+value)) ? value : name;
+				}
+			});
+		}
 		cbSub.getSelectionModel().selectedItemProperty().addListener( (ov,o,n) -> {
 			logger.log(Level.DEBUG, "Chose {0} for {1}", n, choice.getUUID());
 			decisions.put(choice, new Decision(choice, n));
