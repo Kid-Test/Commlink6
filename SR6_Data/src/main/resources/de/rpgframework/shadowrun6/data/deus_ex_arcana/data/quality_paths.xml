@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<qpaths>
+	<qpath id="path_of_mentor_spirit">
+		<step id="first_interaction" level="0">
+			<requires>
+				<datareq type="QUALITY" ref="mentor_spirit" negate="true" />/>
+			</requires>
+			<nextSteps>
+				<next>accept</next>
+				<next>reject</next>
+			</nextSteps>
+			<modifications>
+				<itemmod type="QUALITY" ref="first_interaction"/>
+			</modifications>
+		</step>
+		<step id="accept" level="1">
+			<modifications>
+				<itemmod type="QUALITY" ref="mentor_spirit"/>
+				<itemmod type="QUALITY" ref="first_interaction" remove="true"/>
+			</modifications>
+		</step>
+		<step id="reject" level="1">
+			<modifications>
+				<itemmod type="QUALITY" ref="first_interaction" remove="true"/>
+			</modifications>
+			<nextSteps>
+				<next>first_interaction</next>
+			</nextSteps>
+		</step>
+	</qpath>
+	
+	<qpath id="path_of_familiar">
+		<step id="pet_store" level="0">
+			<modifications>
+				<itemmod type="QUALITY" ref="pet_store"/>
+			</modifications>
+			<nextSteps>
+				<next>new_buddy</next>
+			</nextSteps>
+		</step>
+		<step id="new_buddy" level="1">
+			<modifications>
+				<itemmod type="QUALITY" ref="pet_store" remove="true"/>
+				<itemmod type="QUALITY" ref="new_buddy"/>
+			</modifications>
+			<nextSteps>
+				<next>bound_soul</next>
+			</nextSteps>
+		</step>
+		<step id="bound_soul" level="2">
+			<requires>
+				<selreq>
+					<datareq type="MAGIC_RESO" ref="magician" apply="CHARACTER" />
+					<datareq type="MAGIC_RESO" ref="adept" apply="CHARACTER"/>
+					<datareq type="MAGIC_RESO" ref="mysticadept" apply="CHARACTER"/>
+					<datareq type="MAGIC_RESO" ref="aspectedmagician" apply="CHARACTER"/>
+					<datareq type="MAGIC_RESO" ref="minor_awakened" apply="CHARACTER"/>
+				</selreq>
+			</requires>
+			<modifications>
+				<itemmod type="QUALITY" ref="new_buddy" remove="true"/>
+				<itemmod type="QUALITY" ref="bound_soul"/>
+			</modifications>
+		</step>
+	</qpath>
+	
+</qpaths>

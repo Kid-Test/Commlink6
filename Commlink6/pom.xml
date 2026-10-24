@@ -12,7 +12,7 @@
 
 	<groupId>de.rpgframework.shadowrun6</groupId>
 	<artifactId>commlink6</artifactId>
-	<version>1.14.1-SNAPSHOT</version>
+	<version>1.15.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>Commlink6</name>
@@ -26,7 +26,7 @@
 		<javafx.plugin.version>0.0.8</javafx.plugin.version>
 		<client.plugin.version>1.0.25</client.plugin.version>
 		<attach.version>4.0.22</attach.version>
-		<rpgfw.version>5.5.0</rpgfw.version>
+		<rpgfw.version>5.6.0</rpgfw.version>
 	</properties>
 	<!-- Comment for no real purpose -->
 
@@ -111,7 +111,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.46</version>
+			<version>1.18.48</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -155,10 +155,6 @@
 			<groupId>de.rpgframework</groupId>
 			<artifactId>rpgframework-rules</artifactId>
 		</dependency>
-      <dependency>
-         <groupId>de.rpgframework</groupId>
-         <artifactId>rpgframework-rules</artifactId>
-      </dependency>
 		<dependency>
 			<groupId>de.rpgframework</groupId>
 			<artifactId>shadowrun6-core</artifactId>
@@ -193,7 +189,7 @@
       <dependency>
          <groupId>org.bouncycastle</groupId>
          <artifactId>bcutil-jdk18on</artifactId>
-         <version>1.84</version>
+         <version>1.85</version>
          <scope>runtime</scope>
       </dependency>
 	</dependencies>
@@ -233,7 +229,7 @@
 			<plugin>
 				<groupId>org.prelle</groupId>
 				<artifactId>update4j-plugin</artifactId>
-				<version>1.1.0-SNAPSHOT</version>
+				<version>1.1.0</version>
 				<configuration>
 					<baseUri>https://eden.rpgframework.de/</baseUri>
 					<basePath>${user.home}/CommLink6/app/STABILITY</basePath>
@@ -275,7 +271,7 @@
 						<exclude>de.rpgframework:rpgframework-rules</exclude>
 						<exclude>de.rpgframework:rpgframework-javafx</exclude>
 						<exclude>de.rpgframework:rpgframework-generator</exclude>
-                  <exclude>de.rpgframework:rpgframework-crypto</exclude>
+                        <exclude>de.rpgframework:rpgframework-crypto</exclude>
 						<exclude>de.rpgframework:itextpdf</exclude>
 						<exclude>de.rpgframework:attach-pdf</exclude>
 						<!--exclude>de.rpgframework:attach-pdf-pdfbox</exclude-->

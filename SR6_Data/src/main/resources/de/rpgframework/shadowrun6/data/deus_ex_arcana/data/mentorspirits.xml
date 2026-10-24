@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<mentorspirits>
+
+	<mentorspirit id="the_eldest">
+		<similarNames>
+			<similar>path_walker</similar>
+			<similar>dagda</similar>
+			<similar>morrigan</similar>
+			<similar>odin</similar>
+		</similarNames>
+		<modifications>
+			<relevancemod type="SKILL" topic="SOCIAL"/>
+			<checkmod type="SKILL" ref="conjuring" value="1" what="EDGE"/>
+		</modifications>
+	</mentorspirit>
+
+	<mentorspirit id="fae_godmother">
+		<similarNames>
+			<similar>pauper_lord</similar>
+		</similarNames>
+		<modifications>
+			<checkmod type="SKILL" ref="con" value="1" what="DICE" cond="y"/>
+			<checkmod type="SKILL" ref="influence" value="1" what="DICE" cond="y"/>
+		</modifications>
+	</mentorspirit>
+
+	<mentorspirit id="goblin_king">
+		<similarNames>
+			<similar>goblin_supreme</similar>
+		</similarNames>
+		<modifications>
+			<checkmod type="SKILL" ref="perception"  value="1" what="EDGE_ONLY_TEST" cond="y"/>
+			<checkmod type="SKILL" ref="outdoors"  value="1" what="EDGE_ONLY_TEST" cond="y"/>
+		</modifications>
+	</mentorspirit>
+
+	<mentorspirit id="tripple_goddess">
+		<similarNames>
+			<similar>mother</similar>
+			<similar>maiden</similar>
+			<similar>crone</similar>
+		</similarNames>
+		<modifications>
+			<relevancemod type="SKILL"/>
+			<relevancemod topic="engineering"/>
+			<relevancemod type="SKILL" topic="SOCIAL"/>
+		</modifications>
+	</mentorspirit>
+
+	<mentorspirit id="four_horsemen">
+		<similarNames>
+			<similar>pestilence</similar>
+			<similar>war</similar>
+			<similar>famine</similar>
+			<similar>doom</similar>
+		</similarNames>
+		<modifications>
+			<checkmod type="RESISTANCE" ref="TOXIN_POOL" value="2" what="DICE"/>
+		</modifications>
+		<magician>
+			<checkmod type="SKILL" ref="conjuring"  value="1" what="EDGE_ONLY_TEST" cond="y"/>
+		</magician>
+		<adept>
+			<valmod type="ADEPT_POWER" ref="elemental_weapon" value="1" />
+		</adept>
+	</mentorspirit>
+
+	<mentorspirit id="red_bear">
+		<modifications>
+			<checkmod type="SKILL" ref="con"  value="1" what="EDGE_ONLY_TEST" cond="y"/>
+			<checkmod type="SKILL" ref="influence"  value="1" what="EDGE_ONLY_TEST" cond="y"/>
+		</modifications>
+		<magician>
+			<checkmod type="SPELL" ref="COMBAT" value="1" what="DICE" />
+			<checkmod type="SPELL" ref="HEALTH" value="1" what="DICE" />
+		</magician>
+		<adept>
+			<valmod type="ADEPT_POWER" ref="mystic_armor" value="1" />
+		</adept>
+	</mentorspirit>
+
+	<mentorspirit id="knowledge_seeker">
+		<modifications>
+			<checkmod type="SKILL" ref="con"  value="1" what="EDGE_ONLY_TEST" cond="y"/>
+			<checkmod type="SKILL" ref="influence"  value="1" what="EDGE_ONLY_TEST" cond="y"/>
+		</modifications>
+		<magician>
+			<checkmod type="SPELL" ref="DETECTION" value="1" what="DICE" />
+			<checkmod type="SPELL" ref="MANIPULATION" value="1" what="DICE" />
+		</magician>
+		<adept>
+			<valmod type="ADEPT_POWER" ref="iron_will" value="1"/>
+		</adept>
+	</mentorspirit>
+
+<!-- critter -->
+
+	<mentorspirit id="lemur">
+		<modifications>
+			<checkmod type="SKILL" ref="con"  value="1" what="EDGE_ONLY_TEST" cond="y"/>
+		</modifications>
+		<magician>
+			<checkmod type="SPELL" ref="ILLUSION"  value="1" what="EDGE_ONLY_TEST" cond="y"/>
+		</magician>
+		<adept>
+			<valmod type="ADEPT_POWER" ref="spell_resistance" value="1"/>
+		</adept>
+	</mentorspirit>
+
+<!-- toxic -->
+
+	<mentorspirit id="toxic_red_bear">
+		<modifications>
+           <itemmod type="QUALITY" ref="high_pain_tolerance"/> <!-- wound modifier -1 -->
+		</modifications>
+		<magician>
+			<checkmod type="SKILL" ref="conjuring"  value="1" what="EDGE_ONLY_TEST" cond="y"/>
+		</magician>
+		<adept>
+			<checkmod type="SKILLSPECIALIZATION" ref="athletics/archery" value="1" what="DICE" cond="y"/>
+			<checkmod type="SKILLSPECIALIZATION" ref="athletics/throwing" value="1" what="DICE" cond="y"/>
+			<checkmod type="SKILL" ref="close_combat" value="1" what="DICE" cond="y"/>
+			<checkmod type="SKILL" ref="exotic_weapons" value="1" what="DICE" cond="y"/>
+			<checkmod type="SKILL" ref="firearms" value="1" what="DICE" cond="y"/>
+			<checkmod type="SKILL" ref="influence" value="1" what="DICE" cond="y"/>
+		</adept>
+	</mentorspirit>
+
+	<mentorspirit id="atomic">
+		<modifications>
+			<checkmod type="RESISTANCE" ref="TOXIN_POOL" value="-1" what="EDGE_BOOST" />
+		</modifications>
+		<magician>
+			<checkmod type="SKILL" ref="conjuring" value="-1" what="EDGE_BOOST" cond="yes" />
+		</magician>
+		<adept>
+			<itemmod type="ADEPT_POWER" ref="sustenance" />
+		</adept>
+	</mentorspirit>
+
+	<mentorspirit id="disease">
+		<modifications>
+			<checkmod type="RESISTANCE" ref="TOXIN_POOL" value="-1" what="EDGE_BOOST" />
+		</modifications>
+		<magician>
+			<checkmod type="SKILL" ref="conjuring" value="-1" what="EDGE_BOOST" cond="yes" />
+		</magician>
+		<adept>
+			<itemmod type="ADEPT_POWER" ref="plague_cloud" />
+		</adept>
+	</mentorspirit>
+
+	<mentorspirit id="doom">
+		<modifications>
+			<checkmod type="SKILLSPECIALIZATION" ref="engineering/demolitions" value="-1" what="EDGE_BOOST" cond="yes" />
+		</modifications>
+		<magician>
+			<checkmod type="SPELL" ref="COMBAT" value="-1" what="EDGE_BOOST" />
+		</magician>
+		<adept>
+			<itemmod type="ADEPT_POWER" ref="killing_hands" />
+		</adept>
+	</mentorspirit>
+
+	<mentorspirit id="mutation">
+		<choices>
+			<choice type="SKILL" uuid="da192302-8f07-41a6-8b7c-e795aff64fcd" options="athletics,close_combat,exotic_weapons,firearms,piloting,stealth"/>
+		</choices>
+		<modifications>
+			<checkmod type="SKILL" ref="CHOICE" choice="da192302-8f07-41a6-8b7c-e795aff64fcd" value="-1" what="EDGE_BOOST" />
+		</modifications>
+		<magician>
+			<checkmod type="SPELL" ref="HEALTH" value="-1" what="EDGE_BOOST" />
+		</magician>
+		<adept>
+			<valmod type="ADEPT_POWER" ref="improved_physical_attribute" choice="05054102-0183-482a-9e2b-84bc8d5f153f" options="AGILITY,BODY,REACTION,STRENGTH" value="2" />
+		</adept>
+	</mentorspirit>
+
+	<mentorspirit id="pollution">
+		<modifications>
+			<checkmod type="SKILL" ref="engineering" value="-1" what="EDGE_BOOST" cond="yes" />
+		</modifications>
+		<magician>
+			<checkmod type="SKILL" ref="conjuring" value="-1" what="EDGE_BOOST" cond="yes" />
+		</magician>
+		<adept>
+			<itemmod type="ADEPT_POWER" ref="toxic_strike" />
+		</adept>
+	</mentorspirit>
+
+</mentorspirits>

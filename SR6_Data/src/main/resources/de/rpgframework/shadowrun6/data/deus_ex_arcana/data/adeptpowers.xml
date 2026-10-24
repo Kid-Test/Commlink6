@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<powers>
+
+	<power id="plague_cloud"  cost="0.5" act="MINOR_ACTION"/>
+	<power id="toxic_strike"  cost="0.5" act="MINOR_ACTION"/>
+   
+</powers>

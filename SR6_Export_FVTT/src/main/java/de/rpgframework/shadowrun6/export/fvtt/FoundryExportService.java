@@ -5,6 +5,8 @@ import java.lang.System.Logger.Level;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import com.google.gson.Gson;
@@ -16,12 +18,15 @@ import de.rpgframework.genericrpg.data.PageReference;
 import de.rpgframework.genericrpg.data.SkillSpecialization;
 import de.rpgframework.genericrpg.data.SkillSpecializationValue;
 import de.rpgframework.genericrpg.items.CarriedItem;
+import de.rpgframework.genericrpg.requirements.Requirement;
+import de.rpgframework.genericrpg.requirements.ValueRequirement;
 import de.rpgframework.shadowrun.AdeptPowerValue;
 import de.rpgframework.shadowrun.ComplexFormValue;
 import de.rpgframework.shadowrun.Contact;
 import de.rpgframework.shadowrun.DamageType;
 import de.rpgframework.shadowrun.FocusValue;
 import de.rpgframework.shadowrun.Lifestyle;
+import de.rpgframework.shadowrun.MagicOrResonanceType;
 import de.rpgframework.shadowrun.MetamagicOrEcho;
 import de.rpgframework.shadowrun.MetamagicOrEchoValue;
 import de.rpgframework.shadowrun.QualityValue;
@@ -29,8 +34,9 @@ import de.rpgframework.shadowrun.RitualFeatureReference;
 import de.rpgframework.shadowrun.RitualValue;
 import de.rpgframework.shadowrun.SIN;
 import de.rpgframework.shadowrun.ShadowrunAttribute;
-import de.rpgframework.shadowrun.SpellFeatureReference;
 import de.rpgframework.shadowrun.SpellValue;
+import de.rpgframework.shadowrun.items.AmmunitionSlot;
+import de.rpgframework.shadowrun.items.AugmentationQuality;
 import de.rpgframework.shadowrun.items.Availability;
 import de.rpgframework.shadowrun.items.FireMode;
 import de.rpgframework.shadowrun6.MartialArtsValue;
@@ -41,6 +47,7 @@ import de.rpgframework.shadowrun6.Shadowrun6Character;
 import de.rpgframework.shadowrun6.TechniqueValue;
 import de.rpgframework.shadowrun6.foundry.ActionSkills.ActionSkillValue;
 import de.rpgframework.shadowrun6.foundry.FVTTAdeptPower;
+import de.rpgframework.shadowrun6.foundry.FVTTAmmunition;
 import de.rpgframework.shadowrun6.foundry.FVTTArmor;
 import de.rpgframework.shadowrun6.foundry.FVTTBodyware;
 import de.rpgframework.shadowrun6.foundry.FVTTComplexForm;
@@ -48,6 +55,7 @@ import de.rpgframework.shadowrun6.foundry.FVTTContact;
 import de.rpgframework.shadowrun6.foundry.FVTTEcho;
 import de.rpgframework.shadowrun6.foundry.FVTTFocus;
 import de.rpgframework.shadowrun6.foundry.FVTTGear;
+import de.rpgframework.shadowrun6.foundry.FVTTGear.Matrix;
 import de.rpgframework.shadowrun6.foundry.FVTTLifestyle;
 import de.rpgframework.shadowrun6.foundry.FVTTMAStyle;
 import de.rpgframework.shadowrun6.foundry.FVTTMATechnique;
@@ -56,11 +64,12 @@ import de.rpgframework.shadowrun6.foundry.FVTTQuality;
 import de.rpgframework.shadowrun6.foundry.FVTTRitual;
 import de.rpgframework.shadowrun6.foundry.FVTTSIN;
 import de.rpgframework.shadowrun6.foundry.FVTTSkill;
-import de.rpgframework.shadowrun6.foundry.FVTTSpell;
 import de.rpgframework.shadowrun6.foundry.FVTTVehicle;
 import de.rpgframework.shadowrun6.foundry.FVTTWeapon;
+import de.rpgframework.shadowrun6.foundry.GenericFVTT;
 import de.rpgframework.shadowrun6.foundry.Shadowrun6FoundryCharacter;
 import de.rpgframework.shadowrun6.foundry.Shadowrun6FoundryCharacter.SpecialTraits;
+import de.rpgframework.shadowrun6.items.AmmunitionClass;
 import de.rpgframework.shadowrun6.items.Damage;
 import de.rpgframework.shadowrun6.items.ItemSubType;
 import de.rpgframework.shadowrun6.items.ItemTemplate;
@@ -68,6 +77,7 @@ import de.rpgframework.shadowrun6.items.ItemType;
 import de.rpgframework.shadowrun6.items.OnRoadOffRoadValue;
 import de.rpgframework.shadowrun6.items.SR6ItemAttribute;
 import de.rpgframework.shadowrun6.items.VehicleData.VehicleType;
+import de.rpgframework.shadowrun6.modifications.ShadowrunReference;
 import de.rpgframework.shadowrun6.persist.WeaponDamageConverter;
 
 public class FoundryExportService {
@@ -79,7 +89,7 @@ public class FoundryExportService {
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
 		ActorData<Shadowrun6FoundryCharacter> actor = new ActorData<Shadowrun6FoundryCharacter>(character.getName(), "Player", getJSONCharacter(character));
-		actor.exportVersion = "14.0";
+		actor.exportVersion = "15.0";
 		actor.generatorName="Commlink6";
 		actor.generatorVersion=System.getProperty("project.version");
 		addFoundryItems(actor, character);
@@ -96,12 +106,18 @@ public class FoundryExportService {
 		setSkills(jsonCharacter, character);
 		jsonCharacter.metatype = character.getMetatype().getName();
 		jsonCharacter.gender   = character.getGender().toString();
+		jsonCharacter.realName = character.getRealName();
+		jsonCharacter.appearance = character.getEyeColor()+" "+character.getHairColor()+" "+character.getSkinColor()+" skin";
 		return jsonCharacter;
 	}
 
 
 	//-------------------------------------------------------------------
 	private void setAttributes(Shadowrun6FoundryCharacter json, Shadowrun6Character model) {
+		// Mundane characters must not export Magic or Resonance
+		MagicOrResonanceType mor = model.getMagicOrResonanceType();
+		boolean usesMagic     = mor!=null && mor.usesMagic();
+		boolean usesResonance = mor!=null && mor.usesResonance();
 		for (ShadowrunAttribute attribute : ShadowrunAttribute.values()) {
 			switch (attribute) {
 			case CHARISMA :
@@ -153,12 +169,16 @@ public class FoundryExportService {
 				json.attributes.wil.modString = model.getAttribute(attribute).getPool().toExplainString();
 				break;
 			case MAGIC:
+				if (!usesMagic)
+					break;
 				json.attributes.mag.base = model.getAttribute(attribute).getDistributed();
 				json.attributes.mag.mod   = model.getAttribute(attribute).getModifier();
 				json.attributes.mag.pool = model.getAttribute(attribute).getModifiedValue();
 				json.attributes.mag.modString = model.getAttribute(attribute).getPool().toExplainString();
 				break;
 			case RESONANCE:
+				if (!usesResonance)
+					break;
 				json.attributes.res.base = model.getAttribute(attribute).getDistributed();
 				json.attributes.res.mod   = model.getAttribute(attribute).getModifier();
 				json.attributes.res.pool = model.getAttribute(attribute).getModifiedValue();
@@ -430,7 +450,17 @@ public class FoundryExportService {
 			System.out.println("Item "+item.getNameWithoutRating()+" / "+item.getKey());
 			try {
 				if (ItemTemplate.UUID_UNARMED.equals( item.getUuid())) continue;
+				ItemData<FVTTGear> foundry = convertToFVTTGear(item);
+				actor.addItem(foundry);
+			} catch (Exception e) {
+				logger.log(Level.ERROR, "Could not add item " + item, e);
+			}
+		}
+	}
 
+	//-------------------------------------------------------------------
+	private ItemData<FVTTGear> convertToFVTTGear(CarriedItem<ItemTemplate> item) {
+		WeaponDamageConverter dmgConv = new WeaponDamageConverter();
 				ItemType type = item.getAsObject(SR6ItemAttribute.ITEMTYPE).getValue();
 				ItemSubType subtype = item.getAsObject(SR6ItemAttribute.ITEMSUBTYPE).getValue();
 				FVTTGear gear = new FVTTGear();
@@ -442,18 +472,65 @@ public class FoundryExportService {
 					gear = new FVTTWeapon();
 					((FVTTWeapon)gear).dmg = ((Damage)item.getAsObject(SR6ItemAttribute.DAMAGE).getModifiedValue()).getValue();
 					((FVTTWeapon)gear).dmgDef = dmgConv.write((Damage)item.getAsObject(SR6ItemAttribute.DAMAGE).getModifiedValue());
+					if (item.hasAttribute(SR6ItemAttribute.AMMUNITION)) {
+						Object obj=item.getAsObject(SR6ItemAttribute.AMMUNITION).getModifiedValue();
+						AmmunitionSlot slot = (AmmunitionSlot)( (obj instanceof List)?((List<?>)obj).get(0):obj );
+						((FVTTWeapon)gear).ammocap = slot.getAmount();
+					}
+					if (item.hasAttribute(SR6ItemAttribute.AMMUNITION_CLASS))
+						((FVTTWeapon)gear).ammoClass = ((AmmunitionClass)item.getAsObject(SR6ItemAttribute.AMMUNITION_CLASS).getModifiedValue()).name();
+
+					break;
+				case AMMUNITION:
+					gear = new FVTTAmmunition();
+					if (item.hasAttribute(SR6ItemAttribute.DAMAGE)) ((FVTTAmmunition)gear).dmg=((Damage)item.getAsObject(SR6ItemAttribute.DAMAGE).getModifiedValue()).getValue();
+					if (item.hasAttribute(SR6ItemAttribute.ATTACK_RATING)) ((FVTTAmmunition)gear).attackRating=item.getAsObject(SR6ItemAttribute.ATTACK_RATING).getModifiedValue();
+					for (Requirement req : item.getResolved().getRequirements()) {
+						if (req.getType()==ShadowrunReference.ITEM_ATTRIBUTE && SR6ItemAttribute.AMMUNITION_CLASS.name().equals(req.getKey()) && req instanceof ValueRequirement vReq ) {
+							((FVTTAmmunition)gear).ammoClass = vReq.getRawValue();
+						}
+					}
 					break;
 				case ARMOR:
 					gear = new FVTTArmor();
+					if (item.hasAttribute(SR6ItemAttribute.CAPACITY))
+						((FVTTArmor)gear).capacity = item.getAsValue(SR6ItemAttribute.CAPACITY).getModifiedValue();
 					break;
 				case BIOWARE:
 				case CYBERWARE:
 				case NANOWARE:
 					gear = new FVTTBodyware();
+					gear.matrix = new Matrix();
+					gear.matrix.deviceRating = 2;
+					// Map augmentation quality to device rating
+					if (item.hasAttribute(SR6ItemAttribute.QUALITY)) {
+						AugmentationQuality augQual =item.getAsObject(SR6ItemAttribute.QUALITY).getModifiedValue();
+						if (augQual!=null) {
+							gear.matrix.deviceRating = switch (augQual) {
+							case OMEGA -> 0;
+							case EXO   -> 1;
+							case STANDARD -> 2;
+							case ALPHA -> 3;
+							case BETA  -> 4;
+							case DELTA  -> 5;
+							case GAMMA -> 6;
+							default -> 2;
+							};
+						}
+					}
+
 					break;
 				case VEHICLES:
 				case DRONE_LARGE: case DRONE_MEDIUM: case DRONE_MICRO: case DRONE_MINI: case DRONE_SMALL:
 					gear = new FVTTVehicle();
+					break;
+				case ELECTRONICS:
+					gear.matrix = new Matrix();
+					if (item.hasAttribute(SR6ItemAttribute.DEVICE_RATING)) gear.matrix.deviceRating=item.getAsValue(SR6ItemAttribute.DEVICE_RATING).getModifiedValue();
+					if (item.hasAttribute(SR6ItemAttribute.ATTACK)) gear.matrix.a=item.getAsValue(SR6ItemAttribute.ATTACK).getModifiedValue();
+					if (item.hasAttribute(SR6ItemAttribute.SLEAZE)) gear.matrix.s=item.getAsValue(SR6ItemAttribute.SLEAZE).getModifiedValue();
+					if (item.hasAttribute(SR6ItemAttribute.DATA_PROCESSING)) gear.matrix.d=item.getAsValue(SR6ItemAttribute.DATA_PROCESSING).getModifiedValue();
+					if (item.hasAttribute(SR6ItemAttribute.FIREWALL)) gear.matrix.f=item.getAsValue(SR6ItemAttribute.FIREWALL).getModifiedValue();
 					break;
 				}
 
@@ -485,6 +562,17 @@ public class FoundryExportService {
 				item.getEffectiveAccessories().forEach( ci -> accList.add(ci.getNameWithRating()));
 				if (!accList.isEmpty()) {
 					gear.accessories = String.join(", ", accList);
+					// New: ItemsInItem
+					// getEffectiveAccessories() also lists the accessories of accessories (e.g. the weapon in a weapon mount),
+					// which convertToFVTTGear() already adds to their own parent - so skip them here to avoid duplicates
+					Set<UUID> nestedInAccessory = item.getEffectiveAccessories().stream()
+							.flatMap(acc -> acc.getEffectiveAccessories().stream())
+							.map(CarriedItem::getUuid)
+							.collect(Collectors.toSet());
+					for (CarriedItem<ItemTemplate> acc : item.getEffectiveAccessories()) {
+						if (nestedInAccessory.contains(acc.getUuid())) continue;
+						gear.itemsInItem.add(convertToFVTTGear(acc));
+					}
 				}
 				// Modifications
 				List<String> modList = new ArrayList<>();
@@ -554,12 +642,14 @@ public class FoundryExportService {
 						((FVTTVehicle)gear).vtype = ((VehicleType)item.getAsObject(SR6ItemAttribute.VEHICLE_TYPE).getModifiedValue()).name();
 				}
 
-				ItemData<FVTTGear> foundry = new ItemData<FVTTGear>(item.getNameWithoutRating(), "gear", gear);
-				actor.addItem(foundry);
-			} catch (Exception e) {
-				logger.log(Level.ERROR, "Could not add item " + item, e);
-			}
-		}
+				String name = item.getNameWithoutRating();
+				if (name.contains("(10x)")) {
+					name = name.replace("(10x)", "");
+					gear.count *=10;
+				}
+
+				ItemData<FVTTGear> foundry = new ItemData<FVTTGear>(name, "gear", gear);
+				return foundry;
 	}
 
 	//-------------------------------------------------------------------
@@ -598,31 +688,7 @@ public class FoundryExportService {
 	//-------------------------------------------------------------------
 	private void addSpells(ActorData<Shadowrun6FoundryCharacter> actor, Shadowrun6Character character) {
 		for (SpellValue<SR6Spell> item : character.getSpells()) {
-			FVTTSpell spell = new FVTTSpell();
-
-			spell.genesisID = item.getModifyable().getId();
-			spell.category  = item.getModifyable().getCategory().name().toLowerCase();
-			spell.duration  = item.getModifyable().getDuration().name().toLowerCase();
-			spell.drain     = item.getModifyable().getDrain();
-			spell.range     = item.getModifyable().getRange().name().toLowerCase();
-			spell.type      = item.getModifyable().getType().name().toLowerCase();
-			if (item.getModifyable().getDamage()!=null)
-				spell.damage    = item.getModifyable().getDamage().name().toLowerCase();
-			spell.isOpposed = item.getModifyable().isOpposed();
-			spell.withEssence = item.getModifyable().isEssence();
-			for (SpellFeatureReference ref : item.getModifyable().getFeatures()) {
-				switch (ref.getFeature().getId()) {
-				case "sense_multi": spell.multiSense=true; break;
-				}
-			}
-			
-			for (PageReference pr : item.getModifyable().getPageReferences()) {
-				spell.product = pr.getProduct().getID().toLowerCase();
-				spell.page    = pr.getPage();
-			}
-
-			ItemData<FVTTSpell> foundry = new ItemData<FVTTSpell>(item.getNameWithoutRating(), "spell", spell);
-			actor.addItem(foundry);
+			actor.addItem(FoundryDataConverter.convertSpell(item, Locale.getDefault()));
 		}
 	}
 
@@ -771,6 +837,16 @@ public class FoundryExportService {
 
 			data.quality = item.getQuality().name();
 			data.description = item.getDescription();
+			data.id = item.getUniqueId();
+			data.name = item.getName();
+			
+			// Add connected licenses
+			character.getLicenses(item).forEach( lic -> {
+				GenericFVTT licF = new GenericFVTT();
+
+				ItemData<GenericFVTT> foundry = new ItemData<GenericFVTT>(lic.getNameWithRating(), "license", licF);
+				data.itemsInItem.add(foundry);
+			});
 
 			ItemData<FVTTSIN> foundry = new ItemData<FVTTSIN>(item.getName(), "sin", data);
 			actor.addItem(foundry);
@@ -804,6 +880,8 @@ public class FoundryExportService {
 			data.loyalty     = item.getLoyalty();
 			data.type        = (item.getType()!=null)?item.getType().getName():"NOT_SET";
 			data.description = item.getDescription();
+			data.occupation  = item.getTypeName();
+			data.favors      = item.getFavors();
 
 			ItemData<FVTTContact> foundry = new ItemData<FVTTContact>(item.getName(), "contact", data);
 			if (foundry.name==null)

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<items>
+
+	<item id="orichalcum" avail="3L" price="22000" type="MAGICAL" subtype="MAGICAL_MATERIALS" count="y"/>
+	<item id="corinthian_bronze" avail="8L" price="1700000" type="MAGICAL" subtype="MAGICAL_MATERIALS" count="y"/>
+	<item id="hepatizon" avail="7L" price="900000" type="MAGICAL" subtype="MAGICAL_MATERIALS" count="y"/>
+	<item id="ukkru_small" avail="5L" price="28000" type="MAGICAL" subtype="MAGICAL_MATERIALS" count="y"/>
+	<item id="ukkru_medium" avail="5L" price="43000" type="MAGICAL" subtype="MAGICAL_MATERIALS" count="y"/>
+	<item id="ukkru_large" avail="5L" price="67000" type="MAGICAL" subtype="MAGICAL_MATERIALS" count="y"/>
+	<item id="fools_mithirl_small" avail="6L" price="34000" type="MAGICAL" subtype="MAGICAL_MATERIALS" count="y"/>
+	<item id="fools_mithirl_medium" avail="6L" price="51000" type="MAGICAL" subtype="MAGICAL_MATERIALS" count="y"/>
+	<item id="fools_mithirl_large" avail="6L" price="79000" type="MAGICAL" subtype="MAGICAL_MATERIALS" count="y"/>
+
+	<item id="mana_redis_grenade" avail="6I" price="1200" type="AMMUNITION" subtype="GRENADES" count="y" >
+		<choices>
+			<choice uuid="c2d17c87-1cfe-4355-9877-a20fe09c170d" type="ITEM_ATTRIBUTE" ref="RATING" max="6"/>
+		</choices>
+		<attrdef id="PRICE" value="$RATING*1200"/>
+	</item>
+
+<!-- as cost and avail are not stated in rules, 'Mellow' will not be not shown in data 
+   <item id="mellow" avail="99" price="0" type="CHEMICALS" subtype="DRUGS" count="y" /> -->
+
+</items>

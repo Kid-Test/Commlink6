@@ -451,7 +451,7 @@
      <modifications>
      	<valmod type="ATTRIBUTE" ref="MOVEMENT" value="3/6/1" set="NATURAL" />
      	<!-- +2 AR in combat when kicking -->
-       <checkmod ref="athletics" type="SKILL" what="DICE" value="4"/>
+       <checkmod ref="athletics" type="SKILL" what="DICE" value="4" cond="y"/> <!-- bonus is only for jumping -->
      </modifications>
    </quality>
    <quality id="setae" karma="5" pos="true" type="METAGENIC" cat="METAGENIC_MORPHISMS">
@@ -528,6 +528,7 @@
    			<datareq type="MAGIC_RESO" ref="adept" apply="CHARACTER"/>
    			<datareq type="MAGIC_RESO" ref="mysticadept" apply="CHARACTER"/>
    			<datareq type="MAGIC_RESO" ref="aspectedmagician" apply="CHARACTER"/>
+			<datareq type="MAGIC_RESO" ref="minor_awakened" apply="CHARACTER"/>
    		</selreq>
    	</requires>
    </quality>

@@ -481,12 +481,14 @@
          <itemmod type="HOOK" ref="TOP"/>
          <itemmod type="HOOK" ref="UNDER"/>
       </modifications>
+		<attrdef id="WEAPON_SIZE" value="SMALL"/>
       <weapon attack="8,12,9,," ammo="20(c)" dmg="0P" mode="SS" skill="exotic_weapons" spec="exotic_weapons/air" />
    </item>
    <item avail="2" price="600" id="parashield_dart_pistol" type="WEAPON_SPECIAL" subtype="DART">
       <modifications>
          <itemmod type="HOOK" ref="TOP"/>
       </modifications>
+		<attrdef id="WEAPON_SIZE" value="SMALL"/>
       <weapon attack="9,10,8,," ammo="5(c)" dmg="1P" mode="SS" skill="exotic_weapons" spec="exotic_weapons/air" />
    </item>
    <item avail="3" price="1200" id="parashield_dart_rifle" type="WEAPON_SPECIAL" subtype="DART">
@@ -510,6 +512,7 @@
        <modifications>
          <itemmod type="HOOK" ref="TOP"/>
       </modifications>
+		<attrdef id="WEAPON_SIZE" value="SMALL"/>
       <weapon attack=",8,8,3," ammo="6(c)" dmg="0P" mode="SA" skill="exotic_weapons" spec="exotic_weapons/launchers" />
    </item>
    <item avail="4I" price="5000" id="armtech_mgl12" type="WEAPON_SPECIAL" subtype="LAUNCHERS">
@@ -517,6 +520,7 @@
          <itemmod type="HOOK" ref="TOP"/>
          <itemmod type="HOOK" ref="UNDER"/>
       </modifications>
+		<attrdef id="WEAPON_SIZE" value="LARGE"/>
       <weapon attack=",8,9,6,2" ammo="12(c)" dmg="0P" mode="SA" skill="exotic_weapons" spec="exotic_weapons/launchers" />
    </item>
    <item avail="5I" price="7000" id="aztechnology_striker" type="WEAPON_SPECIAL" subtype="LAUNCHERS">

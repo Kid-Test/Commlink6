@@ -41,6 +41,8 @@ public class PointBuyMagicOrResonanceController extends MagicOrResonanceControll
 		super(parent);
 		// Build available
 		available  = new ArrayList<>(Shadowrun6Core.getItemList(MagicOrResonanceType.class));
+		// Types only granted by modifications (e.g. qualities) are not selectable
+		available.removeIf(MagicOrResonanceType::isModOnly);
 		Collections.sort(available, new Comparator<MagicOrResonanceType>() {
 			public int compare(MagicOrResonanceType arg0, MagicOrResonanceType arg1) {
 				return Collator.getInstance().compare(arg0.getName(), arg1.getName());
@@ -90,6 +92,7 @@ public class PointBuyMagicOrResonanceController extends MagicOrResonanceControll
 		try {
 			available.clear();
 			available.addAll(Shadowrun6Core.getItemList(MagicOrResonanceType.class));
+			available.removeIf(MagicOrResonanceType::isModOnly);
 			List<MagicOrResonanceType> forbidden = new ArrayList<>();
 			// Check for options
 			for (Modification tmp : previous) {

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<traditions>
+
+   <tradition id="reawaken_umt_log" drain1="WILLPOWER" drain2="LOGIC" />
+   <tradition id="reawaken_umt_cha" drain1="WILLPOWER" drain2="CHARISMA" />
+   <tradition id="reawaken_shamanic" drain1="WILLPOWER" drain2="CHARISMA" />
+   <tradition id="reawaken_hermetic" drain1="WILLPOWER" drain2="LOGIC" />
+   
+   <tradition id="toxic_avenger" drain1="WILLPOWER" drain2="CHARISMA" />   
+   <tradition id="toxic_poisoner" drain1="WILLPOWER" drain2="CHARISMA" />   
+   
+</traditions>
