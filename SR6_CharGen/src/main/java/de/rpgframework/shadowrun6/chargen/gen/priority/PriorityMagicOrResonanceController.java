@@ -97,7 +97,7 @@ public class PriorityMagicOrResonanceController extends MagicOrResonanceControll
 					ValueModification mod = (ValueModification) tmp;
 					if (mod.getReferenceType() == ShadowrunReference.MAGIC_RESO) {
 						MagicOrResonanceType type = mod.getResolvedKey();
-						if (forbidden.contains(type)) {
+						if (forbidden.contains(type) || !type.isModOnly()) {
 							logger.log(Level.ERROR, "Would allow {0}, but it has been forbidden",mod.getKey() );
 						} else {
 							available.put(type, mod.getValue());
@@ -125,7 +125,7 @@ public class PriorityMagicOrResonanceController extends MagicOrResonanceControll
 			logger.log(Level.DEBUG, "Available = " + available.keySet());
 
 			MagicOrResonanceType type = model.getMagicOrResonanceType();
-			if (type == null || !available.containsKey(type)) {
+			if (type == null || (!available.containsKey(type) && !type.isModOnly())) {
 				if (available.keySet().isEmpty()) {
 					logger.log(Level.ERROR, "No resonance type set");
 					return unprocessed;
