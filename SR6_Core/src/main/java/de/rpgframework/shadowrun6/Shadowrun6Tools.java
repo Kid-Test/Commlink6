@@ -584,6 +584,8 @@ public class Shadowrun6Tools {
 					}
 				}
 				switch (type) {
+				case ADEPT_POWER:
+					return RES.format("modification.adeptpower", loc, ((AdeptPower)valMod.getResolvedKey()).getName(loc));
 				case CRITTER_POWER:
 					return RES.format("modification.critterpower", loc, ((CritterPower)valMod.getResolvedKey()).getName(loc));
 				case QUALITY:

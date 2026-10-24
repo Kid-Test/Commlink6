@@ -140,6 +140,8 @@ public class ChoiceSelectorDialog<T extends ComplexDataItem, V extends ComplexDa
 	private List<SR6ItemFlag> selectedFlasgs = new ArrayList<>();
 
 	private List<Node> toDeleteOnMentorSpirit = new ArrayList<>();
+	/** Selection boxes for <selmod>s - a visible one must be decided */
+	private List<ChoiceBox<Modification>> selmodBoxes = new ArrayList<>();
 	/** Choice to reflect the decision of the player to use the magician or adept advantages */
 	private Choice magicianOrAdept = new Choice(CommonQualityGenerator.MENTOR_SPIRIT_ADVANTAGES, ShadowrunReference.MAGIC_RESO);
 	private BooleanProperty chooseAdeptAdvantages = new SimpleBooleanProperty(false);
@@ -188,7 +190,7 @@ public class ChoiceSelectorDialog<T extends ComplexDataItem, V extends ComplexDa
 
 		Shadowrun6Character model = ctrl.getModel();
 		chooseAdeptAdvantages.setValue( model.getMagicOrResonanceType()!=null && model.getMagicOrResonanceType().usesPowers());
-		useBothAdvantages.set(model.hasRuleFlag(SR6RuleFlag.MENTOR_SPIRIT_BOTH_ADVANTAGES));
+		useBothAdvantages.set(model.hasRuleFlag(SR6RuleFlag.MENTOR_SPIRIT_BOTH));
 	}
 
 	//-------------------------------------------------------------------
@@ -307,9 +309,13 @@ public class ChoiceSelectorDialog<T extends ComplexDataItem, V extends ComplexDa
 			}
 		}
 
-		logger.log(Level.INFO, "Item selection possible=={0}   btnCtrl={1}",possible,btnCtrl);
+		// Every shown <selmod> must be decided
+		boolean selmodMissing = selmodBoxes.stream()
+			.anyMatch(cb -> cb.getParent()!=null && cb.isVisible() && cb.getValue()==null);
+
+		logger.log(Level.INFO, "Item selection possible=={0}   selmodMissing={1}   btnCtrl={2}",possible,selmodMissing,btnCtrl);
 		if (btnCtrl != null) {
-			if (!possible.getRequireDecisions() || (problem != null && problem.getSeverity() != Severity.INFO)) {
+			if (selmodMissing || !possible.getRequireDecisions() || (problem != null && problem.getSeverity() != Severity.INFO)) {
 				logger.log(Level.DEBUG, " disable OK");
 				canBeLeftWithOK = false;
 				btnCtrl.setDisabled(CloseType.OK, true);
@@ -321,7 +327,7 @@ public class ChoiceSelectorDialog<T extends ComplexDataItem, V extends ComplexDa
 				this.buttonDisabledProperty().put(CloseType.OK, false);
 			}
 		} else {
-			canBeLeftWithOK = possible.get();
+			canBeLeftWithOK = possible.get() && !selmodMissing;
 			if (btnCtrl!=null)
 				btnCtrl.setDisabled(CloseType.OK, !canBeLeftWithOK);
 			this.buttonDisabledProperty().put(CloseType.OK, !canBeLeftWithOK);
@@ -348,6 +354,11 @@ public class ChoiceSelectorDialog<T extends ComplexDataItem, V extends ComplexDa
 		CloseType closed = null;
 		try {
 			decisions.clear();
+			selmodBoxes.clear();
+			// The dialog may be created long before the magic type is known - check again
+			Shadowrun6Character model = ctrl.getModel();
+			chooseAdeptAdvantages.setValue( model.getMagicOrResonanceType()!=null && model.getMagicOrResonanceType().usesPowers());
+			useBothAdvantages.set(model.hasRuleFlag(SR6RuleFlag.MENTOR_SPIRIT_BOTH));
 
 			setTitle(ResourceI18N.format(RES, "title", item.getName()));
 			bxDesc.setData(item);
@@ -667,7 +678,10 @@ public class ChoiceSelectorDialog<T extends ComplexDataItem, V extends ComplexDa
 		cbChoices.setUserData(choice);
 		cbChoices.getItems().addAll(choice.getModificiations());
 		cbChoices.setConverter(new StringConverter<Modification>() {
-			public String toString(Modification mod) { return Shadowrun6Tools.getModificationString(mod, Locale.getDefault()); }
+			public String toString(Modification mod) {
+				if (mod==null) return "-";
+				return Shadowrun6Tools.getModificationString(mod, Locale.getDefault());
+			}
 			public Modification fromString(String string) { return null; }
 		});
 		// Decision references the selected modification by its ID
@@ -682,6 +696,7 @@ public class ChoiceSelectorDialog<T extends ComplexDataItem, V extends ComplexDa
 			updateButtons();
 		 });
 		content.getChildren().add(cbChoices);
+		selmodBoxes.add(cbChoices);
 		ret.add(cbChoices);
 		return ret;
 	}
@@ -984,8 +999,8 @@ public class ChoiceSelectorDialog<T extends ComplexDataItem, V extends ComplexDa
 						logger.log(Level.WARNING, "Found mentor spirit magician choice {0}", choice);
 						List<Node> added = processChoice(cplx, choice, cplx.getName());
 						added.forEach(node -> {
-							node.visibleProperty().bind(chooseAdeptAdvantages.or(useBothAdvantages).not());
-							node.managedProperty().bind(chooseAdeptAdvantages.or(useBothAdvantages).not());
+							node.visibleProperty().bind(chooseAdeptAdvantages.not().or(useBothAdvantages));
+							node.managedProperty().bind(chooseAdeptAdvantages.not().or(useBothAdvantages));
 						});
 				}
 				}
@@ -1184,6 +1199,7 @@ public class ChoiceSelectorDialog<T extends ComplexDataItem, V extends ComplexDa
 				logger.log(Level.DEBUG, "Use advantages for "+n);
 				decisions.put(magicianOrAdept, new Decision(magicianOrAdept, n.getId()));
 				chooseAdeptAdvantages.setValue (n!=null && n.usesPowers());
+				updateButtons();
 			});
 			cbMagOrAdp.getSelectionModel().select(0);
 		}
