@@ -932,16 +932,27 @@ public class ChoiceSelectorDialog<T extends ComplexDataItem, V extends ComplexDa
 		} else {
 			cbSub.getItems().addAll(AugmentationQuality.values());
 		}
+		// STANDARD first, the rest alphabetically
 		Collections.sort(cbSub.getItems(), new Comparator<AugmentationQuality>() {
 			public int compare(AugmentationQuality o1, AugmentationQuality o2) {
+				if (o1==o2) return 0;
+				if (o1==AugmentationQuality.STANDARD) return -1;
+				if (o2==AugmentationQuality.STANDARD) return 1;
 				return Collator.getInstance().compare(o1.getName(), o2.getName());
 			}});
 		cbSub.getSelectionModel().selectedItemProperty().addListener( (ov,o,n) -> {
 			logger.log(Level.DEBUG, "Chose {0} for {1}", n, choice.getUUID());
-			decisions.put(choice, new Decision(choice, n.name()));
+			if (n!=null) {
+				decisions.put(choice, new Decision(choice, n.name()));
+			} else {
+				decisions.remove(choice);
+			}
 			updateButtons();
 		 });
 		content.getChildren().add(cbSub);
+		// Most augmentations are bought in standard quality (COM6-149)
+		if (cbSub.getItems().contains(AugmentationQuality.STANDARD))
+			cbSub.getSelectionModel().select(AugmentationQuality.STANDARD);
 		return cbSub;
 	}
 
