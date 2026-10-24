@@ -41,7 +41,7 @@
 		<step id="new_buddy" level="1">
 			<modifications>
 				<itemmod type="QUALITY" ref="pet_store" remove="true"/>
-				<itemmod type="QUALITY" ref="new_budyy"/>
+				<itemmod type="QUALITY" ref="new_buddy"/>
 			</modifications>
 			<nextSteps>
 				<next>bound_soul</next>
@@ -58,7 +58,7 @@
 				</selreq>
 			</requires>
 			<modifications>
-				<itemmod type="QUALITY" ref="new_budyy" remove="true"/>
+				<itemmod type="QUALITY" ref="new_buddy" remove="true"/>
 				<itemmod type="QUALITY" ref="bound_soul"/>
 			</modifications>
 		</step>
