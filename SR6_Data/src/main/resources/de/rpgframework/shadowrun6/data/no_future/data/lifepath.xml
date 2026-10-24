@@ -21,7 +21,7 @@
       <valmod type="CREATION_POINTS" ref="CONTACT_POINTS" value="4" />
       <allowmod type="CONTACT_TYPES" ref="CORPORATE" />
       <allowmod type="CONTACT_TYPES" ref="MEDIA" />
-      <selmod>
+      <selmod uuid="e590abd2-4417-44a1-b95b-bd8eb836ee67">
         <itemmod type="SKILL" ref="knowledge">
           <decision choice="c700b37d-f770-49cd-81f4-63d332290b64" value="i18n.musical_genre" />
         </itemmod>
@@ -29,7 +29,7 @@
           <decision choice="946af37a-bf54-44d5-81cb-52c06911e226" value="i18n.dance_style" />
         </itemmod>
       </selmod>
-      <selmod>
+      <selmod uuid="e17162ef-1b0e-4a6e-b323-8cf3caf1f846">
         <itemmod type="SKILL" ref="knowledge">
           <decision choice="0c22d375-61ac-4bd2-972c-03a48b54d014" value="i18n.entertainment_media" />
         </itemmod>

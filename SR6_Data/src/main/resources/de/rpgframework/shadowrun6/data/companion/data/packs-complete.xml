@@ -65,7 +65,7 @@
                 </itemmod>
              <embed  type="GEAR" intoId="c12bf51f-7521-43bd-ba07-cf581a05c484" intoType="HOOK" intoRef="OPTICAL" ref="flare_compensation" />
              <embed  type="GEAR" intoId="c12bf51f-7521-43bd-ba07-cf581a05c484" intoType="HOOK" intoRef="OPTICAL" ref="image_link" />
-           <selmod>
+           <selmod uuid="581ffd37-b608-4382-8163-1758e319a3ee">
              <embed  type="GEAR" intoId="c12bf51f-7521-43bd-ba07-cf581a05c484" intoType="HOOK" intoRef="OPTICAL" ref="low_light_vision" />
              <embed  type="GEAR" intoId="c12bf51f-7521-43bd-ba07-cf581a05c484" intoType="HOOK" intoRef="OPTICAL" ref="thermographic_vision" />
            </selmod>
@@ -111,7 +111,7 @@
                 </itemmod>
              <embed  type="GEAR" intoId="49a400ab-3726-44be-b36e-c4348dc5fce9" intoType="HOOK" intoRef="OPTICAL" ref="flare_compensation" />
              <embed  type="GEAR" intoId="49a400ab-3726-44be-b36e-c4348dc5fce9" intoType="HOOK" intoRef="OPTICAL" ref="image_link" />
-           <selmod>
+           <selmod uuid="c457ec99-1fe4-4e07-aec9-621cfbfbce83">
              <embed  type="GEAR" intoId="49a400ab-3726-44be-b36e-c4348dc5fce9" intoType="HOOK" intoRef="OPTICAL" ref="low_light_vision" />
              <embed  type="GEAR" intoId="49a400ab-3726-44be-b36e-c4348dc5fce9" intoType="HOOK" intoRef="OPTICAL" ref="thermographic_vision" />
            </selmod>
@@ -220,7 +220,7 @@
                 </itemmod>
              <embed  type="GEAR" intoId="b5dc0a69-4aba-47c0-97eb-afb530f07041" intoType="HOOK" intoRef="OPTICAL" ref="flare_compensation" />
              <embed  type="GEAR" intoId="b5dc0a69-4aba-47c0-97eb-afb530f07041" intoType="HOOK" intoRef="OPTICAL" ref="image_link" />
-           <selmod>
+           <selmod uuid="dd145f7e-4c80-4a24-a500-e8cc182ae7e6">
              <embed  type="GEAR" intoId="b5dc0a69-4aba-47c0-97eb-afb530f07041" intoType="HOOK" intoRef="OPTICAL" ref="low_light_vision" />
              <embed  type="GEAR" intoId="b5dc0a69-4aba-47c0-97eb-afb530f07041" intoType="HOOK" intoRef="OPTICAL" ref="thermographic_vision" />
            </selmod>
@@ -376,7 +376,7 @@
                 </itemmod>
              <embed  type="GEAR" intoId="7ef8dd9e-2b0b-4aff-86c2-26984ab35d88" intoType="HOOK" intoRef="OPTICAL" ref="flare_compensation" />
              <embed  type="GEAR" intoId="7ef8dd9e-2b0b-4aff-86c2-26984ab35d88" intoType="HOOK" intoRef="OPTICAL" ref="image_link" />
-           <selmod>
+           <selmod uuid="0a58d63b-5185-4060-b078-f568085b65ea">
              <embed  type="GEAR" intoId="7ef8dd9e-2b0b-4aff-86c2-26984ab35d88" intoType="HOOK" intoRef="OPTICAL" ref="low_light_vision" />
              <embed  type="GEAR" intoId="7ef8dd9e-2b0b-4aff-86c2-26984ab35d88" intoType="HOOK" intoRef="OPTICAL" ref="thermographic_vision" />
            </selmod>
@@ -1637,7 +1637,7 @@
                 </itemmod>
              <embed  type="GEAR" intoId="c12bf51f-7521-43bd-ba07-cf581a05c484" intoType="HOOK" intoRef="OPTICAL" ref="flare_compensation" />
              <embed  type="GEAR" intoId="c12bf51f-7521-43bd-ba07-cf581a05c484" intoType="HOOK" intoRef="OPTICAL" ref="image_link" />
-           <selmod>
+           <selmod uuid="10ad8b20-998c-4428-9227-00f731b62913">
              <embed  type="GEAR" intoId="c12bf51f-7521-43bd-ba07-cf581a05c484" intoType="HOOK" intoRef="OPTICAL" ref="low_light_vision" />
              <embed  type="GEAR" intoId="c12bf51f-7521-43bd-ba07-cf581a05c484" intoType="HOOK" intoRef="OPTICAL" ref="thermographic_vision" />
            </selmod>
@@ -1778,7 +1778,7 @@
                 </itemmod>
              <embed  type="GEAR" intoId="b5dc0a69-4aba-47c0-97eb-afb530f07041" intoType="HOOK" intoRef="OPTICAL" ref="flare_compensation" />
              <embed  type="GEAR" intoId="b5dc0a69-4aba-47c0-97eb-afb530f07041" intoType="HOOK" intoRef="OPTICAL" ref="image_link" />
-           <selmod>
+           <selmod uuid="b31155ec-d320-4f49-8a4b-3b988ea5241e">
              <embed  type="GEAR" intoId="b5dc0a69-4aba-47c0-97eb-afb530f07041" intoType="HOOK" intoRef="OPTICAL" ref="low_light_vision" />
              <embed  type="GEAR" intoId="b5dc0a69-4aba-47c0-97eb-afb530f07041" intoType="HOOK" intoRef="OPTICAL" ref="thermographic_vision" />
            </selmod>
@@ -1940,7 +1940,7 @@
                 </itemmod>
              <embed  type="GEAR" intoId="7ef8dd9e-2b0b-4aff-86c2-26984ab35d88" intoType="HOOK" intoRef="OPTICAL" ref="flare_compensation" />
              <embed  type="GEAR" intoId="7ef8dd9e-2b0b-4aff-86c2-26984ab35d88" intoType="HOOK" intoRef="OPTICAL" ref="image_link" />
-           <selmod>
+           <selmod uuid="0bf24fc9-99f5-44ba-a462-f7f1c8ee9698">
              <embed  type="GEAR" intoId="7ef8dd9e-2b0b-4aff-86c2-26984ab35d88" intoType="HOOK" intoRef="OPTICAL" ref="low_light_vision" />
              <embed  type="GEAR" intoId="7ef8dd9e-2b0b-4aff-86c2-26984ab35d88" intoType="HOOK" intoRef="OPTICAL" ref="thermographic_vision" />
            </selmod>

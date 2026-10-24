@@ -361,7 +361,7 @@
              <embed  type="GEAR" intoId="65c73adb-a277-407a-8ffd-ce3fca27ada8" intoType="HOOK" intoRef="SENSOR_HOUSING" ref="single_sensor" id="3c36f8d1-3b26-49af-b315-ffc0c57e56fd">
                 <decision choice="c2d17c87-1cfe-4355-9877-a20fe09c170d" value="3"/>
                 </embed>
-           <selmod>
+           <selmod uuid="95a553ce-80fb-46c9-bb41-085e0a0ac50a">
              <embed  type="GEAR" intoId="3c36f8d1-3b26-49af-b315-ffc0c57e56fd" intoType="HOOK" intoRef="SENSOR_FUNCTION" ref="atmosphere_sensor" />
              <embed  type="GEAR" intoId="3c36f8d1-3b26-49af-b315-ffc0c57e56fd" intoType="HOOK" intoRef="SENSOR_FUNCTION" ref="geiger_counter" />
              <embed  type="GEAR" intoId="3c36f8d1-3b26-49af-b315-ffc0c57e56fd" intoType="HOOK" intoRef="SENSOR_FUNCTION" ref="olfactory_sensor" />
@@ -374,7 +374,7 @@
              <embed  type="GEAR" intoId="3c36f8d1-3b26-49af-b315-ffc0c57e56fd" intoType="HOOK" intoRef="SENSOR_FUNCTION" ref="laser_range_finder" />
              <embed  type="GEAR" intoId="3c36f8d1-3b26-49af-b315-ffc0c57e56fd" intoType="HOOK" intoRef="SENSOR_FUNCTION" ref="laser_microphone" />
            </selmod>
-           <selmod>
+           <selmod uuid="53e9d304-0863-4a55-bd0b-4d48e1a75589">
              <embed  type="GEAR" intoId="3c36f8d1-3b26-49af-b315-ffc0c57e56fd" intoType="HOOK" intoRef="SENSOR_FUNCTION" ref="atmosphere_sensor" />
              <embed  type="GEAR" intoId="3c36f8d1-3b26-49af-b315-ffc0c57e56fd" intoType="HOOK" intoRef="SENSOR_FUNCTION" ref="geiger_counter" />
              <embed  type="GEAR" intoId="3c36f8d1-3b26-49af-b315-ffc0c57e56fd" intoType="HOOK" intoRef="SENSOR_FUNCTION" ref="olfactory_sensor" />
@@ -387,7 +387,7 @@
              <embed  type="GEAR" intoId="3c36f8d1-3b26-49af-b315-ffc0c57e56fd" intoType="HOOK" intoRef="SENSOR_FUNCTION" ref="laser_range_finder" />
              <embed  type="GEAR" intoId="3c36f8d1-3b26-49af-b315-ffc0c57e56fd" intoType="HOOK" intoRef="SENSOR_FUNCTION" ref="laser_microphone" />
            </selmod>
-           <selmod>
+           <selmod uuid="5d91fe3a-bdb7-4476-b9a3-16001e986c43">
              <embed  type="GEAR" intoId="3c36f8d1-3b26-49af-b315-ffc0c57e56fd" intoType="HOOK" intoRef="SENSOR_FUNCTION" ref="atmosphere_sensor" />
              <embed  type="GEAR" intoId="3c36f8d1-3b26-49af-b315-ffc0c57e56fd" intoType="HOOK" intoRef="SENSOR_FUNCTION" ref="geiger_counter" />
              <embed  type="GEAR" intoId="3c36f8d1-3b26-49af-b315-ffc0c57e56fd" intoType="HOOK" intoRef="SENSOR_FUNCTION" ref="olfactory_sensor" />

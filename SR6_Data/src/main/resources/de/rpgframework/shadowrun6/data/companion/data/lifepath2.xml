@@ -14,7 +14,7 @@
       <valmod type="SKILL" ref="choice" choice="5aa1a06d-dda7-4d51-983c-c382b596651e" val="1" />
       <valmod type="CREATION_POINTS" ref="CONTACT_POINTS" val="2" />
       <allowmod type="CONTACT_TYPES" ref="MAGIC" />
-      <selmod>
+      <selmod uuid="38bdd184-75bf-46bb-b1c6-52550daa5d75">
         <valmod type="SKILL" ref="language" val="1" />
         <itemmod type="SKILL" ref="knowledge">
           <decision choice="51cb84a0-2afd-469c-9c02-e6700f1ccd20" value="i18n.Arkana" />
@@ -39,14 +39,14 @@
     <modifications>
       <valmod type="ATTRIBUTE" choice="1ba19504-73bd-404f-8035-8927045d3d6d" val="1" />
       <valmod type="SKILL" ref="choice" choice="0181f0f3-eca5-4d99-b66e-2d14042449ea" val="1" />
-      <selmod>
+      <selmod uuid="43b55a8d-7cee-472f-b0a9-01db6cf96310">
         <valmod type="astral" ref="SKILL" val="1" />
         <valmod type="LOGIC" ref="ATTRIBUTE" val="1" />
         <valmod type="MAGIC" ref="ATTRIBUTE" val="1" />
       </selmod>
-      <selmod />
+      <selmod uuid="22733188-eab7-42ce-bdd5-398c69f938e0" />
       <valmod type="CREATION_POINTS" ref="CONTACT_POINTS" val="0" />
-      <selmod>
+      <selmod uuid="82a76af5-7a4f-42b7-8aa0-019b620ab948">
         <itemmod type="SKILL" ref="knowledge">
           <decision choice="8f73c4a0-db52-4302-8787-f9f429b470f1" value="i18n.Arkana" />
         </itemmod>
@@ -74,7 +74,7 @@
       <allowmod type="CONTACT_TYPES" ref="ACADEMIC" />
       <allowmod type="CONTACT_TYPES" ref="MEDIA" />
       <allowmod type="CONTACT_TYPES" ref="CRIMINAL" />
-      <selmod>
+      <selmod uuid="9c849566-3969-470b-8633-39b096bdfbd0">
         <valmod type="SKILL" ref="language" val="2" />
         <itemmod type="SKILL" ref="knowledge">
           <decision choice="17f2bb03-74c9-4a54-a5b1-fa48b36c8ec0" value="i18n.Combatbiking" />
@@ -102,7 +102,7 @@
       <allowmod type="CONTACT_TYPES" ref="MATRIX" />
       <allowmod type="CONTACT_TYPES" ref="MEDICAL" />
       <allowmod type="CONTACT_TYPES" ref="ENGINEERING" />
-      <selmod>
+      <selmod uuid="04d27ddb-d821-4927-8c5b-1cc935901e96">
         <valmod type="SKILL" ref="language" val="1" />
         <itemmod type="SKILL" ref="knowledge">
           <decision choice="cf93ef38-8737-4244-8877-5e4d971a3a33" value="i18n.Drohnen und Fahrzeugmodelle" />

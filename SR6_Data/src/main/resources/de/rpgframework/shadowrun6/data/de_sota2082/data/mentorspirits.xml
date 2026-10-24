@@ -115,7 +115,7 @@
     </magician>
 	<adept>
 		<itemmod type="ADEPT_POWER" ref="sustenance" />
-		<selmod>
+		<selmod uuid="f187528b-5607-4e95-a58d-6c66912bb93f">
 			<itemmod type="ADEPT_POWER" ref="enhanced_perception" />
 			<itemmod type="ADEPT_POWER" ref="improved_sense" />
 		</selmod>
