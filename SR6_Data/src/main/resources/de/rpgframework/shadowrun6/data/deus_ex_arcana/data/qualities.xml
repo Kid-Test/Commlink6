@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <qualities>
 
-<!-- Burmeur -->
+<!-- Brumeur -->
 
    <quality id="brumeur_mudane" karma="12" pos="true" type="NORMAL">
      <requires>
@@ -43,7 +43,7 @@
    <quality id="spore_aura" karma="6" pos="false" type="METAGENIC" cat="METAGENIC_DEFECTS"/>   
    <quality id="ultrasonic_distress" karma="4" pos="false" type="METAGENIC" cat="METAGENIC_DEFECTS"/>   
    
-<!-- Sparks -->
+    <!-- Sparks -->
 
    <quality id="astral_sensitive" karma="8" pos="true" type="NORMAL">
 		<requires>
@@ -77,14 +77,14 @@
 		</modifications>
    </quality>
 
-<!-- Quality Paths -->
+    <!-- Quality Paths -->
 
    <quality id="first_interaction" karma="5" pos="true" type="QUALITY_PATH" />
    <quality id="pet_store" karma="5" pos="true" type="QUALITY_PATH" />
-   <quality id="new_budyy" karma="5" pos="true" type="QUALITY_PATH" />
+   <quality id="new_buddy" karma="5" pos="true" type="QUALITY_PATH" />
    <quality id="bound_soul" karma="5" pos="true" type="QUALITY_PATH" />
 
-<!-- Gifts and Curses -->
+    <!-- Gifts and Curses -->
 
    <quality id="familiar" karma="15" pos="true" type="NORMAL">
      <requires>
