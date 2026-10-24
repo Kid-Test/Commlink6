@@ -1,16 +1,19 @@
 package de.rpgframework.shadowrun6.chargen.gen;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Locale;
+import java.util.UUID;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import de.rpgframework.genericrpg.chargen.OperationResult;
 import de.rpgframework.genericrpg.data.Decision;
+import de.rpgframework.shadowrun.AdeptPowerValue;
 import de.rpgframework.shadowrun.MagicOrResonanceType;
 import de.rpgframework.shadowrun.QualityValue;
 import de.rpgframework.shadowrun6.SR6Quality;
@@ -60,6 +63,31 @@ public class MentorSpiritAdvantagesTest {
 		selectSeducer(charGen, "magician");
 
 		assertNull("Adept power from mentor spirit granted for magician advantages", model.getAdeptPower("improved_ability"));
+	}
+
+	//-------------------------------------------------------------------
+	/**
+	 * COMMBUG-220: The skill chosen for a rated adept power with a choice
+	 * must reach the granted power
+	 */
+	@Test
+	public void testAdeptPowerChoiceFromMentorSpirit() {
+		Shadowrun6Character model = new Shadowrun6Character();
+		KarmaCharacterGenerator charGen = new KarmaCharacterGenerator();
+		charGen.setModel(model, null);
+		charGen.getMagicOrResonanceController().select(Shadowrun6Core.getItem(MagicOrResonanceType.class, "adept"));
+		SR6Quality mentor = Shadowrun6Core.getItem(SR6Quality.class, "mentor_spirit");
+		OperationResult<QualityValue> res = charGen.getQualityController().select(mentor,
+				new Decision(mentor.getChoices().get(0).getUUID(), "wise_warrior"),
+				new Decision(UUID.fromString("97fb1dcd-14e4-456c-aad7-17a7bf8cbbae"), "firearms"));
+		assertTrue("Selecting mentor spirit failed: "+res, res.wasSuccessful());
+		charGen.runProcessors();
+
+		AdeptPowerValue power = model.getAdeptPower("improved_ability_combat");
+		assertNotNull("Adept power from mentor spirit missing", power);
+		Decision dec = power.getDecision(UUID.fromString("97fb1dcd-14e4-456c-aad7-17a7bf8cbbae"));
+		assertNotNull("Skill decision did not reach the adept power", dec);
+		assertEquals("firearms", dec.getValue());
 	}
 
 	//-------------------------------------------------------------------
