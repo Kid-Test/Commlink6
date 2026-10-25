@@ -7,7 +7,7 @@
 # "Required reviewers" in Settings > Environments. The job then waits until
 # a reviewer clicks "Review deployments" > "Approve and deploy".
 
-name: Deploy Commlink6
+name: Build and Deploy
 
 on:
   push:
