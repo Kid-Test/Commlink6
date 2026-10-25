@@ -14,12 +14,6 @@ on:
     branches: [ "master" ]
   workflow_dispatch:
 
-# Never run two deployments at the same time; a newer push does not cancel
-# a deployment that is already waiting for approval.
-concurrency:
-  group: deploy-commlink6
-  cancel-in-progress: false
-
 env:
   DEPLOY_HOST: ${{ vars.DEPLOY_HOST || 'eden.rpgframework.de' }}
   DEPLOY_USER: ${{ vars.DEPLOY_USER || 'bitbucket' }}
@@ -56,6 +50,10 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     environment: Development
+    # Uploads run one after another and are never interrupted
+    concurrency:
+      group: deploy-development
+      cancel-in-progress: false
     steps:
     - uses: actions/download-artifact@v8
       with:
@@ -79,6 +77,10 @@ jobs:
     needs: deploy-development
     runs-on: ubuntu-latest
     environment: Staging
+    # A newer build replaces an older one still waiting for approval
+    concurrency:
+      group: deploy-staging
+      cancel-in-progress: true
     steps:
     - uses: actions/download-artifact@v8
       with:
@@ -102,6 +104,10 @@ jobs:
     needs: deploy-staging
     runs-on: ubuntu-latest
     environment: Production
+    # A newer build replaces an older one still waiting for approval
+    concurrency:
+      group: deploy-production
+      cancel-in-progress: true
     steps:
     - uses: actions/download-artifact@v8
       with:
