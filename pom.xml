@@ -163,6 +163,12 @@
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.16.0</version>
+				<configuration>
+					<compilerArgs>
+						<!-- Don't warn about the terminal digit in "shadowrun6" -->
+						<arg>-Xlint:-module</arg>
+					</compilerArgs>
+				</configuration>
 			</plugin>
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
