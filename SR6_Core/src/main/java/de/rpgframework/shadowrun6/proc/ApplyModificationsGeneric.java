@@ -522,6 +522,17 @@ public class ApplyModificationsGeneric implements ProcessingStep {
 		if (item == null) {
 			logger.log(Level.ERROR, "Cannot apply modification " + mod + " - no such quality {0}", mod.getKey());
 		}
+		// remove="true" - effects of the quality are suppressed in BuildForbiddenSources,
+		// so here it is only important not to add the quality
+		if (mod.isRemove()) {
+			logger.log(Level.INFO, "Quality {0} is removed by {1}", mod.getKey(), mod.getSource());
+			return true;
+		}
+		// Don't auto-add a quality that something else removes (e.g. orthoskin replaces the dermal deposits of trolls)
+		if (value == null && item != null && model.isForbiddenSource(item)) {
+			logger.log(Level.INFO, "Don't add quality {0} from {1} - it is removed by other modification", mod.getKey(), mod.getSource());
+			return true;
+		}
 
 		logger.log(Level.INFO, "Add {0} with decisions {1}",mod,mod.getDecisions());
 		if (value == null) {
