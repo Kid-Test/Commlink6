@@ -162,9 +162,10 @@ public class ApplyModificationsGeneric implements ProcessingStep {
 						|| tmp.getReferenceType()==ShadowrunReference.SPELL
 						) {
 					try {
+						MagicOrResonanceType oldMoR = model.getMagicOrResonanceType();
 						if (!applyModification(model, tmp)) {
 							unprocessed.add(tmp);
-						} else if (tmp.getReferenceType()==ShadowrunReference.MAGIC_RESO) {
+						} else if (tmp.getReferenceType()==ShadowrunReference.MAGIC_RESO && model.getMagicOrResonanceType()!=oldMoR) {
 							logger.log(Level.WARNING, "TODO: Reapply modifications from magic/reso: {0} ",model.getMagicOrResonanceType().getOutgoingModifications());
 							System.err.println("TODO: Reapply modifications from magic/reso "+model.getMagicOrResonanceType().getOutgoingModifications());
 							unprocessed.addAll(model.getMagicOrResonanceType().getOutgoingModifications());
@@ -474,7 +475,14 @@ public class ApplyModificationsGeneric implements ProcessingStep {
 			logger.log(Level.ERROR, "Cannot apply modification " + mod + " - no such magic_reso {0}", mod.getKey());
 			return false;
 		}
-		
+		// Types only granted by modifications (e.g. minor_awakened) only replace mundane,
+		// never a magic or resonance type chosen by the player
+		MagicOrResonanceType current = model.getMagicOrResonanceType();
+		if (item.isModOnly() && current!=null && !current.isMundane()) {
+			logger.log(Level.INFO, "Don''t change magic/resonance type {0} to {1} from {2}", current, item, mod.getSource());
+			return true;
+		}
+
 		model.setMagicOrResonanceType(item);
 		logger.log(Level.INFO, "Changed magic/resonance type to {0}", item);
 
