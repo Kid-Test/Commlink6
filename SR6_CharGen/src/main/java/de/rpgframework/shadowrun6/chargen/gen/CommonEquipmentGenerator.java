@@ -19,6 +19,7 @@ import de.rpgframework.genericrpg.items.ItemAttributeNumericalValue;
 import de.rpgframework.genericrpg.items.PieceOfGearVariant;
 import de.rpgframework.genericrpg.modification.Modification;
 import de.rpgframework.genericrpg.modification.ValueModification;
+import de.rpgframework.shadowrun.ComplexForm;
 import de.rpgframework.shadowrun.chargen.charctrl.IRejectReasons;
 import de.rpgframework.shadowrun.items.Availability;
 import de.rpgframework.shadowrun6.CreatePoints;
@@ -50,6 +51,12 @@ public class CommonEquipmentGenerator extends CommonEquipmentController  {
 	//-------------------------------------------------------------------
 	public CommonEquipmentGenerator(SR6CharacterController parent) {
 		super(parent);
+	}
+
+	//-------------------------------------------------------------------
+	@Override
+	public Possible areRequirementsMet(ItemTemplate value, Decision... decisions) {
+		return Shadowrun6Tools.areRequirementsMet(getModel(), value, decisions);
 	}
 
 	//-------------------------------------------------------------------

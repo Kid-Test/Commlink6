@@ -12,11 +12,13 @@ import de.rpgframework.genericrpg.chargen.RecommendationState;
 import de.rpgframework.genericrpg.data.Choice;
 import de.rpgframework.genericrpg.data.Decision;
 import de.rpgframework.genericrpg.modification.Modification;
+import de.rpgframework.shadowrun.Quality;
 import de.rpgframework.shadowrun.Ritual;
 import de.rpgframework.shadowrun.RitualValue;
 import de.rpgframework.shadowrun.chargen.charctrl.IRejectReasons;
 import de.rpgframework.shadowrun.chargen.charctrl.IRitualController;
 import de.rpgframework.shadowrun6.Shadowrun6Core;
+import de.rpgframework.shadowrun6.Shadowrun6Tools;
 import de.rpgframework.shadowrun6.chargen.charctrl.ControllerImpl;
 import de.rpgframework.shadowrun6.chargen.charctrl.SR6CharacterController;
 
@@ -82,6 +84,12 @@ public class SR6RitualLeveller extends ControllerImpl<Ritual> implements IRitual
 	@Override
 	public List<Choice> getChoicesToDecide(Ritual value) {
 		return value.getChoices();
+	}
+
+	//-------------------------------------------------------------------
+	@Override
+	public Possible areRequirementsMet(Ritual value, Decision... decisions) {
+		return Shadowrun6Tools.areRequirementsMet( getModel(), value, decisions);
 	}
 
 	//-------------------------------------------------------------------

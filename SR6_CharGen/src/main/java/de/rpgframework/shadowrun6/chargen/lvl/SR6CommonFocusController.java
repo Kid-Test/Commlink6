@@ -90,6 +90,12 @@ public class SR6CommonFocusController extends ControllerImpl<Focus> implements I
 	}
 
 	//-------------------------------------------------------------------
+	@Override
+	public Possible areRequirementsMet(Focus value, Decision... decisions) {
+		return Shadowrun6Tools.areRequirementsMet( getModel(), value, decisions);
+	}
+
+	//-------------------------------------------------------------------
 	/**
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#canBeSelected(de.rpgframework.genericrpg.data.DataItem, de.rpgframework.genericrpg.data.Decision[])
 	 */

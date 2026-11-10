@@ -21,6 +21,7 @@ import de.rpgframework.shadowrun6.MartialArtsValue;
 import de.rpgframework.shadowrun6.SR6RuleFlag;
 import de.rpgframework.shadowrun6.Shadowrun6Character;
 import de.rpgframework.shadowrun6.Shadowrun6Core;
+import de.rpgframework.shadowrun6.Shadowrun6Tools;
 import de.rpgframework.shadowrun6.TechniqueValue;
 import de.rpgframework.shadowrun6.modifications.ShadowrunReference;
 
@@ -290,6 +291,15 @@ public class SR6MartialArtsController extends ControllerImpl<MartialArts> implem
 	@Override
 	public ITechniqueController getTechniqueController(MartialArtsValue style) {
 		return new CommonTechniqueController(parent, style);
+	}
+
+	//-------------------------------------------------------------------
+	/**
+	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#areRequirementsMet(de.rpgframework.genericrpg.data.DataItem, de.rpgframework.genericrpg.data.Decision[])
+	 */
+	@Override
+	public Possible areRequirementsMet(MartialArts value, Decision... decisions) {
+		return Shadowrun6Tools.areRequirementsMet( getModel(), value, decisions);
 	}
 
 }

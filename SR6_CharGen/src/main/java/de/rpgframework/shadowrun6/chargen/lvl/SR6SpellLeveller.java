@@ -18,7 +18,9 @@ import de.rpgframework.shadowrun.ASpell;
 import de.rpgframework.shadowrun.SpellValue;
 import de.rpgframework.shadowrun.chargen.charctrl.IRejectReasons;
 import de.rpgframework.shadowrun6.SR6Spell;
+import de.rpgframework.shadowrun6.Shadowrun6Character;
 import de.rpgframework.shadowrun6.Shadowrun6Core;
+import de.rpgframework.shadowrun6.Shadowrun6Tools;
 import de.rpgframework.shadowrun6.chargen.charctrl.ControllerImpl;
 import de.rpgframework.shadowrun6.chargen.charctrl.SR6CharacterController;
 import de.rpgframework.shadowrun6.chargen.charctrl.SR6SpellController;
@@ -33,6 +35,12 @@ public class SR6SpellLeveller extends ControllerImpl<SR6Spell> implements SR6Spe
 	//-------------------------------------------------------------------
 	protected SR6SpellLeveller(SR6CharacterController parent) {
 		super(parent);
+	}
+
+	//-------------------------------------------------------------------
+	@Override
+	public Possible areRequirementsMet(SR6Spell value, Decision... decisions) {
+		return Shadowrun6Tools.areRequirementsMet( (Shadowrun6Character)getModel(), value, decisions);
 	}
 
 	//-------------------------------------------------------------------

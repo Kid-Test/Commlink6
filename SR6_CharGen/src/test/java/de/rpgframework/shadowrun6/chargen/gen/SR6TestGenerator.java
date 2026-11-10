@@ -24,14 +24,15 @@ import de.rpgframework.shadowrun.chargen.charctrl.IAttributeController;
 import de.rpgframework.shadowrun.chargen.charctrl.IComplexFormController;
 import de.rpgframework.shadowrun.chargen.charctrl.IContactController;
 import de.rpgframework.shadowrun.chargen.charctrl.ICritterPowerController;
+import de.rpgframework.shadowrun.chargen.charctrl.IDisciplineController;
 import de.rpgframework.shadowrun.chargen.charctrl.IFocusController;
 import de.rpgframework.shadowrun.chargen.charctrl.IMagicOrResonanceController;
-import de.rpgframework.shadowrun.chargen.charctrl.IMetamagicOrEchoController;
 import de.rpgframework.shadowrun.chargen.charctrl.IMetatypeController;
 import de.rpgframework.shadowrun.chargen.charctrl.IPANController;
 import de.rpgframework.shadowrun.chargen.charctrl.IQualityController;
 import de.rpgframework.shadowrun.chargen.charctrl.IRitualController;
 import de.rpgframework.shadowrun.chargen.charctrl.ISpellController;
+import de.rpgframework.shadowrun.chargen.charctrl.ISummonableController;
 import de.rpgframework.shadowrun.chargen.charctrl.SINController;
 import de.rpgframework.shadowrun.chargen.gen.WizardPageType;
 import de.rpgframework.shadowrun6.SR6Spell;
@@ -199,7 +200,7 @@ public class SR6TestGenerator implements SR6CharacterGenerator {
 	 * @see de.rpgframework.shadowrun.chargen.charctrl.IShadowrunCharacterController#getMetamagicOrEchoController()
 	 */
 	@Override
-	public IMetamagicOrEchoController getMetamagicOrEchoController() {
+	public IDisciplineController getDisciplineController() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -488,6 +489,12 @@ public class SR6TestGenerator implements SR6CharacterGenerator {
 	public boolean showDataItem(DataItem item) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public ISummonableController getSummonableController() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

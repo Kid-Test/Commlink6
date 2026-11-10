@@ -37,15 +37,15 @@ import de.rpgframework.shadowrun.CritterPower;
 import de.rpgframework.shadowrun.CritterPowerValue;
 import de.rpgframework.shadowrun.DamageElement;
 import de.rpgframework.shadowrun.DamageType;
-import de.rpgframework.shadowrun.MetamagicOrEcho;
-import de.rpgframework.shadowrun.MetamagicOrEcho.Type;
-import de.rpgframework.shadowrun.MetamagicOrEchoValue;
+import de.rpgframework.shadowrun.DisciplineTechnique;
+import de.rpgframework.shadowrun.DisciplineTechniqueValue;
 import de.rpgframework.shadowrun.Movement;
 import de.rpgframework.shadowrun.Movement.MovementType;
 import de.rpgframework.shadowrun.Quality;
 import de.rpgframework.shadowrun.QualityValue;
 import de.rpgframework.shadowrun.ShadowrunAttribute;
 import de.rpgframework.shadowrun6.DrakeTypeValue;
+import de.rpgframework.shadowrun6.SR6Discipline;
 import de.rpgframework.shadowrun6.Shadowrun6Character;
 import de.rpgframework.shadowrun6.Shadowrun6Core;
 import de.rpgframework.shadowrun6.items.Damage;
@@ -102,7 +102,7 @@ public class GetModificationsForDrakes implements ProcessingStep {
 			// Calculate DRAKE_EDGE
 			int dEdge = model.getAttribute(ShadowrunAttribute.EDGE).getModifiedValue();
 			dEdge += model.getMetamagicOrEchoes().stream()
-					.filter(me -> me.getModifyable().getType()==Type.DRACOGENESIS_POWER)
+					.filter(me -> me.getModifyable().getDiscipline()==SR6Discipline.DRACOGENESIS_POWER)
 					.filter(me -> !me.isAutoAdded())
 					.mapToInt(me -> (me.getDistributed()>0)?me.getDistributed():1)
 					.sum();
@@ -191,8 +191,8 @@ public class GetModificationsForDrakes implements ProcessingStep {
 				case METAECHO:
 					diMod = (DataItemModification)mod;
 					logger.log(Level.INFO, "Add special power {0} to drake body", diMod.getKey());
-					MetamagicOrEcho meta = mod.getReferenceType().resolve( diMod.getKey() );
-					MetamagicOrEchoValue mVal = new MetamagicOrEchoValue(meta);
+					DisciplineTechnique meta = mod.getReferenceType().resolve( diMod.getKey() );
+					DisciplineTechniqueValue mVal = new DisciplineTechniqueValue(meta);
 					if (mod instanceof ValueModification) {
 						mVal.setDistributed( ((ValueModification)mod).getValue() );
 					}

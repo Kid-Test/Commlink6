@@ -27,14 +27,15 @@ import de.rpgframework.shadowrun.chargen.charctrl.IAttributeController;
 import de.rpgframework.shadowrun.chargen.charctrl.IComplexFormController;
 import de.rpgframework.shadowrun.chargen.charctrl.IContactController;
 import de.rpgframework.shadowrun.chargen.charctrl.ICritterPowerController;
+import de.rpgframework.shadowrun.chargen.charctrl.IDisciplineController;
 import de.rpgframework.shadowrun.chargen.charctrl.IFocusController;
 import de.rpgframework.shadowrun.chargen.charctrl.IMagicOrResonanceController;
-import de.rpgframework.shadowrun.chargen.charctrl.IMetamagicOrEchoController;
 import de.rpgframework.shadowrun.chargen.charctrl.IMetatypeController;
 import de.rpgframework.shadowrun.chargen.charctrl.IPANController;
 import de.rpgframework.shadowrun.chargen.charctrl.IQualityController;
 import de.rpgframework.shadowrun.chargen.charctrl.IRitualController;
 import de.rpgframework.shadowrun.chargen.charctrl.ISpellController;
+import de.rpgframework.shadowrun.chargen.charctrl.ISummonableController;
 import de.rpgframework.shadowrun.chargen.charctrl.SINController;
 import de.rpgframework.shadowrun.chargen.gen.WizardPageType;
 import de.rpgframework.shadowrun6.SR6Spell;
@@ -410,8 +411,8 @@ public class GeneratorWrapper implements SR6CharacterGenerator, IGeneratorWrappe
 	 * @see de.rpgframework.shadowrun.chargen.charctrl.IShadowrunCharacterController#getMetamagicOrEchoController()
 	 */
 	@Override
-	public IMetamagicOrEchoController getMetamagicOrEchoController() {
-		return wrapped.getMetamagicOrEchoController();
+	public IDisciplineController getDisciplineController() {
+		return wrapped.getDisciplineController();
 	}
 
 	//-------------------------------------------------------------------
@@ -526,6 +527,12 @@ public class GeneratorWrapper implements SR6CharacterGenerator, IGeneratorWrappe
 	@Override
 	public SR6AnimalismController getAnimalismController() {
 		return wrapped.getAnimalismController();
+	}
+
+	@Override
+	public ISummonableController getSummonableController() {
+		// TODO Auto-generated method stub
+		return wrapped.getSummonableController();
 	}
 
 }

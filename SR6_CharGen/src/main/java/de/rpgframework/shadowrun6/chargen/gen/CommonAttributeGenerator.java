@@ -11,7 +11,7 @@ import de.rpgframework.genericrpg.chargen.RecommendationState;
 import de.rpgframework.genericrpg.data.AttributeValue;
 import de.rpgframework.genericrpg.modification.Modification;
 import de.rpgframework.genericrpg.modification.ValueModification;
-import de.rpgframework.shadowrun.MetamagicOrEcho;
+import de.rpgframework.shadowrun.DisciplineTechnique;
 import de.rpgframework.shadowrun.ShadowrunAttribute;
 import de.rpgframework.shadowrun.chargen.charctrl.IAttributeController;
 import de.rpgframework.shadowrun.chargen.charctrl.IRejectReasons;
@@ -50,7 +50,7 @@ public abstract class CommonAttributeGenerator extends ControllerImpl<ShadowrunA
 				ValueModification vMod = (ValueModification)mod;
 				if (vMod.getSet()!=ValueType.MAX)
 					continue;
-				if (mod.getSource() instanceof MetamagicOrEcho) {
+				if (mod.getSource() instanceof DisciplineTechnique) {
 					max -= vMod.getValue();
 				}
 			}

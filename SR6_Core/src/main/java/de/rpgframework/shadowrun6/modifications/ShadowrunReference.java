@@ -23,10 +23,10 @@ import de.rpgframework.shadowrun.ComplexForm;
 import de.rpgframework.shadowrun.ContactType;
 import de.rpgframework.shadowrun.CritterPower;
 import de.rpgframework.shadowrun.DamageElement;
+import de.rpgframework.shadowrun.DisciplineTechnique;
 import de.rpgframework.shadowrun.Focus;
 import de.rpgframework.shadowrun.MagicOrResonanceType;
 import de.rpgframework.shadowrun.MentorSpirit;
-import de.rpgframework.shadowrun.MetamagicOrEcho;
 import de.rpgframework.shadowrun.Resistance;
 import de.rpgframework.shadowrun.SIN.FakeRating;
 import de.rpgframework.shadowrun.ShadowrunAttribute;
@@ -110,7 +110,7 @@ public enum ShadowrunReference implements ModifiedObjectType {
 	MATRIX_ATTRIBUTE(new ItemAttributeConverter()),
 	MENTOR_SPIRIT(MentorSpirit.class),
 	MENTOR_SPIRIT_EFFECTS(new MentorSpiritsEffectConverter()),
-	METAECHO(MetamagicOrEcho.class),
+	METAECHO(DisciplineTechnique.class),
 	METATYPE(SR6MetaType.class),
 	PARAGON(MentorSpirit.class),
 	//POOL("Pool"), // Derived values like defense pool

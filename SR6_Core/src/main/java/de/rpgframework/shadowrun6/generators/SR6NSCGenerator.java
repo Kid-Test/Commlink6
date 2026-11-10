@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import de.rpgframework.classification.Classification;
-import de.rpgframework.classification.ClassificationType;
-import de.rpgframework.classification.GenericClassificationType;
+import de.rpgframework.classification.GenericTagCategory;
+import de.rpgframework.classification.Tag;
+import de.rpgframework.classification.TagCategory;
 import de.rpgframework.core.RoleplayingSystem;
 import de.rpgframework.random.Actor;
 import de.rpgframework.random.DataType;
@@ -41,8 +41,8 @@ public class SR6NSCGenerator extends ShadowrunNSCGenerator {
 	 * @see de.rpgframework.random.RandomGenerator#getRequiredVariables()
 	 */
 	@Override
-	public Collection<ClassificationType> getRequiredVariables() {
-		return List.of(GenericClassificationType.RULES);
+	public Collection<TagCategory> getRequiredCategories() {
+		return List.of(GenericTagCategory.RULES);
 	}
 
 	//-------------------------------------------------------------------
@@ -50,7 +50,7 @@ public class SR6NSCGenerator extends ShadowrunNSCGenerator {
 	 * @see de.rpgframework.random.RandomGenerator#matchesFilter(de.rpgframework.classification.Classification)
 	 */
 	@Override
-	public boolean matchesFilter(Classification<?> filter) {
+	public boolean matchesFilter(Tag filter) {
 		if (filter==RoleplayingSystem.SHADOWRUN6) return true;
 		return super.matchesFilter(filter);
 	}
@@ -60,8 +60,8 @@ public class SR6NSCGenerator extends ShadowrunNSCGenerator {
 	 * @see de.rpgframework.random.RandomGenerator#understandsHint(de.rpgframework.classification.Classification)
 	 */
 	@Override
-	public boolean understandsHint(ClassificationType filter) {
-		if (filter==GenericClassificationType.RULES) return true;
+	public boolean understandsHint(TagCategory filter) {
+		if (filter==GenericTagCategory.RULES) return true;
 		return false;
 	}
 
@@ -70,7 +70,7 @@ public class SR6NSCGenerator extends ShadowrunNSCGenerator {
 	 * @see de.rpgframework.random.RandomGenerator#generate(de.rpgframework.classification.Classification[])
 	 */
 	@Override
-	public Object generate(VariableHolderNode context) {
+	public Actor generate(VariableHolderNode context) {
 		logger.log(Level.INFO, "ENTER: createNSC()");
 		logger.log(Level.INFO, "variables = "+context.getGenericVariables());
 		logger.log(Level.INFO, "classifier = "+context.getHints());
@@ -79,8 +79,8 @@ public class SR6NSCGenerator extends ShadowrunNSCGenerator {
 			Integer minRat = context.getVariable(RunVariable.PROF_EXPECTED_MIN);
 			Integer maxRat = context.getVariable(RunVariable.PROF_EXPECTED_MAX);
 			if (maxRat==0) maxRat=12;
-			NPCType npcType = (NPCType) getHint(ShadowrunTaxonomy.NPCTYPE, context.getHints());
-			ContactType conType = (ContactType) getHint(ShadowrunTaxonomy.CONTACT, context.getHints());
+			NPCType npcType = (NPCType) context.getHint(ShadowrunTaxonomy.NPCTYPE);
+			ContactType conType = (ContactType) context.getHint(ShadowrunTaxonomy.CONTACT);
 			logger.log(Level.WARNING, "To Do: Find a matching rulespecific object for  "+npcType+"/"+conType+" and rating "+minRat+"-"+maxRat);
 
 			List<SR6NPC> possible = new ArrayList<>();

@@ -21,8 +21,8 @@ import de.rpgframework.shadowrun6.Shadowrun6Character;
 import de.rpgframework.shadowrun6.Shadowrun6Core;
 import de.rpgframework.shadowrun6.Shadowrun6Tools;
 import de.rpgframework.shadowrun6.Technique;
-import de.rpgframework.shadowrun6.TechniqueValue;
 import de.rpgframework.shadowrun6.Technique.Category;
+import de.rpgframework.shadowrun6.TechniqueValue;
 import de.rpgframework.shadowrun6.modifications.ShadowrunReference;
 
 /**
@@ -101,6 +101,12 @@ public class CommonTechniqueController extends ControllerImpl<Technique> impleme
 	@Override
 	public List<Choice> getChoicesToDecide(Technique value) {
 		return value.getChoices();
+	}
+
+	//-------------------------------------------------------------------
+	@Override
+	public Possible areRequirementsMet(Technique value, Decision... decisions) {
+		return Shadowrun6Tools.areRequirementsMet( getModel(), value, decisions);
 	}
 
 	//-------------------------------------------------------------------

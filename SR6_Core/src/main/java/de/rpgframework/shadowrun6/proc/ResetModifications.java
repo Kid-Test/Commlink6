@@ -12,9 +12,9 @@ import de.rpgframework.genericrpg.modification.Modification;
 import de.rpgframework.shadowrun.AdeptPowerValue;
 import de.rpgframework.shadowrun.BodyForm;
 import de.rpgframework.shadowrun.BodyType;
+import de.rpgframework.shadowrun.DisciplineTechniqueValue;
 import de.rpgframework.shadowrun.LicenseValue;
 import de.rpgframework.shadowrun.MagicOrResonanceType;
-import de.rpgframework.shadowrun.MetamagicOrEchoValue;
 import de.rpgframework.shadowrun.Movement;
 import de.rpgframework.shadowrun.Movement.MovementType;
 import de.rpgframework.shadowrun.QualityValue;
@@ -110,15 +110,14 @@ public class ResetModifications implements ProcessingStep {
 			}
 
 			// Remove all auto-powers or quality levels
-			model.clearAutoAdeptPower();
+			model.resetAutoAddedData();
 			for (AdeptPowerValue val : new ArrayList<>(model.getAdeptPowers())) {
 				val.reset();
 				val.clearIncomingModifications();
 			}
 
 			// Remove all auto-metaechoes
-			model.clearAutoMetamagicOrEchoes();
-			for (MetamagicOrEchoValue val : new ArrayList<>(model.getMetamagicOrEchoes())) {
+			for (DisciplineTechniqueValue val : new ArrayList<>(model.getMetamagicOrEchoes())) {
 				boolean remove = val.isAutoAdded();
 				val.clearIncomingModifications();
 				if (remove) {

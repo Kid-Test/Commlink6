@@ -5,17 +5,14 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import de.rpgframework.genericrpg.Possible;
 import de.rpgframework.genericrpg.ToDoElement;
 import de.rpgframework.genericrpg.ToDoElement.Severity;
-import de.rpgframework.genericrpg.ValueType;
 import de.rpgframework.genericrpg.chargen.OperationResult;
 import de.rpgframework.genericrpg.data.Choice;
 import de.rpgframework.genericrpg.data.Decision;
-import de.rpgframework.genericrpg.modification.ApplyableValueModification;
 import de.rpgframework.genericrpg.modification.DataItemModification;
 import de.rpgframework.genericrpg.modification.Modification;
 import de.rpgframework.genericrpg.modification.ValueModification;
@@ -42,6 +39,12 @@ public class SR6QualityLeveller extends AQualityLeveller<Shadowrun6Character> {
 	//-------------------------------------------------------------------
 	protected SR6QualityLeveller(IShadowrunCharacterController<?, ?, ?,Shadowrun6Character> parent) {
 		super(parent);
+	}
+
+	//-------------------------------------------------------------------
+	@Override
+	public Possible areRequirementsMet(Quality value, Decision... decisions) {
+		return Shadowrun6Tools.areRequirementsMet( (Shadowrun6Character)getModel(), value, decisions);
 	}
 
 	//-------------------------------------------------------------------

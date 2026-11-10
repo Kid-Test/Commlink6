@@ -13,7 +13,9 @@ import de.rpgframework.genericrpg.data.Decision;
 import de.rpgframework.shadowrun.Ritual;
 import de.rpgframework.shadowrun.RitualValue;
 import de.rpgframework.shadowrun.chargen.gen.IRitualGenerator;
+import de.rpgframework.shadowrun6.SR6RitualValue;
 import de.rpgframework.shadowrun6.Shadowrun6Core;
+import de.rpgframework.shadowrun6.Shadowrun6Tools;
 
 public abstract class CommonRitualController extends ControllerImpl<Ritual> implements IRitualGenerator {
 
@@ -37,13 +39,19 @@ public abstract class CommonRitualController extends ControllerImpl<Ritual> impl
 	}
 
 	//-------------------------------------------------------------------
+	@Override
+	public Possible areRequirementsMet(Ritual value, Decision... decisions) {
+		return Shadowrun6Tools.areRequirementsMet( getModel(), value, decisions);
+	}
+
+	//-------------------------------------------------------------------
 	/**
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#getSelected()
 	 */
 	@Override
 	public List<RitualValue> getSelected() {
 		List<RitualValue> ret = new ArrayList<>();
-		getModel().getRituals().forEach( sp -> ret.add((RitualValue) sp));
+		getModel().getRituals().forEach( sp -> ret.add((SR6RitualValue) sp));
 		return ret;
 	}
 

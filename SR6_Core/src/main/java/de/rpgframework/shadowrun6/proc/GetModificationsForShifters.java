@@ -22,8 +22,8 @@ import de.rpgframework.shadowrun.CritterPower;
 import de.rpgframework.shadowrun.CritterPowerValue;
 import de.rpgframework.shadowrun.DamageElement;
 import de.rpgframework.shadowrun.DamageType;
-import de.rpgframework.shadowrun.MetamagicOrEcho;
-import de.rpgframework.shadowrun.MetamagicOrEchoValue;
+import de.rpgframework.shadowrun.DisciplineTechnique;
+import de.rpgframework.shadowrun.DisciplineTechniqueValue;
 import de.rpgframework.shadowrun.Movement;
 import de.rpgframework.shadowrun.Movement.MovementType;
 import de.rpgframework.shadowrun.Quality;
@@ -184,8 +184,8 @@ public class GetModificationsForShifters implements ProcessingStep {
 					case METAECHO:
 						diMod = (DataItemModification)mod;
 						logger.log(Level.INFO, "TODO Add special power {0} to drake body", diMod.getKey());
-						MetamagicOrEcho meta = mod.getReferenceType().resolve( diMod.getKey() );
-						MetamagicOrEchoValue mVal = new MetamagicOrEchoValue(meta);
+						DisciplineTechnique meta = mod.getReferenceType().resolve( diMod.getKey() );
+						DisciplineTechniqueValue mVal = new DisciplineTechniqueValue(meta);
 						if (mod instanceof ValueModification) {
 							mVal.setDistributed( ((ValueModification)mod).getValue() );
 						}

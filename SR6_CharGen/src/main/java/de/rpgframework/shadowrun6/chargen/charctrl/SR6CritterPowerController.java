@@ -21,6 +21,7 @@ import de.rpgframework.shadowrun.chargen.charctrl.IRejectReasons;
 import de.rpgframework.shadowrun6.Shadowrun6Character;
 import de.rpgframework.shadowrun6.Shadowrun6Core;
 import de.rpgframework.shadowrun6.Shadowrun6Tools;
+import de.rpgframework.shadowrun6.Technique;
 
 /**
  * @author prelle
@@ -86,6 +87,12 @@ public class SR6CritterPowerController extends ControllerImpl<CritterPower> impl
 	@Override
 	public List<Choice> getChoicesToDecide(CritterPower value) {
 		return value.getChoices();
+	}
+
+	//-------------------------------------------------------------------
+	@Override
+	public Possible areRequirementsMet(CritterPower value, Decision... decisions) {
+		return Shadowrun6Tools.areRequirementsMet( getModel(), value, decisions);
 	}
 
 	//-------------------------------------------------------------------

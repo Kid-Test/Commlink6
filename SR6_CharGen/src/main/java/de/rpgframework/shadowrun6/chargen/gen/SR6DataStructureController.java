@@ -20,6 +20,7 @@ import de.rpgframework.shadowrun6.DataStructure;
 import de.rpgframework.shadowrun6.DataStructureValue;
 import de.rpgframework.shadowrun6.Shadowrun6Character;
 import de.rpgframework.shadowrun6.Shadowrun6Core;
+import de.rpgframework.shadowrun6.Shadowrun6Tools;
 import de.rpgframework.shadowrun6.chargen.charctrl.ControllerImpl;
 import de.rpgframework.shadowrun6.chargen.charctrl.IDataStructureController;
 import de.rpgframework.shadowrun6.chargen.charctrl.SR6CharacterController;
@@ -90,6 +91,12 @@ public class SR6DataStructureController extends ControllerImpl<DataStructure> im
 	@Override
 	public List<Choice> getChoicesToDecide(DataStructure value) {
 		return value.getChoices();
+	}
+
+	//-------------------------------------------------------------------
+	@Override
+	public Possible areRequirementsMet(DataStructure value, Decision... decisions) {
+		return Shadowrun6Tools.areRequirementsMet( getModel(), value, decisions);
 	}
 
 	//-------------------------------------------------------------------

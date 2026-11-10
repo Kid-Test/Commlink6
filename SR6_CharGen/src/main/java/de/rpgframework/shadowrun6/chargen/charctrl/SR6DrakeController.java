@@ -16,6 +16,7 @@ import de.rpgframework.genericrpg.chargen.RecommendationState;
 import de.rpgframework.genericrpg.data.AttributeValue;
 import de.rpgframework.genericrpg.data.Choice;
 import de.rpgframework.genericrpg.data.Decision;
+import de.rpgframework.genericrpg.data.GenericRPGTools;
 import de.rpgframework.genericrpg.modification.AllowModification;
 import de.rpgframework.genericrpg.modification.AllowModification.AllowType;
 import de.rpgframework.genericrpg.modification.DataItemModification;
@@ -23,11 +24,11 @@ import de.rpgframework.genericrpg.modification.Modification;
 import de.rpgframework.genericrpg.modification.ValueModification;
 import de.rpgframework.genericrpg.requirements.Requirement;
 import de.rpgframework.shadowrun.BodyType;
-import de.rpgframework.shadowrun.MetamagicOrEcho;
-import de.rpgframework.shadowrun.MetamagicOrEcho.Type;
-import de.rpgframework.shadowrun.MetamagicOrEchoValue;
+import de.rpgframework.shadowrun.DisciplineTechnique;
+import de.rpgframework.shadowrun.DisciplineTechnique.Type;
+import de.rpgframework.shadowrun.DisciplineTechniqueValue;
 import de.rpgframework.shadowrun.ShadowrunAttribute;
-import de.rpgframework.shadowrun.chargen.charctrl.IMetamagicOrEchoController;
+import de.rpgframework.shadowrun.chargen.charctrl.IDisciplineController;
 import de.rpgframework.shadowrun.chargen.charctrl.IRejectReasons;
 import de.rpgframework.shadowrun6.CreatePoints;
 import de.rpgframework.shadowrun6.DrakeType;
@@ -41,8 +42,8 @@ import de.rpgframework.shadowrun6.modifications.ShadowrunReference;
  * @author prelle
  *
  */
-public class SR6DrakeController extends ControllerImpl<MetamagicOrEcho>
-		implements IMetamagicOrEchoController {
+public class SR6DrakeController extends ControllerImpl<DisciplineTechnique>
+		implements IDisciplineController {
 
 	protected static Logger logger = System.getLogger(SR6DrakeController.class.getPackageName()+".drake");
 
@@ -95,7 +96,7 @@ public class SR6DrakeController extends ControllerImpl<MetamagicOrEcho>
 	 * @see de.rpgframework.genericrpg.chargen.RecommendingController#getRecommendationState(java.lang.Object)
 	 */
 	@Override
-	public RecommendationState getRecommendationState(MetamagicOrEcho item) {
+	public RecommendationState getRecommendationState(DisciplineTechnique item) {
 		return RecommendationState.NEUTRAL;
 	}
 
@@ -104,9 +105,9 @@ public class SR6DrakeController extends ControllerImpl<MetamagicOrEcho>
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#getAvailable()
 	 */
 	@Override
-	public List<MetamagicOrEcho> getAvailable() {
+	public List<DisciplineTechnique> getAvailable() {
 		if (getModel().getDrakeType()==null) return List.of();
-		return Shadowrun6Core.getItemList(MetamagicOrEcho.class).stream()
+		return Shadowrun6Core.getItemList(DisciplineTechnique.class).stream()
 				.filter(p -> parent.showDataItem(p))
 				.filter(p -> !getModel().hasMetamagicOrEcho(p.getId()) || p.hasLevel() || p.isMulti())
 				.filter(m -> m.getType()==Type.DRACOGENESIS_POWER)
@@ -118,8 +119,8 @@ public class SR6DrakeController extends ControllerImpl<MetamagicOrEcho>
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#getSelected()
 	 */
 	@Override
-	public List<MetamagicOrEchoValue> getSelected() {
-//		System.err.println("SR6DrakeController.getSelected: "+getModel().getMetamagicOrEchoes().size()+" items");
+	public List<DisciplineTechniqueValue> getSelected() {
+//		System.err.println("SR6DrakeController.getSelected: "+getModel().getDisciplineTechniquees().size()+" items");
 		return getModel().getMetamagicOrEchoes().stream().filter(v -> v.getResolved().getType()==Type.DRACOGENESIS_POWER).collect(Collectors.toList());
 	}
 
@@ -128,7 +129,7 @@ public class SR6DrakeController extends ControllerImpl<MetamagicOrEcho>
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#getRecommendationState(de.rpgframework.genericrpg.data.DataItemValue)
 	 */
 	@Override
-	public RecommendationState getRecommendationState(MetamagicOrEchoValue value) {
+	public RecommendationState getRecommendationState(DisciplineTechniqueValue value) {
 		return RecommendationState.NEUTRAL;
 	}
 
@@ -137,20 +138,20 @@ public class SR6DrakeController extends ControllerImpl<MetamagicOrEcho>
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#getChoicesToDecide(de.rpgframework.genericrpg.data.DataItem)
 	 */
 	@Override
-	public List<Choice> getChoicesToDecide(MetamagicOrEcho value) {
+	public List<Choice> getChoicesToDecide(DisciplineTechnique value) {
 		return value.getChoices();
 	}
 
 	//-------------------------------------------------------------------
 	/**
-	 * @see de.rpgframework.shadowrun.chargen.charctrl.IMetamagicOrEchoController#getGrade()
+	 * @see de.rpgframework.shadowrun.chargen.charctrl.IDisciplineTechniqueController#getGrade()
 	 */
 	@Override
 	public int getGrade() {
-		List<MetamagicOrEchoValue> list = getSelected();
+		List<DisciplineTechniqueValue> list = getSelected();
 		// Determine the grade
 		int grade = 0;
-		for (MetamagicOrEchoValue tmp : list) {
+		for (DisciplineTechniqueValue tmp : list) {
 			if (tmp.isAutoAdded()) continue;
 			if (tmp.getModifyable().hasLevel())
 				grade += tmp.getDistributed();
@@ -165,7 +166,7 @@ public class SR6DrakeController extends ControllerImpl<MetamagicOrEcho>
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#canBeSelected(de.rpgframework.genericrpg.data.DataItem, de.rpgframework.genericrpg.data.Decision[])
 	 */
 	@Override
-	public Possible canBeSelected(MetamagicOrEcho value, Decision... decisions) {
+	public Possible canBeSelected(DisciplineTechnique value, Decision... decisions) {
 		// Check if all requirements are met
 		List<Requirement> notMet = new ArrayList<>();
 		for (Requirement req : value.getRequirements()) {
@@ -206,16 +207,16 @@ public class SR6DrakeController extends ControllerImpl<MetamagicOrEcho>
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#select(de.rpgframework.genericrpg.data.DataItem, de.rpgframework.genericrpg.data.Decision[])
 	 */
 	@Override
-	public OperationResult<MetamagicOrEchoValue> select(MetamagicOrEcho value, Decision... decisions) {
+	public OperationResult<DisciplineTechniqueValue> select(DisciplineTechnique value, Decision... decisions) {
 		logger.log(Level.TRACE, "ENTER select({0})", value);
 		try {
 			Possible possible = canBeSelected(value, decisions);
 			if (possible.getState()!=State.POSSIBLE) {
 				logger.log(Level.ERROR, "Trying to select a dracogenesis power that cannot be selected: {0}",possible.getI18NKey());
-				return new OperationResult<MetamagicOrEchoValue>(possible, false);
+				return new OperationResult<DisciplineTechniqueValue>(possible, false);
 			}
 
-			MetamagicOrEchoValue selected = new MetamagicOrEchoValue(value);
+			DisciplineTechniqueValue selected = new DisciplineTechniqueValue(value);
 			logger.log(Level.INFO, "{0} has Level = {1}", value, value.hasLevel());
 			if (value.hasLevel()) {
 				selected.setDistributed(1);
@@ -240,7 +241,7 @@ public class SR6DrakeController extends ControllerImpl<MetamagicOrEcho>
 			model.addToHistory(mod);
 
 			parent.runProcessors();
-			return new OperationResult<MetamagicOrEchoValue>(selected);
+			return new OperationResult<DisciplineTechniqueValue>(selected);
 		} finally {
 			logger.log(Level.TRACE, "LEAVE select({0})", value);
 		}
@@ -251,7 +252,7 @@ public class SR6DrakeController extends ControllerImpl<MetamagicOrEcho>
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#canBeDeselected(de.rpgframework.genericrpg.data.DataItemValue)
 	 */
 	@Override
-	public Possible canBeDeselected(MetamagicOrEchoValue value) {
+	public Possible canBeDeselected(DisciplineTechniqueValue value) {
 		// Is it selected?
 		if (!getSelected().contains(value)) {
 			return new Possible(false, IRejectReasons.IMPOSS_NOT_PRESENT);
@@ -265,7 +266,7 @@ public class SR6DrakeController extends ControllerImpl<MetamagicOrEcho>
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#deselect(de.rpgframework.genericrpg.data.DataItemValue)
 	 */
 	@Override
-	public boolean deselect(MetamagicOrEchoValue value) {
+	public boolean deselect(DisciplineTechniqueValue value) {
 		logger.log(Level.TRACE, "ENTER deselect({0})", value);
 		try {
 			Possible possible = canBeDeselected(value);
@@ -294,7 +295,7 @@ public class SR6DrakeController extends ControllerImpl<MetamagicOrEcho>
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#getSelectionCost(de.rpgframework.genericrpg.data.DataItem)
 	 */
 	@Override
-	public float getSelectionCost(MetamagicOrEcho data, Decision... decisions) {
+	public float getSelectionCost(DisciplineTechnique data, Decision... decisions) {
 		return 5 + getGrade() +1;
 	}
 
@@ -303,7 +304,7 @@ public class SR6DrakeController extends ControllerImpl<MetamagicOrEcho>
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#getSelectionCostString(de.rpgframework.genericrpg.data.DataItem)
 	 */
 	@Override
-	public String getSelectionCostString(MetamagicOrEcho data) {
+	public String getSelectionCostString(DisciplineTechnique data) {
 		return String.valueOf(getSelectionCost(data));
 	}
 
@@ -312,13 +313,13 @@ public class SR6DrakeController extends ControllerImpl<MetamagicOrEcho>
 	 * @see de.rpgframework.genericrpg.NumericalValueController#canBeIncreased(de.rpgframework.genericrpg.NumericalValue)
 	 */
 	@Override
-	public Possible canBeIncreased(MetamagicOrEchoValue value) {
+	public Possible canBeIncreased(DisciplineTechniqueValue value) {
 		// It must be already possessed
 		if (!getModel().getMetamagicOrEchoes().contains(value)) {
 			return new Possible(false, IRejectReasons.IMPOSS_NOT_PRESENT);
 		}
 
-		MetamagicOrEcho item = value.getModifyable();
+		DisciplineTechnique item = value.getModifyable();
 		if (!item.hasLevel()) {
 			return new Possible(IRejectReasons.IMPOSS_ITEM_HAS_NO_LEVELS);
 		}
@@ -342,13 +343,13 @@ public class SR6DrakeController extends ControllerImpl<MetamagicOrEcho>
 	 * @see de.rpgframework.genericrpg.NumericalValueController#canBeDecreased(de.rpgframework.genericrpg.NumericalValue)
 	 */
 	@Override
-	public Possible canBeDecreased(MetamagicOrEchoValue value) {
+	public Possible canBeDecreased(DisciplineTechniqueValue value) {
 		// It must be already possessed
 		if (!getModel().getMetamagicOrEchoes().contains(value)) {
 			return new Possible(false, IRejectReasons.IMPOSS_NOT_PRESENT);
 		}
 
-		MetamagicOrEcho item = value.getModifyable();
+		DisciplineTechnique item = value.getModifyable();
 		if (!item.hasLevel()) {
 			return new Possible(IRejectReasons.IMPOSS_ITEM_HAS_NO_LEVELS);
 		}
@@ -364,13 +365,13 @@ public class SR6DrakeController extends ControllerImpl<MetamagicOrEcho>
 	 * @see de.rpgframework.genericrpg.NumericalValueController#increase(de.rpgframework.genericrpg.NumericalValue)
 	 */
 	@Override
-	public OperationResult<MetamagicOrEchoValue> increase(MetamagicOrEchoValue value) {
+	public OperationResult<DisciplineTechniqueValue> increase(DisciplineTechniqueValue value) {
 		logger.log(Level.TRACE, "ENTER increase({0})", value);
 		try {
 			Possible possible = canBeIncreased(value);
 			if (possible.getState()!=State.POSSIBLE) {
 				logger.log(Level.ERROR, "Trying to increase a dracogenesis power that cannot be selected: {0}",possible.getI18NKey());
-				return new OperationResult<MetamagicOrEchoValue>(possible, false);
+				return new OperationResult<DisciplineTechniqueValue>(possible, false);
 			}
 
 			int karma = (int)getSelectionCost(value.getResolved());
@@ -382,7 +383,7 @@ public class SR6DrakeController extends ControllerImpl<MetamagicOrEcho>
 			model.setKarmaInvested( model.getKarmaInvested() + karma);
 
 			parent.runProcessors();
-			return new OperationResult<MetamagicOrEchoValue>(value);
+			return new OperationResult<DisciplineTechniqueValue>(value);
 		} finally {
 			logger.log(Level.TRACE, "LEAVE increase({0})", value);
 		}
@@ -393,13 +394,13 @@ public class SR6DrakeController extends ControllerImpl<MetamagicOrEcho>
 	 * @see de.rpgframework.genericrpg.NumericalValueController#decrease(de.rpgframework.genericrpg.NumericalValue)
 	 */
 	@Override
-	public OperationResult<MetamagicOrEchoValue> decrease(MetamagicOrEchoValue value) {
+	public OperationResult<DisciplineTechniqueValue> decrease(DisciplineTechniqueValue value) {
 		logger.log(Level.TRACE, "ENTER decrease({0})", value);
 		try {
 			Possible possible = canBeIncreased(value);
 			if (possible.getState()!=State.POSSIBLE) {
 				logger.log(Level.ERROR, "Trying to decrease a dracogenesis power that cannot be selected: {0}",possible.getI18NKey());
-				return new OperationResult<MetamagicOrEchoValue>(possible, false);
+				return new OperationResult<DisciplineTechniqueValue>(possible, false);
 			}
 
 			value.setDistributed(value.getDistributed()+1);
@@ -411,7 +412,7 @@ public class SR6DrakeController extends ControllerImpl<MetamagicOrEcho>
 			model.setKarmaInvested( model.getKarmaInvested() - karma);
 
 			parent.runProcessors();
-			return new OperationResult<MetamagicOrEchoValue>(value);
+			return new OperationResult<DisciplineTechniqueValue>(value);
 		} finally {
 			logger.log(Level.TRACE, "LEAVE decrease({0})", value);
 		}
@@ -460,10 +461,10 @@ public class SR6DrakeController extends ControllerImpl<MetamagicOrEcho>
 
 				if (tmp.getReferenceType()==ShadowrunReference.METAECHO) {
 					DataItemModification mod = (DataItemModification)tmp;
-					MetamagicOrEcho item = mod.getResolvedKey();
-					MetamagicOrEchoValue val = model.getMetamagicOrEcho(mod.getKey());
+					DisciplineTechnique item = mod.getResolvedKey();
+					DisciplineTechniqueValue val = model.getMetamagicOrEcho(mod.getKey());
 					if (val==null || !item.hasLevel()) {
-						val = new MetamagicOrEchoValue(item);
+						val = new DisciplineTechniqueValue(item);
 						val.addIncomingModification(mod);
 						getModel().addMetamagicOrEcho(val);
 						logger.log(Level.DEBUG, "Auto-Added Dracogenesis Power ''{0}''", mod.getKey());
@@ -494,7 +495,7 @@ public class SR6DrakeController extends ControllerImpl<MetamagicOrEcho>
 			// Pay karma and apply modifications
 			int payNext = 6;
 			int grade = 0;
-			for (MetamagicOrEchoValue val : model.getMetamagicOrEchoes()) {
+			for (DisciplineTechniqueValue val : model.getMetamagicOrEchoes()) {
 				if (val.getModifyable().getType()!=Type.DRACOGENESIS_POWER) continue;
 				logger.log(Level.DEBUG, "Metaecho {0} is auto={1}", val.getKey(), val.isAutoAdded());
 				if (val.isAutoAdded()) {
@@ -534,7 +535,7 @@ public class SR6DrakeController extends ControllerImpl<MetamagicOrEcho>
 	 * @see de.rpgframework.genericrpg.NumericalValueController#getValue(de.rpgframework.genericrpg.NumericalValue)
 	 */
 	@Override
-	public int getValue(MetamagicOrEchoValue value) {
+	public int getValue(DisciplineTechniqueValue value) {
 		return value.getDistributed();
 	}
 
@@ -546,6 +547,11 @@ public class SR6DrakeController extends ControllerImpl<MetamagicOrEcho>
 	//-------------------------------------------------------------------
 	public NumericalValueController<ShadowrunAttribute, AttributeValue<ShadowrunAttribute>> getAttributeController() {
 		return attrCtrl;
+	}
+
+	@Override
+	public Possible areRequirementsMet(DisciplineTechnique value, Decision... decisions) {
+		return Shadowrun6Tools.areRequirementsMet(getModel(), value, decisions);
 	}
 
 }

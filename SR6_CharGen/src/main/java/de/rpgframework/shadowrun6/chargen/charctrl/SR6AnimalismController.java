@@ -18,13 +18,13 @@ import de.rpgframework.genericrpg.modification.DataItemModification;
 import de.rpgframework.genericrpg.modification.Modification;
 import de.rpgframework.genericrpg.modification.ValueModification;
 import de.rpgframework.genericrpg.requirements.Requirement;
+import de.rpgframework.shadowrun.DisciplineTechnique;
+import de.rpgframework.shadowrun.DisciplineTechniqueValue;
 import de.rpgframework.shadowrun.MagicOrResonanceType;
 import de.rpgframework.shadowrun.MetaType;
-import de.rpgframework.shadowrun.MetamagicOrEcho;
-import de.rpgframework.shadowrun.MetamagicOrEcho.Type;
-import de.rpgframework.shadowrun.MetamagicOrEchoValue;
-import de.rpgframework.shadowrun.chargen.charctrl.IMetamagicOrEchoController;
+import de.rpgframework.shadowrun.chargen.charctrl.IDisciplineController;
 import de.rpgframework.shadowrun.chargen.charctrl.IRejectReasons;
+import de.rpgframework.shadowrun6.SR6Discipline;
 import de.rpgframework.shadowrun6.Shadowrun6Character;
 import de.rpgframework.shadowrun6.Shadowrun6Core;
 import de.rpgframework.shadowrun6.Shadowrun6Rules;
@@ -36,8 +36,8 @@ import de.rpgframework.shadowrun6.modifications.ShadowrunReference;
  * @author prelle
  *
  */
-public class SR6AnimalismController extends ControllerImpl<MetamagicOrEcho>
-		implements IMetamagicOrEchoController {
+public class SR6AnimalismController extends ControllerImpl<DisciplineTechnique>
+		implements IDisciplineController {
 
 	protected static Logger logger = System.getLogger(ControllerImpl.class.getPackageName()+".animalism");
 
@@ -55,21 +55,21 @@ public class SR6AnimalismController extends ControllerImpl<MetamagicOrEcho>
 	 * @see de.rpgframework.genericrpg.chargen.RecommendingController#getRecommendationState(java.lang.Object)
 	 */
 	@Override
-	public RecommendationState getRecommendationState(MetamagicOrEcho item) {
+	public RecommendationState getRecommendationState(DisciplineTechnique item) {
 		return RecommendationState.NEUTRAL;
 	}
 
 //	//-------------------------------------------------------------------
-//	private List<MetamagicOrEcho> getNormalAvailable() {
+//	private List<DisciplineTechnique> getNormalAvailable() {
 //		MagicOrResonanceType type = getModel().getMagicOrResonanceType();
 //		if (type!=null && type.usesMagic()) {
-//			return Shadowrun6Core.getItemList(MetamagicOrEcho.class).stream()
+//			return Shadowrun6Core.getItemList(DisciplineTechnique.class).stream()
 //					.filter(p -> parent.showDataItem(p))
 //					.filter(p -> !getModel().hasMetamagicOrEcho(p.getId()) || p.hasLevel())
 //					.filter(m -> m.getType()==Type.METAMAGIC||m.getType()==Type.METAMAGIC_ADEPT)
 //					.collect(Collectors.toList());
 //		} else if (type!=null && type.usesResonance()) {
-//			return Shadowrun6Core.getItemList(MetamagicOrEcho.class).stream()
+//			return Shadowrun6Core.getItemList(DisciplineTechnique.class).stream()
 //					.filter(p -> parent.showDataItem(p))
 //					.filter(p -> !getModel().hasMetamagicOrEcho(p.getId()) || p.hasLevel())
 //					.filter(m -> m.getType()==Type.ECHO)
@@ -83,15 +83,15 @@ public class SR6AnimalismController extends ControllerImpl<MetamagicOrEcho>
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#getAvailable()
 	 */
 	@Override
-	public List<MetamagicOrEcho> getAvailable() {
+	public List<DisciplineTechnique> getAvailable() {
 		MetaType meta = getModel().getMetatype();
 		if (meta==null)
 			return List.of();
 
-		List<MetamagicOrEcho> ret = Shadowrun6Core.getItemList(MetamagicOrEcho.class).stream()
+		List<DisciplineTechnique> ret = Shadowrun6Core.getItemList(DisciplineTechnique.class).stream()
 				.filter(p -> parent.showDataItem(p))
 				.filter(p -> !getModel().hasMetamagicOrEcho(p.getId()) || p.hasLevel())
-				.filter(m -> m.getType()==Type.ANIMALISM)
+				.filter(m -> m.getType()==SR6Discipline.ANIMALISM)
 				.collect(Collectors.toList());
 		return ret;
 	}
@@ -101,8 +101,8 @@ public class SR6AnimalismController extends ControllerImpl<MetamagicOrEcho>
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#getSelected()
 	 */
 	@Override
-	public List<MetamagicOrEchoValue> getSelected() {
-		return getModel().getMetamagicOrEchoes().stream().filter(m -> m.getResolved().getType()==Type.ANIMALISM).toList();
+	public List<DisciplineTechniqueValue> getSelected() {
+		return getModel().getMetamagicOrEchoes().stream().filter(m -> m.getResolved().getType()==SR6Discipline.ANIMALISM).toList();
 	}
 
 	//-------------------------------------------------------------------
@@ -110,7 +110,7 @@ public class SR6AnimalismController extends ControllerImpl<MetamagicOrEcho>
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#getRecommendationState(de.rpgframework.genericrpg.data.DataItemValue)
 	 */
 	@Override
-	public RecommendationState getRecommendationState(MetamagicOrEchoValue value) {
+	public RecommendationState getRecommendationState(DisciplineTechniqueValue value) {
 		return RecommendationState.NEUTRAL;
 	}
 
@@ -119,7 +119,7 @@ public class SR6AnimalismController extends ControllerImpl<MetamagicOrEcho>
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#getChoicesToDecide(de.rpgframework.genericrpg.data.DataItem)
 	 */
 	@Override
-	public List<Choice> getChoicesToDecide(MetamagicOrEcho value) {
+	public List<Choice> getChoicesToDecide(DisciplineTechnique value) {
 		return value.getChoices();
 	}
 
@@ -131,14 +131,14 @@ public class SR6AnimalismController extends ControllerImpl<MetamagicOrEcho>
 	public int getGrade() {
 		MetaType meta = getModel().getMetatype();
 		if (meta==null) return 0;
-		List<MetamagicOrEchoValue> list = getSelected().stream()
+		List<DisciplineTechniqueValue> list = getSelected().stream()
 				.filter(m -> m.getModifyable()!=null)
-				.filter(m -> m.getModifyable().getType() == Type.ANIMALISM)
+				.filter(m -> m.getModifyable().getType() == SR6Discipline.ANIMALISM)
 				.filter(m -> !m.isAutoAdded())
 				.collect(Collectors.toList());
 		// Determine the grade
 		int grade = 0;
-		for (MetamagicOrEchoValue tmp : list) {
+		for (DisciplineTechniqueValue tmp : list) {
 			if (tmp.getModifyable().hasLevel())
 				grade += tmp.getDistributed();
 			else
@@ -152,7 +152,7 @@ public class SR6AnimalismController extends ControllerImpl<MetamagicOrEcho>
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#canBeSelected(de.rpgframework.genericrpg.data.DataItem, de.rpgframework.genericrpg.data.Decision[])
 	 */
 	@Override
-	public Possible canBeSelected(MetamagicOrEcho value, Decision... decisions) {
+	public Possible canBeSelected(DisciplineTechnique value, Decision... decisions) {
 		// Check if all requirements are met
 		List<Requirement> notMet = new ArrayList<>();
 		for (Requirement req : value.getRequirements()) {
@@ -182,7 +182,7 @@ public class SR6AnimalismController extends ControllerImpl<MetamagicOrEcho>
 
 		// Check if initiation/immersion/transhumanism is allowed (for chargen)
 		if (isCharGen) {
-			if (value.getType()==Type.ANIMALISM && !parent.getRuleController().getRuleValueAsBoolean(Shadowrun6Rules.ALLOW_ANIMALISM)) {
+			if (value.getType()==SR6Discipline.ANIMALISM && !parent.getRuleController().getRuleValueAsBoolean(Shadowrun6Rules.ALLOW_ANIMALISM)) {
 				return new Possible(Severity.STOPPER, IRejectReasons.RES, IRejectReasons.IMPOSS_NOT_AVAILABLE);
 			}
 		}
@@ -195,16 +195,16 @@ public class SR6AnimalismController extends ControllerImpl<MetamagicOrEcho>
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#select(de.rpgframework.genericrpg.data.DataItem, de.rpgframework.genericrpg.data.Decision[])
 	 */
 	@Override
-	public OperationResult<MetamagicOrEchoValue> select(MetamagicOrEcho value, Decision... decisions) {
+	public OperationResult<DisciplineTechniqueValue> select(DisciplineTechnique value, Decision... decisions) {
 		logger.log(Level.TRACE, "ENTER select({0})", value);
 		try {
 			Possible possible = canBeSelected(value, decisions);
 			if (possible.getState()!=State.POSSIBLE) {
 				logger.log(Level.ERROR, "Trying to select an animalism that cannot be selected: {0}",possible.getI18NKey());
-				return new OperationResult<MetamagicOrEchoValue>(possible, false);
+				return new OperationResult<DisciplineTechniqueValue>(possible, false);
 			}
 
-			MetamagicOrEchoValue selected = new MetamagicOrEchoValue(value);
+			DisciplineTechniqueValue selected = new DisciplineTechniqueValue(value);
 			logger.log(Level.INFO, "{0} has Level = {1}", value, value.hasLevel());
 			if (value.hasLevel()) {
 				selected.setDistributed(1);
@@ -234,7 +234,7 @@ public class SR6AnimalismController extends ControllerImpl<MetamagicOrEcho>
 				essenceMod.setId(selected.getUuid());
 
 			parent.runProcessors();
-			return new OperationResult<MetamagicOrEchoValue>(selected);
+			return new OperationResult<DisciplineTechniqueValue>(selected);
 		} finally {
 			logger.log(Level.TRACE, "LEAVE select({0})", value);
 		}
@@ -245,7 +245,7 @@ public class SR6AnimalismController extends ControllerImpl<MetamagicOrEcho>
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#canBeDeselected(de.rpgframework.genericrpg.data.DataItemValue)
 	 */
 	@Override
-	public Possible canBeDeselected(MetamagicOrEchoValue value) {
+	public Possible canBeDeselected(DisciplineTechniqueValue value) {
 		// Is it selected?
 		if (!getSelected().contains(value)) {
 			return new Possible(Severity.STOPPER, IRejectReasons.RES, IRejectReasons.IMPOSS_NOT_PRESENT);
@@ -258,7 +258,7 @@ public class SR6AnimalismController extends ControllerImpl<MetamagicOrEcho>
 		return Possible.TRUE;
 	}
 	//-------------------------------------------------------------------
-	private ValueModification getHighestModification(MetamagicOrEcho key) {
+	private ValueModification getHighestModification(DisciplineTechnique key) {
 		ValueModification ret = null;
 		for (Modification mod : getModel().getHistory()) {
 			if (!(mod instanceof ValueModification))
@@ -281,7 +281,7 @@ public class SR6AnimalismController extends ControllerImpl<MetamagicOrEcho>
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#deselect(de.rpgframework.genericrpg.data.DataItemValue)
 	 */
 	@Override
-	public boolean deselect(MetamagicOrEchoValue value) {
+	public boolean deselect(DisciplineTechniqueValue value) {
 		logger.log(Level.TRACE, "ENTER deselect({0})", value);
 		try {
 			Possible possible = canBeDeselected(value);
@@ -317,7 +317,7 @@ public class SR6AnimalismController extends ControllerImpl<MetamagicOrEcho>
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#getSelectionCost(de.rpgframework.genericrpg.data.DataItem)
 	 */
 	@Override
-	public float getSelectionCost(MetamagicOrEcho data, Decision... decisions) {
+	public float getSelectionCost(DisciplineTechnique data, Decision... decisions) {
 		return 10 + getGrade() +1;
 	}
 
@@ -326,7 +326,7 @@ public class SR6AnimalismController extends ControllerImpl<MetamagicOrEcho>
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#getSelectionCostString(de.rpgframework.genericrpg.data.DataItem)
 	 */
 	@Override
-	public String getSelectionCostString(MetamagicOrEcho data) {
+	public String getSelectionCostString(DisciplineTechnique data) {
 		return String.valueOf(getSelectionCost(data));
 	}
 
@@ -335,14 +335,14 @@ public class SR6AnimalismController extends ControllerImpl<MetamagicOrEcho>
 	 * @see de.rpgframework.genericrpg.NumericalValueController#canBeIncreased(de.rpgframework.genericrpg.NumericalValue)
 	 */
 	@Override
-	public Possible canBeIncreased(MetamagicOrEchoValue value) {
+	public Possible canBeIncreased(DisciplineTechniqueValue value) {
 		// It must be already possessed
 		if (!getModel().getMetamagicOrEchoes().contains(value)) {
 			return canBeSelected(value.getModifyable());
 //			return new Possible(false, IRejectReasons.IMPOSS_NOT_PRESENT);
 		}
 
-		MetamagicOrEcho item = value.getModifyable();
+		DisciplineTechnique item = value.getModifyable();
 		if (!item.hasLevel()) {
 			return new Possible(Severity.STOPPER, IRejectReasons.RES, IRejectReasons.IMPOSS_ITEM_HAS_NO_LEVELS);
 		}
@@ -366,13 +366,13 @@ public class SR6AnimalismController extends ControllerImpl<MetamagicOrEcho>
 	 * @see de.rpgframework.genericrpg.NumericalValueController#canBeDecreased(de.rpgframework.genericrpg.NumericalValue)
 	 */
 	@Override
-	public Possible canBeDecreased(MetamagicOrEchoValue value) {
+	public Possible canBeDecreased(DisciplineTechniqueValue value) {
 		// It must be already possessed
 		if (!getModel().getMetamagicOrEchoes().contains(value)) {
 			return new Possible(Severity.STOPPER, IRejectReasons.RES, IRejectReasons.IMPOSS_NOT_PRESENT);
 		}
 
-		MetamagicOrEcho item = value.getModifyable();
+		DisciplineTechnique item = value.getModifyable();
 		if (!item.hasLevel()) {
 			return new Possible(Severity.STOPPER, IRejectReasons.RES, IRejectReasons.IMPOSS_ITEM_HAS_NO_LEVELS);
 		}
@@ -388,13 +388,13 @@ public class SR6AnimalismController extends ControllerImpl<MetamagicOrEcho>
 	 * @see de.rpgframework.genericrpg.NumericalValueController#increase(de.rpgframework.genericrpg.NumericalValue)
 	 */
 	@Override
-	public OperationResult<MetamagicOrEchoValue> increase(MetamagicOrEchoValue value) {
+	public OperationResult<DisciplineTechniqueValue> increase(DisciplineTechniqueValue value) {
 		logger.log(Level.TRACE, "ENTER increase({0})", value);
 		try {
 			Possible possible = canBeIncreased(value);
 			if (possible.getState()!=State.POSSIBLE) {
 				logger.log(Level.ERROR, "Trying to increase an animalism that cannot be selected: {0}",possible.getI18NKey());
-				return new OperationResult<MetamagicOrEchoValue>(possible, false);
+				return new OperationResult<DisciplineTechniqueValue>(possible, false);
 			}
 
 			int karma = 10 + getGrade() +1;
@@ -423,7 +423,7 @@ public class SR6AnimalismController extends ControllerImpl<MetamagicOrEcho>
 				essenceMod.setId(value.getUuid());
 			
 			parent.runProcessors();
-			return new OperationResult<MetamagicOrEchoValue>(value);
+			return new OperationResult<DisciplineTechniqueValue>(value);
 		} finally {
 			logger.log(Level.TRACE, "LEAVE increase({0})", value);
 		}
@@ -434,13 +434,13 @@ public class SR6AnimalismController extends ControllerImpl<MetamagicOrEcho>
 	 * @see de.rpgframework.genericrpg.NumericalValueController#decrease(de.rpgframework.genericrpg.NumericalValue)
 	 */
 	@Override
-	public OperationResult<MetamagicOrEchoValue> decrease(MetamagicOrEchoValue value) {
+	public OperationResult<DisciplineTechniqueValue> decrease(DisciplineTechniqueValue value) {
 		logger.log(Level.TRACE, "ENTER decrease({0})", value);
 		try {
 			Possible possible = canBeDecreased(value);
 			if (possible.getState()!=State.POSSIBLE) {
 				logger.log(Level.ERROR, "Trying to decrease an animalism that cannot be selected: {0}",possible.getI18NKey());
-				return new OperationResult<MetamagicOrEchoValue>(possible, false);
+				return new OperationResult<DisciplineTechniqueValue>(possible, false);
 			}
 
 			value.setDistributed(value.getDistributed()-1);
@@ -452,7 +452,7 @@ public class SR6AnimalismController extends ControllerImpl<MetamagicOrEcho>
 			model.setKarmaFree( model.getKarmaFree() + karma);
 			model.setKarmaInvested( model.getKarmaInvested() - karma);
 
-			// If value = 0, delete MetamagicOrEcho completely
+			// If value = 0, delete DisciplineTechnique completely
 			if (getGrade()==0) {
 			model.removeMetamagicOrEcho(value);
 			}
@@ -466,7 +466,7 @@ public class SR6AnimalismController extends ControllerImpl<MetamagicOrEcho>
 			Shadowrun6Tools.removeEssenceChange(model, value.getResolved(), RemoveMode.UNDO);
 
 			parent.runProcessors();
-			return new OperationResult<MetamagicOrEchoValue>(value);
+			return new OperationResult<DisciplineTechniqueValue>(value);
 		} finally {
 			logger.log(Level.TRACE, "LEAVE decrease({0})", value);
 		}
@@ -492,11 +492,11 @@ public class SR6AnimalismController extends ControllerImpl<MetamagicOrEcho>
 			for (Modification tmp : previous) {
 				if (tmp.getReferenceType()==ShadowrunReference.METAECHO) {
 					DataItemModification mod = (DataItemModification)tmp;
-					MetamagicOrEcho item = mod.getResolvedKey();
-					if (item.getType()==Type.ANIMALISM) {
-						MetamagicOrEchoValue val = model.getMetamagicOrEcho(mod.getKey());
+					DisciplineTechnique item = mod.getResolvedKey();
+					if (item.getType()==SR6Discipline.ANIMALISM) {
+						DisciplineTechniqueValue val = model.getMetamagicOrEcho(mod.getKey());
 						if (val==null || !item.hasLevel()) {
-							val = new MetamagicOrEchoValue(item);
+							val = new DisciplineTechniqueValue(item);
 							val.addIncomingModification(mod);
 							getModel().addMetamagicOrEcho(val);
 							logger.log(Level.DEBUG, "Auto-Added animalism ''{0}''", mod.getKey());
@@ -517,8 +517,8 @@ public class SR6AnimalismController extends ControllerImpl<MetamagicOrEcho>
 			}
 			int payNext = 11;
 			int grade = 0;
-			for (MetamagicOrEchoValue val : model.getMetamagicOrEchoes()) {
-				if (val.getModifyable().getType()!=Type.ANIMALISM) continue;
+			for (DisciplineTechniqueValue val : model.getMetamagicOrEchoes()) {
+				if (val.getModifyable().getType()!=SR6Discipline.ANIMALISM) continue;
 				if (val.getModifyable().hasLevel()) {
 					for (int i=0; i<val.getDistributed(); i++) {
 						if (isCharGen) {
@@ -557,8 +557,14 @@ public class SR6AnimalismController extends ControllerImpl<MetamagicOrEcho>
 	 * @see de.rpgframework.genericrpg.NumericalValueController#getValue(de.rpgframework.genericrpg.NumericalValue)
 	 */
 	@Override
-	public int getValue(MetamagicOrEchoValue value) {
+	public int getValue(DisciplineTechniqueValue value) {
 		return value.getDistributed();
+	}
+
+	@Override
+	public Possible areRequirementsMet(DisciplineTechnique value, Decision... decisions) {
+		// TODO Auto-generated method stub
+		return Possible.TRUE;
 	}
 
 }

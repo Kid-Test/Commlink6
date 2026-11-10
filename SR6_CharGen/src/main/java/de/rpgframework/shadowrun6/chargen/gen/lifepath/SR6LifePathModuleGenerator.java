@@ -96,6 +96,12 @@ public class SR6LifePathModuleGenerator extends ControllerImpl<LifepathModule>
 	}
 
 	//-------------------------------------------------------------------
+	@Override
+	public Possible areRequirementsMet(LifepathModule value, Decision... decisions) {
+		return Shadowrun6Tools.areRequirementsMet( getModel(), value, decisions);
+	}
+
+	//-------------------------------------------------------------------
 	/**
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#canBeSelected(de.rpgframework.genericrpg.data.DataItem, de.rpgframework.genericrpg.data.Decision[])
 	 */

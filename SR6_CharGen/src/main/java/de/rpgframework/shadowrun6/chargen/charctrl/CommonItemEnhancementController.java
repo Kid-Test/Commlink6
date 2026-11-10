@@ -18,6 +18,7 @@ import de.rpgframework.genericrpg.items.ItemEnhancementValue;
 import de.rpgframework.genericrpg.modification.Modification;
 import de.rpgframework.shadowrun.chargen.charctrl.IRejectReasons;
 import de.rpgframework.shadowrun6.Shadowrun6Core;
+import de.rpgframework.shadowrun6.Shadowrun6Tools;
 import de.rpgframework.shadowrun6.items.ItemTemplate;
 import de.rpgframework.shadowrun6.items.SR6GearTool;
 import de.rpgframework.shadowrun6.items.SR6ItemAttribute;
@@ -117,6 +118,12 @@ public class CommonItemEnhancementController extends ControllerImpl<SR6ItemEnhan
 	@Override
 	public List<Choice> getChoicesToDecide(SR6ItemEnhancement value) {
 		return value.getChoices();
+	}
+
+	//-------------------------------------------------------------------
+	@Override
+	public Possible areRequirementsMet(SR6ItemEnhancement value, Decision... decisions) {
+		return Shadowrun6Tools.areRequirementsMet(getModel(), value, decisions);
 	}
 
 	//-------------------------------------------------------------------

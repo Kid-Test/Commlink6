@@ -77,12 +77,12 @@ import de.rpgframework.shadowrun.ComplexForm;
 import de.rpgframework.shadowrun.ComplexFormValue;
 import de.rpgframework.shadowrun.CritterPower;
 import de.rpgframework.shadowrun.CritterPowerValue;
+import de.rpgframework.shadowrun.DisciplineTechnique;
+import de.rpgframework.shadowrun.DisciplineTechniqueValue;
 import de.rpgframework.shadowrun.Focus;
 import de.rpgframework.shadowrun.FocusValue;
 import de.rpgframework.shadowrun.LifestyleQuality;
 import de.rpgframework.shadowrun.MagicOrResonanceType;
-import de.rpgframework.shadowrun.MetamagicOrEcho;
-import de.rpgframework.shadowrun.MetamagicOrEchoValue;
 import de.rpgframework.shadowrun.Quality;
 import de.rpgframework.shadowrun.QualityValue;
 import de.rpgframework.shadowrun.Ritual;
@@ -809,12 +809,12 @@ public class Shadowrun6Tools {
 				if (data==null)
 					return "Unknown "+tmp.getKey();
 				String meType = "";
-				switch ( ((MetamagicOrEcho)data).getType() ) {
-				case ECHO: meType = RES.getString("label.echo"); break;
-				case METAMAGIC: meType = RES.getString("label.metamagic"); break;
-				case METAMAGIC_ADEPT: meType = RES.getString("label.metamagic"); break;
-				case DRACOGENESIS_POWER: meType = RES.getString("label.dracogenesis"); break;
-				}
+//				switch ( ((DisciplineTechnique)data).getDiscipline() ) {
+//				case ECHO: meType = RES.getString("label.echo"); break;
+//				case METAMAGIC: meType = RES.getString("label.metamagic"); break;
+//				case METAMAGIC_ADEPT: meType = RES.getString("label.metamagic"); break;
+//				case DRACOGENESIS_POWER: meType = RES.getString("label.dracogenesis"); break;
+//				}
 				return prefix+meType+" "+data.getName(loc);
 			case SKILL:
 				String value = (req instanceof ValueRequirement)?((ValueRequirement)req).getRawValue():"";
@@ -976,9 +976,9 @@ public class Shadowrun6Tools {
 				tmp.setResolved(resolved);
 			}
 			logger.log(Level.DEBUG, "resolve metamagics or echoes");
-			for (MetamagicOrEchoValue tmp : model.getMetamagicOrEchoes()) {
+			for (DisciplineTechniqueValue tmp : model.getMetamagicOrEchoes()) {
 				tmp.setCharacter(model);
-				MetamagicOrEcho resolved = Shadowrun6Core.getItem(MetamagicOrEcho.class, tmp.getKey(), tmp.getLanguage());
+				DisciplineTechnique resolved = Shadowrun6Core.getItem(DisciplineTechnique.class, tmp.getKey(), tmp.getLanguage());
 				tmp.setResolved(resolved);
 			}
 			logger.log(Level.DEBUG, "resolve critter powers");

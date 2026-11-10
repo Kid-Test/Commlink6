@@ -30,6 +30,7 @@ import de.rpgframework.shadowrun6.Shadowrun6Core;
 import de.rpgframework.shadowrun6.Shadowrun6Tools;
 import de.rpgframework.shadowrun6.chargen.charctrl.SR6CharacterGenerator;
 import de.rpgframework.shadowrun6.chargen.charctrl.SR6RejectReasons;
+import de.rpgframework.shadowrun6.items.SR6ItemEnhancement;
 import de.rpgframework.shadowrun6.modifications.ShadowrunReference;
 import de.rpgframework.shadowrun6.proc.ApplyModificationsGeneric;
 
@@ -52,6 +53,7 @@ public class CommonQualityGenerator extends QualityGenerator<Shadowrun6Character
 
 	//-------------------------------------------------------------------
 	public int getNumberOfQualities() { return numberOfQualities; }
+
 
 	//-------------------------------------------------------------------
 	/**
@@ -454,6 +456,12 @@ public class CommonQualityGenerator extends QualityGenerator<Shadowrun6Character
 		} finally {
 			logger.log(Level.TRACE, "LEAVE decrease({0})", value);
 		}
+	}
+
+	//-------------------------------------------------------------------
+	@Override
+	public Possible areRequirementsMet(Quality value, Decision... decisions) {
+		return Shadowrun6Tools.areRequirementsMet( (Shadowrun6Character)getModel(), value, decisions);
 	}
 
 }

@@ -41,7 +41,6 @@ import de.rpgframework.shadowrun6.items.ItemTemplate;
 import de.rpgframework.shadowrun6.items.ItemType;
 import de.rpgframework.shadowrun6.items.ItemTypeFilter;
 import de.rpgframework.shadowrun6.items.ItemUtil;
-import de.rpgframework.shadowrun6.items.SR6GearTool;
 import de.rpgframework.shadowrun6.items.SR6ItemAttribute;
 import de.rpgframework.shadowrun6.items.SR6ItemEnhancement;
 import de.rpgframework.shadowrun6.items.SR6PieceOfGearVariant;
@@ -103,6 +102,12 @@ public abstract class CommonEquipmentController extends ControllerImpl<ItemTempl
 		List<ItemTemplate> list = Shadowrun6Core.getItemList(ItemTemplate.class);
 		list = list.stream().filter(new ItemTypeFilter(mode, types)).collect(Collectors.toList());
 		return list;
+	}
+
+	//-------------------------------------------------------------------
+	@Override
+	public Possible areRequirementsMet(ItemTemplate value, Decision... decisions) {
+		return Shadowrun6Tools.areRequirementsMet( getModel(), value, decisions);
 	}
 
 	//-------------------------------------------------------------------

@@ -2,8 +2,8 @@ package de.rpgframework.shadowrun6.chargen.gen.free;
 
 import de.rpgframework.genericrpg.Possible;
 import de.rpgframework.genericrpg.data.Decision;
-import de.rpgframework.shadowrun.MetamagicOrEcho;
-import de.rpgframework.shadowrun.MetamagicOrEchoValue;
+import de.rpgframework.shadowrun.DisciplineTechnique;
+import de.rpgframework.shadowrun.DisciplineTechniqueValue;
 import de.rpgframework.shadowrun6.chargen.charctrl.SR6AnimalismController;
 import de.rpgframework.shadowrun6.chargen.charctrl.SR6CharacterController;
 
@@ -27,7 +27,7 @@ public class SR6FreeAnimalismController extends SR6AnimalismController {
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#canBeSelected(de.rpgframework.genericrpg.data.DataItem, de.rpgframework.genericrpg.data.Decision[])
 	 */
 	@Override
-	public Possible canBeSelected(MetamagicOrEcho value, Decision... decisions) {
+	public Possible canBeSelected(DisciplineTechnique value, Decision... decisions) {
 		return Possible.TRUE;
 	}
 
@@ -36,7 +36,7 @@ public class SR6FreeAnimalismController extends SR6AnimalismController {
 	 * @see de.rpgframework.genericrpg.NumericalValueController#canBeIncreased(de.rpgframework.genericrpg.NumericalValue)
 	 */
 	@Override
-	public Possible canBeIncreased(MetamagicOrEchoValue value) {
+	public Possible canBeIncreased(DisciplineTechniqueValue value) {
 		return Possible.TRUE;
 	}
 }

@@ -43,6 +43,7 @@ import de.rpgframework.shadowrun.ContactType;
 import de.rpgframework.shadowrun.ContactTypeList;
 import de.rpgframework.shadowrun.CritterPower;
 import de.rpgframework.shadowrun.CritterPowerList;
+import de.rpgframework.shadowrun.DisciplineTechnique;
 import de.rpgframework.shadowrun.Focus;
 import de.rpgframework.shadowrun.FocusList;
 import de.rpgframework.shadowrun.LifestyleQuality;
@@ -51,7 +52,6 @@ import de.rpgframework.shadowrun.MagicOrResonanceType;
 import de.rpgframework.shadowrun.MagicOrResonanceTypeList;
 import de.rpgframework.shadowrun.MentorSpirit;
 import de.rpgframework.shadowrun.MentorSpiritList;
-import de.rpgframework.shadowrun.MetamagicOrEcho;
 import de.rpgframework.shadowrun.MetamagicOrEchoList;
 import de.rpgframework.shadowrun.Ritual;
 import de.rpgframework.shadowrun.RitualFeature;
@@ -354,9 +354,9 @@ public class Shadowrun6DataPlugin  {
 		logger.log(Level.DEBUG, "Loaded "+list.size()+" drones");
 		list = Shadowrun6Core.loadDataItems(ItemTemplateList.class, ItemTemplate.class, core, clazz,"core/data/gear_magical.xml");
 		logger.log(Level.DEBUG, "Loaded "+list.size()+" magic gear");
-		list = Shadowrun6Core.loadDataItems(MetamagicOrEchoList.class, MetamagicOrEcho.class, core, clazz,"core/data/metamagics.xml");
+		list = Shadowrun6Core.loadDataItems(MetamagicOrEchoList.class, DisciplineTechnique.class, core, clazz,"core/data/metamagics.xml");
 		logger.log(Level.DEBUG, "Loaded "+list.size()+" metamagics");
-		list = Shadowrun6Core.loadDataItems(MetamagicOrEchoList.class, MetamagicOrEcho.class, core, clazz,"core/data/echoes.xml");
+		list = Shadowrun6Core.loadDataItems(MetamagicOrEchoList.class, DisciplineTechnique.class, core, clazz,"core/data/echoes.xml");
 		logger.log(Level.DEBUG, "Loaded "+list.size()+" echoes");
 		list = Shadowrun6Core.loadDataItems(LifestyleQualityList.class, LifestyleQuality.class, core, clazz,"core/data/lifestyles.xml");
 		logger.log(Level.DEBUG, "Loaded "+list.size()+" lifestyle qualities");
@@ -473,7 +473,7 @@ public class Shadowrun6DataPlugin  {
 		logger.log(Level.DEBUG, "Loaded "+list.size()+" qualities");
 		list = Shadowrun6Core.loadDataItems(QualityList.class, SR6Quality.class, set, clazz, "street_wyrd/data/qualities2.xml");
 		logger.log(Level.DEBUG, "Loaded "+list.size()+" qualities (Adept Ways)");
-		list = Shadowrun6Core.loadDataItems(MetamagicOrEchoList.class, MetamagicOrEcho.class, set, clazz, "street_wyrd/data/metamagics.xml");
+		list = Shadowrun6Core.loadDataItems(MetamagicOrEchoList.class, DisciplineTechnique.class, set, clazz, "street_wyrd/data/metamagics.xml");
 		logger.log(Level.DEBUG, "Loaded "+list.size()+" metamagics for adepts");
 		list = Shadowrun6Core.loadDataItems(TraditionList.class, Tradition.class, set, clazz,"street_wyrd/data/traditions.xml");
 		logger.log(Level.DEBUG, "Loaded "+list.size()+" magic traditions");
@@ -563,7 +563,7 @@ public class Shadowrun6DataPlugin  {
 		logger.log(Level.DEBUG, "Loaded "+list.size()+" vehicles");
 		list = Shadowrun6Core.loadDataItems(ItemTemplateList.class, ItemTemplate.class, set, clazz,"hack_slash/data/gear_ammunition.xml");
 		logger.log(Level.DEBUG, "Loaded "+list.size()+" ammunition");
-		list = Shadowrun6Core.loadDataItems(MetamagicOrEchoList.class, MetamagicOrEcho.class, set, clazz, "hack_slash/data/echoes.xml");
+		list = Shadowrun6Core.loadDataItems(MetamagicOrEchoList.class, DisciplineTechnique.class, set, clazz, "hack_slash/data/echoes.xml");
 		logger.log(Level.DEBUG, "Loaded "+list.size()+" echoes");
 		list = Shadowrun6Core.loadDataItems(QualityList.class, SR6Quality.class, set, clazz, "hack_slash/data/qualities.xml");
 		logger.log(Level.DEBUG, "Loaded "+list.size()+" qualities");
@@ -579,7 +579,7 @@ public class Shadowrun6DataPlugin  {
 		logger.log(Level.DEBUG, "Loaded "+list.size()+" streams");
 		list = Shadowrun6Core.loadDataItems(QualityPathList.class, QualityPath.class, set, clazz,"hack_slash/data/quality_paths.xml");
 		logger.log(Level.DEBUG, "Loaded "+list.size()+" quality paths");
-		list = Shadowrun6Core.loadDataItems(MetamagicOrEchoList.class, MetamagicOrEcho.class, set, clazz,"hack_slash/data/neuromorphism.xml");
+		list = Shadowrun6Core.loadDataItems(MetamagicOrEchoList.class, DisciplineTechnique.class, set, clazz,"hack_slash/data/neuromorphism.xml");
 		logger.log(Level.DEBUG, "Loaded {0} echoes", list.size());
 
 	}
@@ -604,7 +604,7 @@ public class Shadowrun6DataPlugin  {
 		logger.log(Level.DEBUG, "Loaded "+list.size()+" critter power");
 		list = Shadowrun6Core.loadDataItems(MetaTypeList.class, SR6MetaType.class, set, clazz, "companion/data/metatypes.xml");
 		logger.log(Level.DEBUG, "Loaded "+list.size()+" metatypes");
-		list = Shadowrun6Core.loadDataItems(MetamagicOrEchoList.class, MetamagicOrEcho.class, set, clazz,"companion/data/transhumanism.xml");
+		list = Shadowrun6Core.loadDataItems(MetamagicOrEchoList.class, DisciplineTechnique.class, set, clazz,"companion/data/transhumanism.xml");
 		logger.log(Level.DEBUG, "Loaded "+list.size()+" transhumanisms");
 		list = Shadowrun6Core.loadDataItems(ItemTemplateList.class, ItemTemplate.class, set, clazz,"companion/data/packs-complete.xml");
 		logger.log(Level.DEBUG, "Loaded "+list.size()+" complete PACKs");
@@ -636,7 +636,7 @@ public class Shadowrun6DataPlugin  {
 		set.setReleased(202201);
 		list = Shadowrun6Core.loadDataItems(CritterPowerList.class, CritterPower.class, set, clazz, "lofwyr/data/critterpower.xml");
 		logger.log(Level.DEBUG, "Loaded "+list.size()+" critter powers");
-		list = Shadowrun6Core.loadDataItems(MetamagicOrEchoList.class, MetamagicOrEcho.class, set, clazz, "lofwyr/data/dracogenesis_powers.xml");
+		list = Shadowrun6Core.loadDataItems(MetamagicOrEchoList.class, DisciplineTechnique.class, set, clazz, "lofwyr/data/dracogenesis_powers.xml");
 		logger.log(Level.DEBUG, "Loaded "+list.size()+" dracogenesis powers");
 		list = Shadowrun6Core.loadDataItems(QualityList.class, SR6Quality.class, set, clazz, "lofwyr/data/qualities.xml");
 		logger.log(Level.DEBUG, "Loaded "+list.size()+" qualities");
@@ -936,7 +936,7 @@ public class Shadowrun6DataPlugin  {
 		logger.log(Level.DEBUG, "Loaded "+list.size()+" ammunition types");
 		list = Shadowrun6Core.loadDataItems(ItemTemplateList.class, ItemTemplate.class, set, clazz,"astral_ways/data/gear_vehicles.xml");
 		logger.log(Level.DEBUG, "Loaded {0} vehicles", list.size());
-		list = Shadowrun6Core.loadDataItems(MetamagicOrEchoList.class, MetamagicOrEcho.class, set, clazz, "astral_ways/data/metamagics.xml");
+		list = Shadowrun6Core.loadDataItems(MetamagicOrEchoList.class, DisciplineTechnique.class, set, clazz, "astral_ways/data/metamagics.xml");
 		logger.log(Level.DEBUG, "Loaded {0} metamagics", list.size());
 		list = Shadowrun6Core.loadDataItems(QualityList.class, SR6Quality.class, set, clazz, "astral_ways/data/qualities.xml");
 		logger.log(Level.DEBUG, "Loaded {0} qualities", list.size());
@@ -1043,7 +1043,7 @@ public class Shadowrun6DataPlugin  {
 		logger.log(Level.DEBUG, "Loaded {0} rituals from 'Smooth Operations'", list.size());
 		list = Shadowrun6Core.loadDataItems(AdeptPowerList.class, AdeptPower.class, set, clazz,"smooth_operations/data/adeptpowers.xml");
 		logger.log(Level.DEBUG, "Loaded {0} adept powers from 'Smooth Operations'", list.size());
-		list = Shadowrun6Core.loadDataItems(MetamagicOrEchoList.class, MetamagicOrEcho.class, set, clazz,"smooth_operations/data/metamagics.xml");
+		list = Shadowrun6Core.loadDataItems(MetamagicOrEchoList.class, DisciplineTechnique.class, set, clazz,"smooth_operations/data/metamagics.xml");
 		logger.log(Level.DEBUG, "Loaded {0} metamagic from 'Smooth Operations'", list.size());
 		list = Shadowrun6Core.loadDataItems(MentorSpiritList.class, MentorSpirit.class, set, clazz,"smooth_operations/data/mentorspirits.xml");
 		logger.log(Level.DEBUG, "Loaded {0} mentor spirits from 'Smooth Operations'", list.size());
@@ -1086,7 +1086,7 @@ public class Shadowrun6DataPlugin  {
 		set.setReleased(202306);
 		list = Shadowrun6Core.loadDataItems(QualityList.class, SR6Quality.class, set, clazz,"bestial_nature/data/qualities.xml");
 		logger.log(Level.DEBUG, "Loaded {0} shifter qualities", list.size());
-		list = Shadowrun6Core.loadDataItems(MetamagicOrEchoList.class, MetamagicOrEcho.class, set, clazz,"bestial_nature/data/metamagics.xml");
+		list = Shadowrun6Core.loadDataItems(MetamagicOrEchoList.class, DisciplineTechnique.class, set, clazz,"bestial_nature/data/metamagics.xml");
 		logger.log(Level.DEBUG, "Loaded {0} animalisms", list.size());
 		list = Shadowrun6Core.loadDataItems(ItemTemplateList.class, ItemTemplate.class, set, clazz,"bestial_nature/data/gear_items.xml");
 		logger.log(Level.DEBUG, "Loaded "+list.size()+" items");
@@ -1223,7 +1223,7 @@ public class Shadowrun6DataPlugin  {
 		logger.log(Level.DEBUG, "Loaded "+list.size()+" spells");
 		list = Shadowrun6Core.loadDataItems(AdeptPowerList.class, AdeptPower.class, set, clazz, "deadly_arts/data/adeptpowers.xml");
 		logger.log(Level.DEBUG, "Loaded "+list.size()+" adept powers");
-		list = Shadowrun6Core.loadDataItems(MetamagicOrEchoList.class, MetamagicOrEcho.class, set, clazz,"deadly_arts/data/metamagics.xml");
+		list = Shadowrun6Core.loadDataItems(MetamagicOrEchoList.class, DisciplineTechnique.class, set, clazz,"deadly_arts/data/metamagics.xml");
 		logger.log(Level.DEBUG, "Loaded "+list.size()+" metamagics");
 		list = Shadowrun6Core.loadDataItems(RitualList.class, Ritual.class, set, clazz, "deadly_arts/data/rituals.xml");
 		logger.log(Level.DEBUG, "Loaded "+list.size()+" rituals");
@@ -1249,7 +1249,7 @@ public class Shadowrun6DataPlugin  {
 		logger.log(Level.DEBUG, "Loaded "+list.size()+" spells");
 		list = Shadowrun6Core.loadDataItems(RitualList.class, Ritual.class, set, clazz, "deus_ex_arcana/data/rituals.xml");
 		logger.log(Level.DEBUG, "Loaded "+list.size()+" rituals");
-		list = Shadowrun6Core.loadDataItems(MetamagicOrEchoList.class, MetamagicOrEcho.class, set, clazz,"deus_ex_arcana/data/metamagics.xml");
+		list = Shadowrun6Core.loadDataItems(MetamagicOrEchoList.class, DisciplineTechnique.class, set, clazz,"deus_ex_arcana/data/metamagics.xml");
 		logger.log(Level.DEBUG, "Loaded "+list.size()+" metamagics");
 		list = Shadowrun6Core.loadDataItems(SkillList.class, SR6Skill.class, set, clazz,"deus_ex_arcana/data/skills.xml");
 		logger.log(Level.DEBUG, "Loaded "+list.size()+" skills");

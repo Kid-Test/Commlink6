@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
+import de.rpgframework.genericrpg.Possible;
 import de.rpgframework.genericrpg.ToDoElement;
 import de.rpgframework.genericrpg.chargen.CharacterController;
 import de.rpgframework.genericrpg.chargen.PartialController;
@@ -14,8 +15,10 @@ import de.rpgframework.genericrpg.data.Choice;
 import de.rpgframework.genericrpg.data.ComplexDataItem;
 import de.rpgframework.genericrpg.data.Decision;
 import de.rpgframework.genericrpg.modification.ModificationChoice;
+import de.rpgframework.shadowrun.ComplexForm;
 import de.rpgframework.shadowrun.ShadowrunAttribute;
 import de.rpgframework.shadowrun6.Shadowrun6Character;
+import de.rpgframework.shadowrun6.Shadowrun6Tools;
 
 /**
  * @author Stefan Prelle

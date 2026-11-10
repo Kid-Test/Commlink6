@@ -19,6 +19,7 @@ import de.rpgframework.shadowrun.Quality.QualityType;
 import de.rpgframework.shadowrun.QualityValue;
 import de.rpgframework.shadowrun6.SR6Quality;
 import de.rpgframework.shadowrun6.Shadowrun6Core;
+import de.rpgframework.shadowrun6.Shadowrun6Tools;
 import de.rpgframework.shadowrun6.chargen.charctrl.ControllerImpl;
 import de.rpgframework.shadowrun6.chargen.charctrl.SR6CharacterGenerator;
 import de.rpgframework.shadowrun6.chargen.charctrl.SR6RejectReasons;
@@ -117,6 +118,12 @@ public class SR6ShifterGenerator extends ControllerImpl<Quality> implements
 		ret.addAll(getModel().getShifterAddOns());
 		logger.log(Level.WARNING, "getSelected() returns2 "+ret);
 		return ret;
+	}
+
+	//-------------------------------------------------------------------
+	@Override
+	public Possible areRequirementsMet(Quality value, Decision... decisions) {
+		return Shadowrun6Tools.areRequirementsMet( getModel(), value, decisions);
 	}
 
 	//-------------------------------------------------------------------

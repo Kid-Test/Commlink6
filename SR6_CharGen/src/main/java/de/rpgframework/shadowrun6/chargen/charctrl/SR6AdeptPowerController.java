@@ -95,6 +95,12 @@ public class SR6AdeptPowerController extends ControllerImpl<AdeptPower> implemen
 	}
 
 	//-------------------------------------------------------------------
+	@Override
+	public Possible areRequirementsMet(AdeptPower value, Decision... decisions) {
+		return Shadowrun6Tools.areRequirementsMet( getModel(), value, decisions);
+	}
+
+	//-------------------------------------------------------------------
 	/**
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#canBeSelected(de.rpgframework.genericrpg.data.DataItem, de.rpgframework.genericrpg.data.Decision[])
 	 */

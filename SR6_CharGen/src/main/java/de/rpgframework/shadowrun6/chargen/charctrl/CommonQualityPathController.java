@@ -91,6 +91,15 @@ public class CommonQualityPathController extends ControllerImpl<QualityPath> imp
 
 	//-------------------------------------------------------------------
 	/**
+	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#areRequirementsMet(de.rpgframework.genericrpg.data.DataItem, de.rpgframework.genericrpg.data.Decision[])
+	 */
+	@Override
+	public Possible areRequirementsMet(QualityPath value, Decision... decisions) {
+		return Shadowrun6Tools.areRequirementsMet( getModel(), value, decisions);
+	}
+
+	//-------------------------------------------------------------------
+	/**
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#canBeSelected(de.rpgframework.genericrpg.data.DataItem, de.rpgframework.genericrpg.data.Decision[])
 	 */
 	@Override

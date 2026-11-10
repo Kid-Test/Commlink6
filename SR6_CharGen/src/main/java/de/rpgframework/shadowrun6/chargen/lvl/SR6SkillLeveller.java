@@ -24,10 +24,11 @@ import de.rpgframework.shadowrun.SkillType;
 import de.rpgframework.shadowrun.chargen.charctrl.IRejectReasons;
 import de.rpgframework.shadowrun6.SR6Skill;
 import de.rpgframework.shadowrun6.SR6SkillValue;
+import de.rpgframework.shadowrun6.Shadowrun6Rules;
+import de.rpgframework.shadowrun6.Shadowrun6Tools;
 import de.rpgframework.shadowrun6.chargen.charctrl.SR6CharacterController;
 import de.rpgframework.shadowrun6.chargen.gen.CommonSkillController;
 import de.rpgframework.shadowrun6.modifications.ShadowrunReference;
-import de.rpgframework.shadowrun6.Shadowrun6Rules;
 
 /**
  * @author prelle
@@ -78,6 +79,12 @@ public class SR6SkillLeveller extends CommonSkillController {
 				ret = amod;
 		}
 		return ret;
+	}
+
+	//-------------------------------------------------------------------
+	@Override
+	public Possible areRequirementsMet(SR6Skill value, Decision... decisions) {
+		return Shadowrun6Tools.areRequirementsMet( getModel(), value, decisions);
 	}
 
 	//-------------------------------------------------------------------

@@ -8,11 +8,12 @@ import de.rpgframework.shadowrun.chargen.charctrl.IAttributeController;
 import de.rpgframework.shadowrun.chargen.charctrl.IComplexFormController;
 import de.rpgframework.shadowrun.chargen.charctrl.IContactController;
 import de.rpgframework.shadowrun.chargen.charctrl.ICritterPowerController;
+import de.rpgframework.shadowrun.chargen.charctrl.IDisciplineController;
 import de.rpgframework.shadowrun.chargen.charctrl.IFocusController;
-import de.rpgframework.shadowrun.chargen.charctrl.IMetamagicOrEchoController;
 import de.rpgframework.shadowrun.chargen.charctrl.IPANController;
 import de.rpgframework.shadowrun.chargen.charctrl.IQualityController;
 import de.rpgframework.shadowrun.chargen.charctrl.IRitualController;
+import de.rpgframework.shadowrun.chargen.charctrl.ISummonableController;
 import de.rpgframework.shadowrun.chargen.charctrl.SINController;
 import de.rpgframework.shadowrun6.Shadowrun6Character;
 
@@ -32,7 +33,7 @@ public abstract class SR6CharacterControllerImpl extends CharacterControllerImpl
 	protected IAdeptPowerController adeptPowers;
 	protected SR6SpellController spells;
 	protected IRitualController rituals;
-	protected IMetamagicOrEchoController metaEcho;
+	protected IDisciplineController metaEcho;
 	protected ISR6EquipmentController equipment;
 	protected SINController sins;
 	protected SR6LifestyleController lifestyles;
@@ -44,6 +45,7 @@ public abstract class SR6CharacterControllerImpl extends CharacterControllerImpl
 	protected SR6DrakeController drake;
 	protected SR6AnimalismController animalism;
 	protected IDataStructureController dataStructures;
+	protected ISummonableController summonables;
 
 	//-------------------------------------------------------------------
 	public SR6CharacterControllerImpl() {
@@ -139,7 +141,7 @@ public abstract class SR6CharacterControllerImpl extends CharacterControllerImpl
 	 * @see de.rpgframework.shadowrun.chargen.charctrl.IShadowrunCharacterController#getMetamagicOrEchoController()
 	 */
 	@Override
-	public IMetamagicOrEchoController getMetamagicOrEchoController() {
+	public IDisciplineController getDisciplineController() {
 		return metaEcho;
 	}
 
@@ -239,6 +241,15 @@ public abstract class SR6CharacterControllerImpl extends CharacterControllerImpl
 	@Override
 	public SR6AnimalismController getAnimalismController() {
 		return animalism;
+	}
+
+	//-------------------------------------------------------------------
+	/**
+	 * @see de.rpgframework.shadowrun.chargen.charctrl.IShadowrunCharacterController#getSummonableController()
+	 */
+	@Override
+	public ISummonableController getSummonableController() {
+		return summonables;
 	}
 
 }

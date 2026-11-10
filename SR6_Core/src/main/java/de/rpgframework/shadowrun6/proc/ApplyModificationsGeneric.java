@@ -31,11 +31,11 @@ import de.rpgframework.shadowrun.BodyForm;
 import de.rpgframework.shadowrun.BodyType;
 import de.rpgframework.shadowrun.CritterPower;
 import de.rpgframework.shadowrun.CritterPowerValue;
+import de.rpgframework.shadowrun.DisciplineTechnique;
+import de.rpgframework.shadowrun.DisciplineTechniqueValue;
 import de.rpgframework.shadowrun.LicenseValue;
 import de.rpgframework.shadowrun.LifestyleQuality;
 import de.rpgframework.shadowrun.MagicOrResonanceType;
-import de.rpgframework.shadowrun.MetamagicOrEcho;
-import de.rpgframework.shadowrun.MetamagicOrEchoValue;
 import de.rpgframework.shadowrun.Movement;
 import de.rpgframework.shadowrun.Quality;
 import de.rpgframework.shadowrun.Quality.QualityType;
@@ -491,18 +491,18 @@ public class ApplyModificationsGeneric implements ProcessingStep {
 
 	// -------------------------------------------------------------------
 	private static boolean applyMetaEcho(Shadowrun6Character model, DataItemModification mod) {
-		MetamagicOrEcho item = Shadowrun6Core.getItem(MetamagicOrEcho.class, mod.getKey());
+		DisciplineTechnique item = Shadowrun6Core.getItem(DisciplineTechnique.class, mod.getKey());
 		if (item == null) {
 			logger.log(Level.ERROR, "Cannot apply modification " + mod + " - no such metaecho {0}", mod.getKey());
 			return false;
 		}
-		MetamagicOrEchoValue value = model.getMetamagicOrEcho(mod.getKey());
+		DisciplineTechniqueValue value = model.getMetamagicOrEcho(mod.getKey());
 		// Find an metaecho that matches ID
 		// AND decisions
 		value = Shadowrun6Tools.getMatchIncludingDecisions(model.getMetamagicOrEchoes(),mod.getKey(), mod.getDecisions());
 
 		if (value == null) {
-			value = new MetamagicOrEchoValue(item);
+			value = new DisciplineTechniqueValue(item);
 			value.setInjectedBy(mod.getSource());
 			value.addIncomingModification(mod);
 			if (!(mod instanceof ValueModification) && item.hasLevel()) {
