@@ -29,7 +29,7 @@ import de.rpgframework.shadowrun.AdeptPower;
 import de.rpgframework.shadowrun.ComplexForm;
 import de.rpgframework.shadowrun.CritterPower;
 import de.rpgframework.shadowrun.DamageType;
-import de.rpgframework.shadowrun.MetamagicOrEcho;
+import de.rpgframework.shadowrun.DisciplineTechnique;
 import de.rpgframework.shadowrun.Quality;
 import de.rpgframework.shadowrun.Ritual;
 import de.rpgframework.shadowrun.RitualFeatureReference;
@@ -752,7 +752,7 @@ public class Converter {
 	}
 
 	//-------------------------------------------------------------------
-	public static void convertEcho(MetamagicOrEcho item, Locale loc, Row row, int x) {
+	public static void convertEcho(DisciplineTechnique item, Locale loc, Row row, int x) {
 		// data-rating
 		row.createCell(x++, CellType.BOOLEAN).setCellValue(item.hasLevel());
 	}

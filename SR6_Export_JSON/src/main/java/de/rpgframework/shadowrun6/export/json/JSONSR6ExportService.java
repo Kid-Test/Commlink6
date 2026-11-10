@@ -43,10 +43,10 @@ import de.rpgframework.genericrpg.items.ItemAttributeObjectValue;
 import de.rpgframework.shadowrun.AdeptPowerValue;
 import de.rpgframework.shadowrun.ComplexFormValue;
 import de.rpgframework.shadowrun.Contact;
+import de.rpgframework.shadowrun.DisciplineTechniqueValue;
 import de.rpgframework.shadowrun.LicenseValue;
 import de.rpgframework.shadowrun.Lifestyle;
 import de.rpgframework.shadowrun.MagicOrResonanceType;
-import de.rpgframework.shadowrun.MetamagicOrEchoValue;
 import de.rpgframework.shadowrun.Quality;
 import de.rpgframework.shadowrun.QualityValue;
 import de.rpgframework.shadowrun.Ritual;
@@ -240,7 +240,7 @@ public class JSONSR6ExportService {
 
     private void setRituals(JSONCharacter jsonCharacter, Shadowrun6Character character) {
         List<JSONRitual> jsonRitualList = new ArrayList<>();
-        for (RitualValue ritualValue : character.getRituals()) {
+        for (RitualValue<Ritual> ritualValue : character.getRituals()) {
             JSONRitual jsonRitual = new JSONRitual();
             Ritual ritual = ritualValue.getModifyable();
             jsonRitual.name = ritual.getName();
@@ -690,7 +690,7 @@ public class JSONSR6ExportService {
 
     private List<JSONMetaMagicOrEcho> getMetaMagicOrEcho(Shadowrun6Character character) {
         List<JSONMetaMagicOrEcho> jsonMetaMagicOrEchoList = new ArrayList<>();
-        for (MetamagicOrEchoValue metamagicOrEcho : character.getMetamagicOrEchoes()) {
+        for (DisciplineTechniqueValue metamagicOrEcho : character.getMetamagicOrEchoes()) {
             JSONMetaMagicOrEcho jsonMeta = new JSONMetaMagicOrEcho();
             jsonMeta.name = metamagicOrEcho.getNameWithoutRating(loc);
             jsonMeta.page = getPageString(metamagicOrEcho.getModifyable());

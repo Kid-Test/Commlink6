@@ -32,8 +32,8 @@ import de.rpgframework.shadowrun.ASpell;
 import de.rpgframework.shadowrun.AdeptPower;
 import de.rpgframework.shadowrun.ComplexForm;
 import de.rpgframework.shadowrun.CritterPower;
-import de.rpgframework.shadowrun.MetamagicOrEcho;
-import de.rpgframework.shadowrun.MetamagicOrEcho.Type;
+import de.rpgframework.shadowrun.DisciplineTechnique;
+import de.rpgframework.shadowrun.DisciplineTechnique.Type;
 import de.rpgframework.shadowrun.NPCType;
 import de.rpgframework.shadowrun.Quality;
 import de.rpgframework.shadowrun.Ritual;
@@ -432,14 +432,14 @@ public class Shadowrun6CompendiumFactory {
 
 		head.createCell(5+blobOffset, CellType.STRING).setCellValue("data-rating");
 
-		List<MetamagicOrEcho> list = Shadowrun6Core.getItemList(MetamagicOrEcho.class);
+		List<DisciplineTechnique> list = Shadowrun6Core.getItemList(DisciplineTechnique.class);
 		list = list.stream().filter(moe -> moe.getType()==Type.METAMAGIC || moe.getType()==Type.METAMAGIC_ADEPT)
-				.sorted(new Comparator<MetamagicOrEcho>() {
-			public int compare(MetamagicOrEcho o1, MetamagicOrEcho o2) {
+				.sorted(new Comparator<DisciplineTechnique>() {
+			public int compare(DisciplineTechnique o1, DisciplineTechnique o2) {
 				return o1.getName().compareTo(o2.getName());
 			}
 		}).toList();
-		for (MetamagicOrEcho item : list) {
+		for (DisciplineTechnique item : list) {
 			Locale[] locales = localeCallback.apply(item.getPageReferences());
 
 			Row row = sheet.createRow(++rowNum);
@@ -452,7 +452,7 @@ public class Shadowrun6CompendiumFactory {
 			row.createCell(3+blobOffset, CellType.STRING).setCellValue(item.getDescription(locales[0]));
 			row.createCell(4+blobOffset, CellType.STRING).setCellValue(item.getId());
 
-			Converter.convertEcho((MetamagicOrEcho) item, locales[0], row, 5+blobOffset);
+			Converter.convertEcho((DisciplineTechnique) item, locales[0], row, 5+blobOffset);
 		}
 		for (int i=0; i<20; i++) {
 			if (i==(3+blobOffset) ) {
@@ -529,14 +529,14 @@ public class Shadowrun6CompendiumFactory {
 		head.createCell(4+blobOffset, CellType.STRING).setCellValue("data-app_commlinkID");
 		head.createCell(5, CellType.STRING).setCellValue("data-rating");
 
-		List<MetamagicOrEcho> list = Shadowrun6Core.getItemList(MetamagicOrEcho.class);
+		List<DisciplineTechnique> list = Shadowrun6Core.getItemList(DisciplineTechnique.class);
 		list = list.stream().filter(moe -> moe.getType()==Type.ECHO)
-				.sorted(new Comparator<MetamagicOrEcho>() {
-			public int compare(MetamagicOrEcho o1, MetamagicOrEcho o2) {
+				.sorted(new Comparator<DisciplineTechnique>() {
+			public int compare(DisciplineTechnique o1, DisciplineTechnique o2) {
 				return o1.getName().compareTo(o2.getName());
 			}
 		}).toList();
-		for (MetamagicOrEcho item : list) {
+		for (DisciplineTechnique item : list) {
 			Locale[] locales = localeCallback.apply(item.getPageReferences());
 
 			Row row = sheet.createRow(++rowNum);
@@ -548,7 +548,7 @@ public class Shadowrun6CompendiumFactory {
 			row.createCell(2+blobOffset, CellType.STRING).setCellValue(createSourceText(item, locales[0]));
 			row.createCell(3+blobOffset, CellType.STRING).setCellValue(item.getDescription(locales[0]));
 			row.createCell(4+blobOffset, CellType.STRING).setCellValue(item.getId());
-			Converter.convertEcho((MetamagicOrEcho) item, locales[0], row, 5);
+			Converter.convertEcho((DisciplineTechnique) item, locales[0], row, 5);
 		}
 		for (int i=0; i<20; i++) {
 			if (i==(3+blobOffset) ) {
