@@ -20,8 +20,8 @@ import de.rpgframework.genericrpg.data.Decision;
 import de.rpgframework.jfx.GenericDescriptionVBox;
 import de.rpgframework.shadowrun.Focus;
 import de.rpgframework.shadowrun.FocusValue;
-import de.rpgframework.shadowrun.MetamagicOrEcho;
-import de.rpgframework.shadowrun.MetamagicOrEchoValue;
+import de.rpgframework.shadowrun.DisciplineTechnique;
+import de.rpgframework.shadowrun.DisciplineTechniqueValue;
 import de.rpgframework.shadowrun.RitualValue;
 import de.rpgframework.shadowrun.ShadowrunAttribute;
 import de.rpgframework.shadowrun.Tradition;
@@ -96,11 +96,7 @@ public class MagicPage extends Page {
 
 	//-------------------------------------------------------------------
 	private void initSpells() {
-		secSpells = new SpellSection<SR6Spell>(
-				ResourceI18N.get(RES, "page.magic.section.spells"),
-				Shadowrun6Tools.requirementResolver(Locale.getDefault()),
-				Shadowrun6Tools.modificationResolver(Locale.getDefault())
-				) {
+		secSpells = new SpellSection<SR6Spell>() {
 			public void refresh() {
 				super.refresh();
 
@@ -111,6 +107,7 @@ public class MagicPage extends Page {
 			}
 
 		};
+		secSpells.setTitle(ResourceI18N.get(RES, "page.magic.section.spells"));
 		secSpells.setMaxHeight(Double.MAX_VALUE);
 		FlexGridPane.setMinWidth(secSpells, 4);
 		FlexGridPane.setMinHeight(secSpells, 6);
@@ -124,7 +121,7 @@ public class MagicPage extends Page {
 				ResourceI18N.get(RES, "page.magic.section.metamagic"),
 				Shadowrun6Tools.requirementResolver(Locale.getDefault()),
 				Shadowrun6Tools.modificationResolver(Locale.getDefault()),
-				MetamagicOrEcho.Type.METAMAGIC
+				DisciplineTechnique.Type.METAMAGIC
 				);
 		secMeta.setMaxHeight(Double.MAX_VALUE);
 		FlexGridPane.setMinWidth(secMeta, 4);
@@ -135,8 +132,9 @@ public class MagicPage extends Page {
 
 	//-------------------------------------------------------------------
 	private void initRituals() {
-		secRituals = new RitualSection(
-				ResourceI18N.get(RES, "page.magic.section.rituals"),
+		secRituals = new RitualSection();
+		secRituals.setTitle(ResourceI18N.get(RES, "page.magic.section.rituals"));
+		secRituals.initialize(
 				Shadowrun6Tools.requirementResolver(Locale.getDefault()),
 				Shadowrun6Tools.modificationResolver(Locale.getDefault())
 				);
@@ -207,7 +205,7 @@ public class MagicPage extends Page {
 			}
 		});
 		secAdeptPowers.showHelpForProperty().addListener( (ov,o,n) -> showDescription(n));
-		secMeta.showHelpForProperty().addListener( (ov,o,n) -> showDescription((MetamagicOrEchoValue)n));
+		secMeta.showHelpForProperty().addListener( (ov,o,n) -> showDescription((DisciplineTechniqueValue)n));
 		secRituals.showHelpForProperty().addListener( (ov,o,n) -> showDescription((RitualValue)n));
 		secFoci.showHelpForProperty().addListener( (ov,o,n) -> showDescription((FocusValue)n));
 	}
@@ -237,7 +235,7 @@ public class MagicPage extends Page {
 		secMeta.updateController(ctrl);
 		secRituals.updateController(ctrl);
 		secFoci.updateController(ctrl);
-		secMeta.setOptionCallback(new ChoiceSelectorDialog<>(control.getMetamagicOrEchoController()));
+		secMeta.setOptionCallback(new ChoiceSelectorDialog<>(control.getDisciplineController()));
 		refresh();
 	}
 

@@ -9,7 +9,7 @@ import org.prelle.javafx.Wizard;
 import de.rpgframework.jfx.GenericDescriptionVBox;
 import de.rpgframework.jfx.cells.ComplexDataItemListCell;
 import de.rpgframework.shadowrun.MagicOrResonanceType;
-import de.rpgframework.shadowrun.MetamagicOrEcho;
+import de.rpgframework.shadowrun.DisciplineTechnique;
 import de.rpgframework.shadowrun.ShadowrunRules;
 import de.rpgframework.shadowrun.chargen.jfx.wizard.AWizardPageMetaOrEcho;
 import de.rpgframework.shadowrun6.Shadowrun6Rules;
@@ -34,9 +34,9 @@ public class SR6WizardPageMetaOrEcho extends AWizardPageMetaOrEcho {
 	protected void initComponents() {
 		super.initComponents();
 //		selection.setFilterNode(new QualityFilterNode(RES, selection, QualityType.NORMAL));
-		selection.setOptionCallback(new ChoiceSelectorDialog<>(charGen.getMetamagicOrEchoController()));
+		selection.setOptionCallback(new ChoiceSelectorDialog<>(charGen.getDisciplineController()));
 //		selection.setSelectedFilter(qv -> qv.getModifyable().getType()==QualityType.NORMAL);
-		selection.setAvailableCellFactory(lv -> new ComplexDataItemListCell<MetamagicOrEcho>( () -> selection.getController(), Shadowrun6Tools.requirementResolver(Locale.getDefault())));
+		selection.setAvailableCellFactory(lv -> new ComplexDataItemListCell<DisciplineTechnique>( () -> selection.getController(), Shadowrun6Tools.requirementResolver(Locale.getDefault())));
 
 		bxDescription = new GenericDescriptionVBox(
 				Shadowrun6Tools.requirementResolver(Locale.getDefault()),

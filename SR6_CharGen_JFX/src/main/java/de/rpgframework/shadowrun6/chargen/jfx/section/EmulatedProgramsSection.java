@@ -113,7 +113,7 @@ public class EmulatedProgramsSection extends ComplexDataItemListSection<ItemTemp
 	public void refresh() {
 		if (model==null) return;
 
-		emulatedCtrl = ((SR6MetamagicOrEchoController)control.getMetamagicOrEchoController()).getEmulatedSoftwareController();
+		emulatedCtrl = ((SR6MetamagicOrEchoController)control.getDisciplineController()).getEmulatedSoftwareController();
 		list.getItems().setAll(emulatedCtrl.getSelected());
 	}
 

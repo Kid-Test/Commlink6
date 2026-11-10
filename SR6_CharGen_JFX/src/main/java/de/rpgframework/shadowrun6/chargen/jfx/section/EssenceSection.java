@@ -13,8 +13,8 @@ import de.rpgframework.genericrpg.chargen.RuleConfiguration;
 import de.rpgframework.genericrpg.data.AttributeValue;
 import de.rpgframework.genericrpg.data.ComplexDataItem;
 import de.rpgframework.jfx.NumericalValueField;
-import de.rpgframework.shadowrun.MetamagicOrEcho;
-import de.rpgframework.shadowrun.MetamagicOrEchoValue;
+import de.rpgframework.shadowrun.DisciplineTechnique;
+import de.rpgframework.shadowrun.DisciplineTechniqueValue;
 import de.rpgframework.shadowrun.Quality;
 import de.rpgframework.shadowrun.QualityValue;
 import de.rpgframework.shadowrun.ShadowrunAttribute;
@@ -48,7 +48,7 @@ public class EssenceSection extends Section {
 	private Label lbEssenceRemain;
 
 	private NumericalValueField<Quality,QualityValue> nfAcclimation;
-	private NumericalValueField<MetamagicOrEcho,MetamagicOrEchoValue> nfTranshumanism;
+	private NumericalValueField<DisciplineTechnique,DisciplineTechniqueValue> nfTranshumanism;
 
 	private GridPane grid;
 
@@ -57,7 +57,7 @@ public class EssenceSection extends Section {
 	private ObjectProperty<ComplexDataItem> showHelpFor = new SimpleObjectProperty<>();
 
 	private static Quality acclimQual = Shadowrun6Core.getItem(SR6Quality.class, "augmentation_acclimation");
-	private static MetamagicOrEcho transhum = Shadowrun6Core.getItem(MetamagicOrEcho.class, "transhumanism");
+	private static DisciplineTechnique transhum = Shadowrun6Core.getItem(DisciplineTechnique.class, "transhumanism");
 
 	//-------------------------------------------------------------------
 	public EssenceSection(String title) {
@@ -75,9 +75,9 @@ public class EssenceSection extends Section {
 				QualityValue val = model.getQuality(acclimQual.getId());
 				return (val==null)?(new QualityValue(acclimQual,0)):val;
 				});
-		nfTranshumanism = new NumericalValueField<MetamagicOrEcho,MetamagicOrEchoValue>( () -> {
-			MetamagicOrEchoValue val = model.getMetamagicOrEcho(transhum.getId());
-			return (val==null)?(new MetamagicOrEchoValue(transhum)):val;
+		nfTranshumanism = new NumericalValueField<DisciplineTechnique,DisciplineTechniqueValue>( () -> {
+			DisciplineTechniqueValue val = model.getMetamagicOrEcho(transhum.getId());
+			return (val==null)?(new DisciplineTechniqueValue(transhum)):val;
 			});
 		lbEssenceHole   = new Label("?");
 		lbEssenceHoleArt= new Label("?");
@@ -127,7 +127,7 @@ public class EssenceSection extends Section {
 		this.control = ctrl;
 		model = ctrl.getModel();
 		nfAcclimation.setController(control.getQualityController());
-		nfTranshumanism.setController(control.getMetamagicOrEchoController());
+		nfTranshumanism.setController(control.getDisciplineController());
 
 		refresh();
 	}
@@ -150,15 +150,15 @@ public class EssenceSection extends Section {
 		nfAcclimation.refresh();
 
 		// Transhumanism
-		MetamagicOrEcho transhum = Shadowrun6Core.getItem(MetamagicOrEcho.class, "transhumanism");
-		NumericalValueController<MetamagicOrEcho, MetamagicOrEchoValue> tCtrl = control.getMetamagicOrEchoController();
-		MetamagicOrEchoValue mVal = model.getMetamagicOrEcho("transhumanism");
+		DisciplineTechnique transhum = Shadowrun6Core.getItem(DisciplineTechnique.class, "transhumanism");
+		NumericalValueController<DisciplineTechnique, DisciplineTechniqueValue> tCtrl = control.getDisciplineController();
+		DisciplineTechniqueValue mVal = model.getMetamagicOrEcho("transhumanism");
 		if (transhum != null) {
 			if (mVal == null) {
-				mVal = new MetamagicOrEchoValue(transhum);
+				mVal = new DisciplineTechniqueValue(transhum);
 			}
-//			nfTranshumanism.setData(mVal, new SimpleObjectProperty<NumericalValueController<MetamagicOrEcho, MetamagicOrEchoValue>>(tCtrl));
-			nfTranshumanism.setUserData(Shadowrun6Core.getItem(MetamagicOrEcho.class, "transhumanism"));
+//			nfTranshumanism.setData(mVal, new SimpleObjectProperty<NumericalValueController<DisciplineTechnique, DisciplineTechniqueValue>>(tCtrl));
+			nfTranshumanism.setUserData(Shadowrun6Core.getItem(DisciplineTechnique.class, "transhumanism"));
 		}
 		boolean allowTransh = Boolean.parseBoolean(Shadowrun6Rules.ALLOW_TRANSHUMANISM.getDefaultValue()) && (transhum!=null);
 		RuleConfiguration conf =  model.getRuleValue(Shadowrun6Rules.ALLOW_TRANSHUMANISM);

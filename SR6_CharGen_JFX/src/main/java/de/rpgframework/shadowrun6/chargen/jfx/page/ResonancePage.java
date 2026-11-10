@@ -23,7 +23,7 @@ import de.rpgframework.shadowrun.ComplexForm;
 import de.rpgframework.shadowrun.ComplexFormValue;
 import de.rpgframework.shadowrun.Focus;
 import de.rpgframework.shadowrun.FocusValue;
-import de.rpgframework.shadowrun.MetamagicOrEcho;
+import de.rpgframework.shadowrun.DisciplineTechnique;
 import de.rpgframework.shadowrun.chargen.jfx.section.ComplexFormSection;
 import de.rpgframework.shadowrun.chargen.jfx.section.MetamagicOrEchoSection;
 import de.rpgframework.shadowrun6.DataStructure;
@@ -99,7 +99,7 @@ public class ResonancePage extends Page {
 				ResourceI18N.get(RES, "page.resonance.section.echoes"),
 				Shadowrun6Tools.requirementResolver(Locale.getDefault()),
 				Shadowrun6Tools.modificationResolver(Locale.getDefault()),
-				MetamagicOrEcho.Type.ECHO
+				DisciplineTechnique.Type.ECHO
 				);
 		secMeta.setMaxHeight(Double.MAX_VALUE);
 		FlexGridPane.setMinWidth(secMeta, 4);

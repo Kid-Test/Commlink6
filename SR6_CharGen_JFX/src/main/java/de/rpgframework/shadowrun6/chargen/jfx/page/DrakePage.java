@@ -16,7 +16,7 @@ import de.rpgframework.genericrpg.data.ComplexDataItemValue;
 import de.rpgframework.jfx.GenericDescriptionVBox;
 import de.rpgframework.shadowrun.BodyForm;
 import de.rpgframework.shadowrun.BodyType;
-import de.rpgframework.shadowrun.MetamagicOrEcho;
+import de.rpgframework.shadowrun.DisciplineTechnique;
 import de.rpgframework.shadowrun.chargen.jfx.section.MetamagicOrEchoSection;
 import de.rpgframework.shadowrun6.Shadowrun6Tools;
 import de.rpgframework.shadowrun6.chargen.charctrl.SR6CharacterController;
@@ -123,7 +123,7 @@ public class DrakePage extends Page {
 				ResourceI18N.get(RES, "page.drake.section.dracogenesis"),
 				Shadowrun6Tools.requirementResolver(Locale.getDefault()),
 				Shadowrun6Tools.modificationResolver(Locale.getDefault()),
-				MetamagicOrEcho.Type.DRACOGENESIS_POWER
+				DisciplineTechnique.Type.DRACOGENESIS_POWER
 				);
 		secMeta.setControlSupplier( () -> ctrl.getDrakeController());
 		secMeta.setMaxHeight(Double.MAX_VALUE);
@@ -156,7 +156,7 @@ public class DrakePage extends Page {
 		secBody.updateController(ctrl);
 		secCrit.updateController(ctrl);
 		secMeta.updateController(ctrl);
-		secMeta.setOptionCallback(new ChoiceSelectorDialog<>(ctrl.getMetamagicOrEchoController()));
+		secMeta.setOptionCallback(new ChoiceSelectorDialog<>(ctrl.getDisciplineController()));
 
 		refresh();
 	}

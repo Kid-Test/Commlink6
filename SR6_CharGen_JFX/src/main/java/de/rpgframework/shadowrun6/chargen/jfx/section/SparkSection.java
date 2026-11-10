@@ -13,8 +13,8 @@ import de.rpgframework.genericrpg.chargen.RuleConfiguration;
 import de.rpgframework.genericrpg.data.AttributeValue;
 import de.rpgframework.genericrpg.data.ComplexDataItem;
 import de.rpgframework.jfx.NumericalValueField;
-import de.rpgframework.shadowrun.MetamagicOrEcho;
-import de.rpgframework.shadowrun.MetamagicOrEchoValue;
+import de.rpgframework.shadowrun.DisciplineTechnique;
+import de.rpgframework.shadowrun.DisciplineTechniqueValue;
 import de.rpgframework.shadowrun.ShadowrunAttribute;
 import de.rpgframework.shadowrun6.Shadowrun6Character;
 import de.rpgframework.shadowrun6.Shadowrun6Core;
@@ -35,7 +35,7 @@ public class SparkSection extends Section {
 	private final static Logger logger = System.getLogger(GearSection.class.getPackageName());
 
 	private static PropertyResourceBundle RES = (PropertyResourceBundle) ResourceBundle.getBundle(SparkSection.class.getPackageName()+".Section");
-	private static MetamagicOrEcho transhum = Shadowrun6Core.getItem(MetamagicOrEcho.class, "neuromorphism");
+	private static DisciplineTechnique transhum = Shadowrun6Core.getItem(DisciplineTechnique.class, "neuromorphism");
 
 //	private Label hdAcclimation;
 	private Label hdNeuromorphism;
@@ -44,7 +44,7 @@ public class SparkSection extends Section {
 	private Label lbEssenceRemain;
 
 //	private NumericalValueField<Quality,QualityValue> nfAcclimation;
-	private NumericalValueField<MetamagicOrEcho,MetamagicOrEchoValue> nfNeuromorphism;
+	private NumericalValueField<DisciplineTechnique,DisciplineTechniqueValue> nfNeuromorphism;
 
 	private GridPane grid;
 
@@ -66,9 +66,9 @@ public class SparkSection extends Section {
 	//-------------------------------------------------------------------
 	private void initComponents() {
 //		nfAcclimation   = new NumericalValueField<Quality,QualityValue>();
-		nfNeuromorphism = new NumericalValueField<MetamagicOrEcho,MetamagicOrEchoValue>( ()->{
-			MetamagicOrEchoValue val = model.getMetamagicOrEcho("neuromorphism");
-			return (val==null)?(new MetamagicOrEchoValue(transhum)):val;
+		nfNeuromorphism = new NumericalValueField<DisciplineTechnique,DisciplineTechniqueValue>( ()->{
+			DisciplineTechniqueValue val = model.getMetamagicOrEcho("neuromorphism");
+			return (val==null)?(new DisciplineTechniqueValue(transhum)):val;
 			});
 		lbEssenceHole   = new Label("?");
 		lbEssenceLost   = new Label("?");
@@ -113,7 +113,7 @@ public class SparkSection extends Section {
 		logger.log(Level.DEBUG, "updateController");
 		this.control = ctrl;
 		model = ctrl.getModel();
-		nfNeuromorphism.setController(control.getMetamagicOrEchoController());
+		nfNeuromorphism.setController(control.getDisciplineController());
 		refresh();
 	}
 
@@ -135,15 +135,15 @@ public class SparkSection extends Section {
 //		}
 
 		// Transhumanism
-		MetamagicOrEcho transhum = Shadowrun6Core.getItem(MetamagicOrEcho.class, "neuromorphism");
-		NumericalValueController<MetamagicOrEcho, MetamagicOrEchoValue> tCtrl = control.getMetamagicOrEchoController();
-		MetamagicOrEchoValue mVal = model.getMetamagicOrEcho("neuromorphism");
+		DisciplineTechnique transhum = Shadowrun6Core.getItem(DisciplineTechnique.class, "neuromorphism");
+		NumericalValueController<DisciplineTechnique, DisciplineTechniqueValue> tCtrl = control.getDisciplineController();
+		DisciplineTechniqueValue mVal = model.getMetamagicOrEcho("neuromorphism");
 		if (transhum != null) {
 			if (mVal == null) {
-				mVal = new MetamagicOrEchoValue(transhum);
+				mVal = new DisciplineTechniqueValue(transhum);
 			}
-//			nfNeuromorphism.setData(mVal, new SimpleObjectProperty<NumericalValueController<MetamagicOrEcho, MetamagicOrEchoValue>>(tCtrl));
-			nfNeuromorphism.setUserData(Shadowrun6Core.getItem(MetamagicOrEcho.class, "neuromorphism"));
+//			nfNeuromorphism.setData(mVal, new SimpleObjectProperty<NumericalValueController<DisciplineTechnique, DisciplineTechniqueValue>>(tCtrl));
+			nfNeuromorphism.setUserData(Shadowrun6Core.getItem(DisciplineTechnique.class, "neuromorphism"));
 		}
 		boolean allowTransh = Boolean.parseBoolean(Shadowrun6Rules.ALLOW_NEUROMORPHISM.getDefaultValue()) && (transhum!=null);
 		RuleConfiguration conf =  model.getRuleValue(Shadowrun6Rules.ALLOW_NEUROMORPHISM);

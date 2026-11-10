@@ -23,8 +23,8 @@ import de.rpgframework.jfx.cells.ComplexDataItemListCell;
 import de.rpgframework.jfx.cells.ComplexDataItemValueListCell;
 import de.rpgframework.jfx.wizard.NumberUnitBackHeader;
 import de.rpgframework.shadowrun.BodyType;
-import de.rpgframework.shadowrun.MetamagicOrEcho;
-import de.rpgframework.shadowrun.MetamagicOrEchoValue;
+import de.rpgframework.shadowrun.DisciplineTechnique;
+import de.rpgframework.shadowrun.DisciplineTechniqueValue;
 import de.rpgframework.shadowrun.chargen.jfx.CommonShadowrunJFXResourceHook;
 import de.rpgframework.shadowrun.chargen.jfx.wizard.AWizardPageQualities;
 import de.rpgframework.shadowrun6.DrakeType;
@@ -58,7 +58,7 @@ public class SR6WizardPageDrake extends WizardPage implements ControllerListener
 	private ImageView iView;
 	private ChoiceBox<DrakeType> cbDrakeType;
 	private DracoformAttributePane paneAttr;
-	protected ComplexDataItemControllerNode<MetamagicOrEcho, MetamagicOrEchoValue> selection;
+	protected ComplexDataItemControllerNode<DisciplineTechnique, DisciplineTechniqueValue> selection;
 	protected GenericDescriptionVBox bxDescription;
 	protected OptionalNodePane layout;
 	private NumberUnitBackHeader backHeader;
@@ -100,8 +100,8 @@ public class SR6WizardPageDrake extends WizardPage implements ControllerListener
 		selection.setAvailablePlaceholder(ResourceI18N.get(RES, "page.drake.placeholder.available"));
 		selection.setSelectedPlaceholder(ResourceI18N.get(RES, "page.drake.placeholder.selected"));
 
-		selection.setAvailableCellFactory(lv -> new ComplexDataItemListCell<MetamagicOrEcho>( () -> selection.getController(), Shadowrun6Tools.requirementResolver(Locale.getDefault())));
-		selection.setSelectedCellFactory(lv -> new ComplexDataItemValueListCell<MetamagicOrEcho,MetamagicOrEchoValue>( ()->selection.getController() ));
+		selection.setAvailableCellFactory(lv -> new ComplexDataItemListCell<DisciplineTechnique>( () -> selection.getController(), Shadowrun6Tools.requirementResolver(Locale.getDefault())));
+		selection.setSelectedCellFactory(lv -> new ComplexDataItemValueListCell<DisciplineTechnique,DisciplineTechniqueValue>( ()->selection.getController() ));
 		selection.setShowHeadings(ResponsiveControlManager.getCurrentMode()!=WindowMode.MINIMAL);
 		selection.setOptionCallback(new ChoiceSelectorDialog<>(charGen.getDrakeController()));
 

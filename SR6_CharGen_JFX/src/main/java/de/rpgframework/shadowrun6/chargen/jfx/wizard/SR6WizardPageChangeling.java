@@ -171,6 +171,11 @@ public class SR6WizardPageChangeling extends WizardPage implements ControllerLis
 			public Possible canBeSelected(SetItem value, Decision... decisions) {
 				return Possible.TRUE;
 			}
+
+			@Override
+			public Possible areRequirementsMet(SetItem value, Decision... decisions) {
+				return Possible.TRUE;
+			}
 			@Override
 			public OperationResult<SetItemValue> select(SetItem value, Decision... decisions) {
 				// TODO Auto-generated method stub

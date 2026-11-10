@@ -17,7 +17,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
-public class RitualValueListCell extends ListCell<RitualValue> {
+public class RitualValueListCell extends ListCell<RitualValue<Ritual>> {
 	
 //	private final static Map<RitualFeature, Image> IMAGES = new HashMap<>();
 	
@@ -87,7 +87,7 @@ public class RitualValueListCell extends ListCell<RitualValue> {
 	 * @see javafx.scene.control.Cell#updateItem(java.lang.Object, boolean)
 	 */
 	@Override
-	public void updateItem(RitualValue item, boolean empty) {
+	public void updateItem(RitualValue<Ritual> item, boolean empty) {
 		super.updateItem(item, empty);
 		
 		if (empty) {
