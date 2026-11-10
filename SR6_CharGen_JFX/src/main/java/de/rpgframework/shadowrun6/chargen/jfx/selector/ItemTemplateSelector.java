@@ -8,7 +8,7 @@ import java.util.ResourceBundle;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import org.prelle.javafx.CloseType;
+import javafx.scene.control.ButtonType;
 
 import de.rpgframework.genericrpg.Possible;
 import de.rpgframework.genericrpg.Possible.State;
@@ -76,7 +76,7 @@ public class ItemTemplateSelector extends Selector<ItemTemplate, CarriedItem<Ite
     		}
     		logger.log(Level.DEBUG, "Selection possible = {0}",poss);
     		if (btnCtrl!=null) {
-    			btnCtrl.setDisabled(CloseType.OK, !poss.get());
+    			btnCtrl.setDisabled(ButtonType.OK, !poss.get());
     		}
     	});
 
@@ -108,7 +108,7 @@ public class ItemTemplateSelector extends Selector<ItemTemplate, CarriedItem<Ite
 		Possible poss = sr6Control.canBeSelected(n, variantID, carry);
 		//logger.log(Level.TRACE, "  poss= {0}  btnCtrl={1}", poss, btnCtrl);
 		if (btnCtrl!=null) {
-			btnCtrl.setDisabled(CloseType.OK, !poss.get());
+			btnCtrl.setDisabled(ButtonType.OK, !poss.get());
 		}
 		if (poss.getState()==State.REQUIREMENTS_NOT_MET) {
 			List<String> problems = poss.getUnfulfilledRequirements().stream().map(r -> resolver.apply(r)).collect(Collectors.toList());

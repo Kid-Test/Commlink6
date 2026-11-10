@@ -21,7 +21,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.prelle.javafx.CloseType;
+import javafx.scene.control.ButtonType;
 import org.prelle.javafx.FlexibleApplication;
 import org.prelle.javafx.JavaFXConstants;
 import org.prelle.javafx.ManagedDialog;
@@ -162,7 +162,7 @@ public class ChoiceSelectorDialog<T extends ComplexDataItem, V extends ComplexDa
 
 	//-------------------------------------------------------------------
 	public ChoiceSelectorDialog(ComplexDataItemController<T,V> ctrl, CarryMode carry, ItemHook hook, DataItemValue context) {
-		super("Select",null, CloseType.CANCEL, CloseType.OK);
+		super("Select",null, ButtonType.CANCEL, ButtonType.OK);
 		this.ctrl = ctrl;
 		this.carry = carry;
 		this.context = context;
@@ -318,19 +318,19 @@ public class ChoiceSelectorDialog<T extends ComplexDataItem, V extends ComplexDa
 			if (selmodMissing || !possible.getRequireDecisions() || (problem != null && problem.getSeverity() != Severity.INFO)) {
 				logger.log(Level.DEBUG, " disable OK");
 				canBeLeftWithOK = false;
-				btnCtrl.setDisabled(CloseType.OK, true);
-				this.buttonDisabledProperty().put(CloseType.OK, true);
+				btnCtrl.setDisabled(ButtonType.OK, true);
+				this.buttonDisabledProperty().put(ButtonType.OK, true);
 			} else {
 				logger.log(Level.DEBUG, " enable OK ");
 				canBeLeftWithOK = true;
-				btnCtrl.setDisabled(CloseType.OK, false);
-				this.buttonDisabledProperty().put(CloseType.OK, false);
+				btnCtrl.setDisabled(ButtonType.OK, false);
+				this.buttonDisabledProperty().put(ButtonType.OK, false);
 			}
 		} else {
 			canBeLeftWithOK = possible.get() && !selmodMissing;
 			if (btnCtrl!=null)
-				btnCtrl.setDisabled(CloseType.OK, !canBeLeftWithOK);
-			this.buttonDisabledProperty().put(CloseType.OK, !canBeLeftWithOK);
+				btnCtrl.setDisabled(ButtonType.OK, !canBeLeftWithOK);
+			this.buttonDisabledProperty().put(ButtonType.OK, !canBeLeftWithOK);
 		}
 	}
 
@@ -351,7 +351,7 @@ public class ChoiceSelectorDialog<T extends ComplexDataItem, V extends ComplexDa
 		logger.log(Level.WARNING, "ENTER apply({0}, {1}, {2}) for container {3}", item, choices, selections, context);
 		this.item = item;
 		this.choices = choices;
-		CloseType closed = null;
+		ButtonType closed = null;
 		try {
 			decisions.clear();
 			selmodBoxes.clear();
@@ -398,13 +398,13 @@ public class ChoiceSelectorDialog<T extends ComplexDataItem, V extends ComplexDa
 			btnCtrl = new NavigButtonControl();
 			btnCtrl.setCallback( (close) -> isButtonEnabled(close));
 			btnCtrl.initialize(FlexibleApplication.getInstance(), this);
-//			btnCtrl.setDisabled(CloseType.OK, true);
-//			this.buttonDisabledProperty().put(CloseType.OK, true);
+//			btnCtrl.setDisabled(ButtonType.OK, true);
+//			this.buttonDisabledProperty().put(ButtonType.OK, true);
 			updateButtons();
 			logger.log(Level.DEBUG, "showAlertAndCall with btnCtrl="+btnCtrl);
 			closed = FlexibleApplication.getInstance().showAlertAndCall(this, btnCtrl);
 			logger.log(Level.DEBUG, "Closed with "+closed);
-			if (closed==CloseType.CANCEL)
+			if (closed==ButtonType.CANCEL)
 				return null;
 			return getDecisions();
 		} finally {
@@ -439,8 +439,8 @@ public class ChoiceSelectorDialog<T extends ComplexDataItem, V extends ComplexDa
 	}
 
 	//-------------------------------------------------------------------
-	private boolean isButtonEnabled(CloseType close) {
-		if (close==CloseType.CANCEL) return true;
+	private boolean isButtonEnabled(ButtonType close) {
+		if (close==ButtonType.CANCEL) return true;
 		return true;
 	}
 

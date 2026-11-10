@@ -88,7 +88,8 @@ public class SR6WizardPageChangeling extends WizardPage implements ControllerLis
 
 	//-------------------------------------------------------------------
 	public SR6WizardPageChangeling(Wizard wizard, GeneratorWrapper charGen) {
-		super(wizard);
+		super();
+		setWizard(wizard);
 		this.charGen = charGen;
 		setTitle(ResourceI18N.get(RES, "page.surge.title"));
 		none = new SetItem();

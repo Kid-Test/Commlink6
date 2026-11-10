@@ -7,7 +7,7 @@ import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-import org.prelle.javafx.CloseType;
+import javafx.scene.control.ButtonType;
 import org.prelle.javafx.ManagedDialog;
 import org.prelle.javafx.NavigButtonControl;
 
@@ -48,9 +48,9 @@ public class EditSignatureManeuverDialog extends ManagedDialog {
 
 	//--------------------------------------------------------------------
 	public EditSignatureManeuverDialog(SignatureManeuver data, boolean isEdit) {
-		super(ResourceI18N.get(UI,"dialog.editsignature.dialog.title"), null, CloseType.APPLY);
+		super(ResourceI18N.get(UI,"dialog.editsignature.dialog.title"), null, ButtonType.APPLY);
 		if (!isEdit) {
-			buttons.setAll(CloseType.OK, CloseType.CANCEL);
+			buttons.setAll(ButtonType.OK, ButtonType.CANCEL);
 		}
 		this.selectedItem    = data;
 		btnControl = new NavigButtonControl();
@@ -182,7 +182,7 @@ public class EditSignatureManeuverDialog extends ManagedDialog {
 
 	//-------------------------------------------------------------------
 	private void updateOKButton() {
-		btnControl.setDisabled(CloseType.OK, !(
+		btnControl.setDisabled(ButtonType.OK, !(
 				tfName.getText()!=null &&
 				cbSkill.getValue()!=null &&
 				cbAction1.getValue()!=null

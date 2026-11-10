@@ -8,7 +8,7 @@ import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
 import org.prelle.javafx.AlertManager;
-import org.prelle.javafx.CloseType;
+import javafx.scene.control.ButtonType;
 import org.prelle.javafx.FlexibleApplication;
 import org.prelle.javafx.JavaFXConstants;
 import org.prelle.javafx.ManagedDialog;
@@ -89,15 +89,15 @@ public class AdeptPowerSection extends ListSection<AdeptPowerValue> {
 				null){
 		};
 		NavigButtonControl btnCtrl = new NavigButtonControl();
-    	btnCtrl.setDisabled(CloseType.OK, true);
+    	btnCtrl.setDisabled(ButtonType.OK, true);
     	selector.setButtonControl(btnCtrl);
 
-    	ManagedDialog dialog = new ManagedDialog(ResourceI18N.get(RES,"section.adeptpowers.selector.title"), selector, CloseType.OK, CloseType.CANCEL);
+    	ManagedDialog dialog = new ManagedDialog(ResourceI18N.get(RES,"section.adeptpowers.selector.title"), selector, ButtonType.OK, ButtonType.CANCEL);
     	btnCtrl.initialize(FlexibleApplication.getInstance(), dialog);
 
-		CloseType close = (CloseType) FlexibleApplication.getInstance().showAndWait(dialog);
+		ButtonType close = (ButtonType) FlexibleApplication.getInstance().showAndWait(dialog);
 		logger.log(Level.DEBUG,"Closed with "+close);
-		if (close==CloseType.OK) {
+		if (close==ButtonType.OK) {
 			AdeptPower data = selector.getSelected();
 			logger.log(Level.DEBUG, "Selected adept power: "+data);
 			OperationResult<AdeptPowerValue> res = null;

@@ -6,7 +6,7 @@ import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
 import org.prelle.javafx.ApplicationScreen;
-import org.prelle.javafx.CloseType;
+import javafx.scene.control.ButtonType;
 import org.prelle.javafx.FlexibleApplication;
 import org.prelle.javafx.ManagedDialog;
 
@@ -61,10 +61,10 @@ public class QualityPathsSection extends ListSection<QualityPathValue> {
 	protected void onAdd() {
 		// TODO Auto-generated method stub
 		QualityPathSelector selector = new QualityPathSelector(control.getQualityPathController());
-		ManagedDialog dialog = new ManagedDialog(ResourceI18N.get(RES, "section.qualitypaths.selector.title"), selector, CloseType.OK, CloseType.CANCEL);
-		CloseType closed = FlexibleApplication.getInstance().showAndWait(dialog);
+		ManagedDialog dialog = new ManagedDialog(ResourceI18N.get(RES, "section.qualitypaths.selector.title"), selector, ButtonType.OK, ButtonType.CANCEL);
+		ButtonType closed = FlexibleApplication.getInstance().showAndWait(dialog);
 		logger.log(Level.WARNING, "closed "+closed);
-		if (closed==CloseType.OK) {
+		if (closed==ButtonType.OK) {
 			// Assume there are no decisions to be made
 			OperationResult<QualityPathValue> result = control.getQualityPathController().select(selector.getSelected());
 			if (result.hasError()) {

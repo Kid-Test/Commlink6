@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import org.prelle.javafx.CloseType;
+import javafx.scene.control.ButtonType;
 import org.prelle.javafx.FlexibleApplication;
 
 import de.rpgframework.genericrpg.chargen.ComplexDataItemController;
@@ -78,9 +78,9 @@ public class MartialArtsValueListCell extends ComplexDataItemValueListCell<Marti
 		IMartialArtsController control = (IMartialArtsController) controlProvider.get();
 		EditMartialArtsValueDialog dialog = new EditMartialArtsValueDialog(control, data);
 
-		CloseType result = FlexibleApplication.getInstance().showAlertAndCall(dialog, dialog.getButtonControl());
+		ButtonType result = FlexibleApplication.getInstance().showAlertAndCall(dialog, dialog.getButtonControl());
 
-		if (result==CloseType.OK) {
+		if (result==ButtonType.OK) {
 			this.requestLayout();
 			return new OperationResult<>(ref);
 		}

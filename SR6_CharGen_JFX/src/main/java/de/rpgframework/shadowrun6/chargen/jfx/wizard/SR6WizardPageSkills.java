@@ -7,10 +7,11 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.controlsfx.control.ToggleSwitch;
-import org.prelle.javafx.CloseType;
+import javafx.scene.control.ButtonType;
 import org.prelle.javafx.FlexibleApplication;
 import org.prelle.javafx.ManagedDialog;
 import org.prelle.javafx.SymbolIcon;
+import org.prelle.javafx.JavaFXConstants;
 import org.prelle.javafx.Wizard;
 import org.prelle.javafx.public_skins.GridPaneTableViewSkin.HeaderLine;
 
@@ -120,7 +121,7 @@ public class SR6WizardPageSkills extends WizardPageSkills<SR6Skill, SR6SkillValu
 	protected void initInteractivity() {
 		super.initInteractivity();
 
-		setOnExtraActionHandler( button -> onExtraAction(button));
+		getExtraButtons().add(JavaFXConstants.RANDOMIZE);
 
 		table.useExpertModeProperty().bind(tsExpertMode.selectedProperty());
 		tsExpertMode.visibleProperty().bind(table.expertModeAvailableProperty());
@@ -223,12 +224,12 @@ public class SR6WizardPageSkills extends WizardPageSkills<SR6Skill, SR6SkillValu
 	}
 
 	//-------------------------------------------------------------------
-	private CloseType openActionDialog(SR6SkillValue sVal) {
+	private ButtonType openActionDialog(SR6SkillValue sVal) {
 		logger.log(Level.INFO, "openActionDialog({0})", sVal);
 
 		SRSkillSettingsPane pane = new SRSkillSettingsPane(sVal, charGen.getSkillController());
-		ManagedDialog dialog = new ManagedDialog("Settings", pane, CloseType.OK);
-		CloseType close = FlexibleApplication.getInstance().showAlertAndCall(dialog, null);
+		ManagedDialog dialog = new ManagedDialog("Settings", pane, ButtonType.OK);
+		ButtonType close = FlexibleApplication.getInstance().showAlertAndCall(dialog, null);
 		return close;
 	}
 
@@ -265,13 +266,15 @@ public class SR6WizardPageSkills extends WizardPageSkills<SR6Skill, SR6SkillValu
 	}
 
 	//-------------------------------------------------------------------
-	private void onExtraAction(CloseType button) {
-		switch (button) {
-		case RANDOMIZE:
+	/**
+	 * @see org.prelle.javafx.WizardPage#onExtraAction(javafx.scene.control.ButtonType)
+	 */
+	@Override
+	public void onExtraAction(ButtonType button) {
+		if (button==JavaFXConstants.RANDOMIZE) {
 			charGen.getSkillController().roll();
 			refresh();
-			break;
-		default:
+		} else {
 			logger.log(Level.WARNING, "ToDo: handle "+button);
 		}
 	}

@@ -9,7 +9,7 @@ import java.util.Locale;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import org.prelle.javafx.CloseType;
+import javafx.scene.control.ButtonType;
 import org.prelle.javafx.ResponsiveControl;
 
 import de.rpgframework.genericrpg.Possible;
@@ -48,7 +48,7 @@ public class DataStructureSelector extends Selector<DataStructure, DataStructure
     		Possible poss = ctrl.canBeSelected(n);
     		logger.log(Level.DEBUG, "Selection possible = {0}",poss);
     		if (btnCtrl!=null) {
-    			btnCtrl.setDisabled(CloseType.OK, !poss.get());
+    			btnCtrl.setDisabled(ButtonType.OK, !poss.get());
     		}
     	});
 	}

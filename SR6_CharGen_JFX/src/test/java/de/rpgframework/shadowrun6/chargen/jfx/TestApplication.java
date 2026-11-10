@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.function.Predicate;
 
-import org.prelle.javafx.CloseType;
+import javafx.scene.control.ButtonType;
 import org.prelle.javafx.FlexibleApplication;
 import org.prelle.javafx.ManagedDialog;
 import org.prelle.javafx.NavigationPane;
@@ -89,16 +89,16 @@ public class TestApplication extends FlexibleApplication {
 		
 		Predicate<ItemTemplate> selectFilter = new ItemTypeFilter(CarryMode.IMPLANTED, ItemType.CYBERWARE); 
 		ItemTemplateSelector selector = new ItemTemplateSelector(chargen, CarryMode.IMPLANTED, selectFilter, null, null);
-		ManagedDialog dialog = new ManagedDialog("Select an item", selector, CloseType.OK, CloseType.CANCEL);
-		CloseType closed = FlexibleApplication.getInstance().showAndWait(dialog);
-		if (closed==CloseType.CANCEL)
+		ManagedDialog dialog = new ManagedDialog("Select an item", selector, ButtonType.OK, ButtonType.CANCEL);
+		ButtonType closed = FlexibleApplication.getInstance().showAndWait(dialog);
+		if (closed==ButtonType.CANCEL)
 			System.exit(0);
 		
 		ItemTemplate item = selector.getSelected();
 		ChoiceSelectorDialog<ItemTemplate, CarriedItem<ItemTemplate>> dialog2 = new ChoiceSelectorDialog<>(chargen.getEquipmentController(), CarryMode.IMPLANTED);
 		dialog2.apply(item, item.getChoices());
 		closed = FlexibleApplication.getInstance().showAndWait(dialog2);
-		if (closed==CloseType.CANCEL)
+		if (closed==ButtonType.CANCEL)
 			System.exit(0);
 		
     }

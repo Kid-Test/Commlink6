@@ -67,7 +67,8 @@ public class SR6WizardPageDrake extends WizardPage implements ControllerListener
 
 	//-------------------------------------------------------------------
 	public SR6WizardPageDrake(Wizard wizard, GeneratorWrapper charGen) {
-		super(wizard);
+		super();
+		setWizard(wizard);
 		this.charGen = charGen;
 		setTitle(ResourceI18N.get(RES, "page.drake.title"));
 		initComponents();

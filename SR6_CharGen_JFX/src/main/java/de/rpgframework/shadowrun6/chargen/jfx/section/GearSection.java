@@ -12,7 +12,8 @@ import java.util.stream.Collectors;
 
 import org.controlsfx.control.ToggleSwitch;
 import org.prelle.javafx.AlertType;
-import org.prelle.javafx.CloseType;
+import javafx.scene.control.ButtonType;
+import org.prelle.javafx.JavaFXConstants;
 import org.prelle.javafx.FlexibleApplication;
 import org.prelle.javafx.ManagedDialog;
 import org.prelle.javafx.Mode;
@@ -154,9 +155,9 @@ public class GearSection extends ComplexDataItemListSection<ItemTemplate, Carrie
 		ItemTemplateSelector selector = new ItemTemplateSelector(control, carry, templateFilter, addToContainer, addToHook);
 //		if (templateFilter!=null)
 //			selector.setBaseFilter(templateFilter);
-		ManagedDialog dialog = new ManagedDialog(ResourceI18N.get(RES, "section.gear.selector.title"), selector, CloseType.OK, CloseType.CANCEL);
-		CloseType closed = FlexibleApplication.getInstance().showAndWait(dialog);
-		if (closed==CloseType.OK) {
+		ManagedDialog dialog = new ManagedDialog(ResourceI18N.get(RES, "section.gear.selector.title"), selector, ButtonType.OK, ButtonType.CANCEL);
+		ButtonType closed = FlexibleApplication.getInstance().showAndWait(dialog);
+		if (closed==ButtonType.OK) {
 			ItemTemplate selected = selector.getSelected();
 			SR6PieceOfGearVariant suggestedVariant = selector.getVariant();
 			OperationResult<CarriedItem<ItemTemplate>> result = null;
@@ -236,10 +237,10 @@ public class GearSection extends ComplexDataItemListSection<ItemTemplate, Carrie
 	//-------------------------------------------------------------------
 	private RemoveMode askRemoveMode(CarriedItem<ItemTemplate> item) {
 		Label lblQuest = new Label(ResourceI18N.get(RES, "section.gear.delete.question"));
-		CloseType closed = FlexibleApplication.getInstance().showAlertAndCall(AlertType.QUESTION,
-				ResourceI18N.get(RES, "section.gear.delete.title"), lblQuest, null, CloseType.UNDO, CloseType.TRASH);
-		if (closed==CloseType.UNDO) return RemoveMode.UNDO;
-		if (closed==CloseType.TRASH) return RemoveMode.REMOVE_LATE;
+		ButtonType closed = FlexibleApplication.getInstance().showAlertAndCall(AlertType.QUESTION,
+				ResourceI18N.get(RES, "section.gear.delete.title"), lblQuest, null, JavaFXConstants.UNDO, JavaFXConstants.TRASH);
+		if (closed==JavaFXConstants.UNDO) return RemoveMode.UNDO;
+		if (closed==JavaFXConstants.TRASH) return RemoveMode.REMOVE_LATE;
 
 		return RemoveMode.UNDO;
 	}

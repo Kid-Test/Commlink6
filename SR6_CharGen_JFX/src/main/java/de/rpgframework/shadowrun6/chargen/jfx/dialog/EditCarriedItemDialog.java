@@ -11,7 +11,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 import org.prelle.javafx.ApplicationScreen;
-import org.prelle.javafx.CloseType;
+import javafx.scene.control.ButtonType;
 import org.prelle.javafx.FlexibleApplication;
 import org.prelle.javafx.ManagedDialog;
 import org.prelle.javafx.NavigButtonControl;
@@ -329,12 +329,12 @@ public class EditCarriedItemDialog extends ACarriedItemPage<ItemTemplate, ItemHo
 		ManagedDialog dialog = new ManagedDialog(
 				ResourceI18N.format(UI, "dialog.add.accessory.title", slot.getName()),
 				selector,
-				CloseType.CANCEL, CloseType.OK);
+				ButtonType.CANCEL, ButtonType.OK);
 		NavigButtonControl btnCtrl = new NavigButtonControl();
 		selector.setButtonControl(btnCtrl);
-		CloseType closed = getAppLayout().getApplication().showAlertAndCall(dialog, btnCtrl);
+		ButtonType closed = getAppLayout().getApplication().showAlertAndCall(dialog, btnCtrl);
 		logger.log(Level.INFO, "Closed via "+closed);
-		if (closed==CloseType.OK) {
+		if (closed==ButtonType.OK) {
 			refresh();
 			ItemTemplate toAdd = selector.getSelected();
 			CarryMode carry = CarryMode.EMBEDDED;
@@ -391,12 +391,12 @@ public class EditCarriedItemDialog extends ACarriedItemPage<ItemTemplate, ItemHo
 		ManagedDialog dialog = new ManagedDialog(
 				ResourceI18N.get(UI, "dialog.add.modification.title"),
 				selector,
-				CloseType.CANCEL, CloseType.OK);
+				ButtonType.CANCEL, ButtonType.OK);
 		NavigButtonControl btnCtrl = new NavigButtonControl();
 		selector.setButtonControl(btnCtrl);
-		CloseType closed = getAppLayout().getApplication().showAlertAndCall(dialog, btnCtrl);
+		ButtonType closed = getAppLayout().getApplication().showAlertAndCall(dialog, btnCtrl);
 		logger.log(Level.DEBUG, "Closed via "+closed);
-		if (closed==CloseType.OK) {
+		if (closed==ButtonType.OK) {
 			SR6ItemEnhancement master = selector.getSelected();
 			// Do we need to configure the enhancement?
 			boolean needToAsk = !master.getChoices().isEmpty();
@@ -439,8 +439,8 @@ public class EditCarriedItemDialog extends ACarriedItemPage<ItemTemplate, ItemHo
 		EditCarriedItemDialog dialog = new EditCarriedItemDialog(control, accessoryToEdit);
 		dialog.setAppLayout(FlexibleApplication.getInstance().getAppLayout());
 		FlexibleApplication.getInstance().openScreen(new ApplicationScreen(dialog));
-//		CloseType result = (CloseType) FlexibleApplication.getInstance().showAlertAndCall(dialog, dialog.getButtonControl());
-//		if (result==CloseType.OK) {
+//		ButtonType result = (ButtonType) FlexibleApplication.getInstance().showAlertAndCall(dialog, dialog.getButtonControl());
+//		if (result==ButtonType.OK) {
 //			this.requestLayout();
 //		}
 	}

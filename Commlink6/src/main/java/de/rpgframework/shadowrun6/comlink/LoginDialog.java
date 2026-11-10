@@ -2,7 +2,7 @@ package de.rpgframework.shadowrun6.comlink;
 
 import java.util.ResourceBundle;
 
-import org.prelle.javafx.CloseType;
+import javafx.scene.control.ButtonType;
 import org.prelle.javafx.JavaFXConstants;
 import org.prelle.javafx.ManagedDialog;
 
@@ -26,7 +26,7 @@ public class LoginDialog extends ManagedDialog {
 
 	//-------------------------------------------------------------------
 	public LoginDialog(int failedAttempts) {
-		super(ResourceI18N.get(RES, "title"), null, CloseType.OK, CloseType.CANCEL);
+		super(ResourceI18N.get(RES, "title"), null, ButtonType.OK, ButtonType.CANCEL);
 		initComponents();
 		initLayout(failedAttempts);
 		initInteractivity();
@@ -94,7 +94,7 @@ public class LoginDialog extends ManagedDialog {
 	//-------------------------------------------------------------------
 	private void refreshButtons() {
 		boolean valid = isDataValid();
-		buttonDisabledProperty().put(CloseType.OK, !valid);
+		buttonDisabledProperty().put(ButtonType.OK, !valid);
 	}
 
 	//-------------------------------------------------------------------

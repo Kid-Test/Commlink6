@@ -72,7 +72,8 @@ public class SR6WizardPageShifter extends WizardPage implements ControllerListen
 
 	//-------------------------------------------------------------------
 	public SR6WizardPageShifter(Wizard wizard, GeneratorWrapper charGen) {
-		super(wizard);
+		super();
+		setWizard(wizard);
 		this.charGen = charGen;
 		setTitle(ResourceI18N.get(RES, "page.shifter.title"));
 		initComponents();

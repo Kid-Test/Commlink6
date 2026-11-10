@@ -9,7 +9,7 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 import org.controlsfx.control.ToggleSwitch;
-import org.prelle.javafx.CloseType;
+import javafx.scene.control.ButtonType;
 import org.prelle.javafx.FlexibleApplication;
 import org.prelle.javafx.ManagedDialog;
 import org.prelle.javafx.Mode;
@@ -245,10 +245,10 @@ public class SkillSection extends Section {
 			});
 			NavigButtonControl btnCtrl = new NavigButtonControl();
 			selector.setButtonControl(btnCtrl);
-			ManagedDialog dialog = new ManagedDialog(ResourceI18N.get(SkillSelector.RES, "selector.skill.title"), selector, CloseType.OK, CloseType.CANCEL);
-			CloseType closed = FlexibleApplication.getInstance().showAlertAndCall(dialog, btnCtrl);
+			ManagedDialog dialog = new ManagedDialog(ResourceI18N.get(SkillSelector.RES, "selector.skill.title"), selector, ButtonType.OK, ButtonType.CANCEL);
+			ButtonType closed = FlexibleApplication.getInstance().showAlertAndCall(dialog, btnCtrl);
 			logger.log(Level.INFO, "Closed via {0}",closed);
-			if (closed==CloseType.OK) {
+			if (closed==ButtonType.OK) {
 				OperationResult<SR6SkillValue> res = control.getSkillController().select(selector.getSelected());
 				logger.log(Level.INFO, "Result was {0}",res);
 				if (!res.wasSuccessful()) {
@@ -274,12 +274,12 @@ public class SkillSection extends Section {
 	}
 
 	//-------------------------------------------------------------------
-	private CloseType openActionDialog(SR6SkillValue sVal) {
+	private ButtonType openActionDialog(SR6SkillValue sVal) {
 		logger.log(Level.INFO, "openActionDialog({0})", sVal);
 
 		SRSkillSettingsPane pane = new SRSkillSettingsPane(sVal, control.getSkillController());
-		ManagedDialog dialog = new ManagedDialog(ResourceI18N.get(RES, "dialog.specializations.title"), pane, CloseType.OK);
-		CloseType close = FlexibleApplication.getInstance().showAlertAndCall(dialog, null);
+		ManagedDialog dialog = new ManagedDialog(ResourceI18N.get(RES, "dialog.specializations.title"), pane, ButtonType.OK);
+		ButtonType close = FlexibleApplication.getInstance().showAlertAndCall(dialog, null);
 		return close;
 	}
 

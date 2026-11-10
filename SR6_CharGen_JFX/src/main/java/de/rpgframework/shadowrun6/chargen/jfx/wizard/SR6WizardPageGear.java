@@ -71,7 +71,8 @@ public class SR6WizardPageGear extends WizardPage implements ControllerListener{
 
 	//-------------------------------------------------------------------
 	public SR6WizardPageGear(Wizard wizard, SR6CharacterController charGen) {
-		super(wizard);
+		super();
+		setWizard(wizard);
 		this.charGen = charGen;
 		setTitle(ResourceI18N.get(RES, "page.gear.title"));
 		initComponents();

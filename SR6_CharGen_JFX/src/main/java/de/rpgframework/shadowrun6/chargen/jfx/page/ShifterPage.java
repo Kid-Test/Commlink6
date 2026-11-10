@@ -5,7 +5,7 @@ import java.lang.System.Logger.Level;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import org.prelle.javafx.CloseType;
+import javafx.scene.control.ButtonType;
 import org.prelle.javafx.FlexibleApplication;
 import org.prelle.javafx.ManagedDialog;
 import org.prelle.javafx.Mode;

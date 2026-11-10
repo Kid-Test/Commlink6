@@ -6,7 +6,7 @@ import java.util.Locale;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
-import org.prelle.javafx.CloseType;
+import javafx.scene.control.ButtonType;
 import org.prelle.javafx.ManagedDialog;
 import org.prelle.javafx.NavigButtonControl;
 import org.prelle.javafx.OptionalNodePane;
@@ -52,7 +52,7 @@ public class EditMartialArtsValueDialog extends ManagedDialog implements Control
 
 	//--------------------------------------------------------------------
 	public EditMartialArtsValueDialog(IMartialArtsController ctrl, MartialArtsValue toEdit) {
-		super(ResourceI18N.format(UI,"dialog.editmartialart.title", toEdit.getResolved().getName()), null, CloseType.APPLY);
+		super(ResourceI18N.format(UI,"dialog.editmartialart.title", toEdit.getResolved().getName()), null, ButtonType.APPLY);
 		this.control  = ctrl.getTechniqueController(toEdit);
 		btnControl = new NavigButtonControl();
 
@@ -102,7 +102,7 @@ public class EditMartialArtsValueDialog extends ManagedDialog implements Control
 	}
 
 	//-------------------------------------------------------------------
-	public void onClose(CloseType closeType) {
+	public void onClose(ButtonType closeType) {
 		control.getCharacterController().removeListener(this);
 	}
 

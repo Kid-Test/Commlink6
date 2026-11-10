@@ -5,7 +5,7 @@ import java.lang.System.Logger.Level;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import org.prelle.javafx.CloseType;
+import javafx.scene.control.ButtonType;
 import org.prelle.javafx.FlexibleApplication;
 import org.prelle.javafx.ManagedDialog;
 import org.prelle.javafx.Mode;
@@ -83,11 +83,11 @@ public class CareerPage extends Page {
 			public void onAdd() {
 				logger.log(Level.ERROR, "onAdd");
 				SR6RewardPane box = new SR6RewardPane(null);
-				ManagedDialog dialog = new ManagedDialog(ResourceI18N.get(RES, "page.career.reward.add.title"), box, CloseType.OK, CloseType.CANCEL)
+				ManagedDialog dialog = new ManagedDialog(ResourceI18N.get(RES, "page.career.reward.add.title"), box, ButtonType.OK, ButtonType.CANCEL)
 						.setImage(new Image(getClass().getResourceAsStream("Ork1.png")))
 						.setImagePosition(HPos.RIGHT);
-				CloseType close = FlexibleApplication.getInstance().showAlertAndCall(dialog, null);
-				if (close==CloseType.OK) {
+				ButtonType close = FlexibleApplication.getInstance().showAlertAndCall(dialog, null);
+				if (close==ButtonType.OK) {
 					Reward reward = box.getData();
 					logger.log(Level.WARNING, "Add reward "+reward);
 					Shadowrun6Tools.applyReward(ctrl.getModel(), reward);

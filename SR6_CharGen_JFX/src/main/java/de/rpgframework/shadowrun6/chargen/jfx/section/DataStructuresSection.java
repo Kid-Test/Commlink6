@@ -7,7 +7,7 @@ import java.util.Locale;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
-import org.prelle.javafx.CloseType;
+import javafx.scene.control.ButtonType;
 import org.prelle.javafx.FlexibleApplication;
 import org.prelle.javafx.ManagedDialog;
 
@@ -59,11 +59,11 @@ public abstract class DataStructuresSection extends ComplexDataItemListSection<D
 		logger.log(Level.WARNING, "opening data structure selection dialog  "+control.getDataStructureController());
 
 		DataStructureSelector selector = new DataStructureSelector(control.getDataStructureController(), null, Shadowrun6Tools.requirementResolver(Locale.getDefault()));
-		ManagedDialog dialog = new ManagedDialog(ResourceI18N.get(RES,"section.datastructure.selector.title"), selector, CloseType.OK, CloseType.CANCEL);
+		ManagedDialog dialog = new ManagedDialog(ResourceI18N.get(RES,"section.datastructure.selector.title"), selector, ButtonType.OK, ButtonType.CANCEL);
 
-		CloseType close = (CloseType) FlexibleApplication.getInstance().showAndWait(dialog);
+		ButtonType close = (ButtonType) FlexibleApplication.getInstance().showAndWait(dialog);
 		logger.log(Level.ERROR,"Closed with "+close);
-		if (close==CloseType.OK) {
+		if (close==ButtonType.OK) {
 			DataStructure data = selector.getSelected();
 			logger.log(Level.INFO, "Selected focus: "+data);
 			OperationResult<DataStructureValue> result = null;

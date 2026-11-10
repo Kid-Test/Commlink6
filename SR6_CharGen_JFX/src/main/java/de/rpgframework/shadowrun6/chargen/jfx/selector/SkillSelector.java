@@ -6,7 +6,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
 
-import org.prelle.javafx.CloseType;
+import javafx.scene.control.ButtonType;
 import org.prelle.javafx.NavigButtonControl;
 
 import de.rpgframework.genericrpg.Possible;
@@ -49,7 +49,7 @@ public class SkillSelector extends Selector<SR6Skill,SR6SkillValue> {
     		logger.log(Level.DEBUG, "Selected {0}", n);
     		Possible poss = ctrl.getSkillController().canBeSelected(n);
     		if (btnCtrl!=null) {
-    			btnCtrl.setDisabled(CloseType.OK, !poss.get());
+    			btnCtrl.setDisabled(ButtonType.OK, !poss.get());
     		}
     	});
 	}
@@ -59,7 +59,7 @@ public class SkillSelector extends Selector<SR6Skill,SR6SkillValue> {
 		super.setButtonControl(btnCtrl);
 
 		btnCtrl.setCallback( (close) -> {
-			if (close!=CloseType.OK) return true;
+			if (close!=ButtonType.OK) return true;
 			SR6Skill select = getSelected();
 			if (select==null) return false;
 	   		Possible poss = control.canBeSelected(select);

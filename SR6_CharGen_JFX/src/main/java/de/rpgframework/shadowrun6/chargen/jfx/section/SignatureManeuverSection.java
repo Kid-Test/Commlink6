@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
-import org.prelle.javafx.CloseType;
+import javafx.scene.control.ButtonType;
 import org.prelle.javafx.FlexibleApplication;
 import org.prelle.javafx.JavaFXConstants;
 
@@ -78,9 +78,9 @@ public class SignatureManeuverSection extends ListSection<SignatureManeuver> {
 	protected void onAdd() {
 		SignatureManeuver toAdd = new SignatureManeuver();
 		EditSignatureManeuverDialog dialog = new EditSignatureManeuverDialog(toAdd, false);
-		CloseType result = FlexibleApplication.getInstance().showAlertAndCall(dialog, dialog.getButtonControl());
+		ButtonType result = FlexibleApplication.getInstance().showAlertAndCall(dialog, dialog.getButtonControl());
 		logger.log(Level.INFO,"Adding signature maneuver dialog closed with {0}",result);
-		if (result==CloseType.OK || result==CloseType.APPLY) {
+		if (result==ButtonType.OK || result==ButtonType.APPLY) {
 			logger.log(Level.INFO,"Adding signature maneuver: "+toAdd);
 			model.addSignatureManeuver(toAdd);
 			getListView().getItems().add(toAdd);

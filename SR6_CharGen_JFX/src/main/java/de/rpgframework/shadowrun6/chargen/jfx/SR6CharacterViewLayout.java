@@ -6,7 +6,7 @@ import java.lang.System.Logger.Level;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import org.prelle.javafx.CloseType;
+import javafx.scene.control.ButtonType;
 import org.prelle.javafx.FlexibleApplication;
 import org.prelle.javafx.JavaFXConstants;
 import org.prelle.javafx.ResponsiveControlManager;
@@ -197,14 +197,14 @@ public class SR6CharacterViewLayout extends CharacterViewLayout<ShadowrunAttribu
 		logger.log(Level.ERROR, "Create wizard for "+wrapper.getWrapped());
 		GenerationWizard wizard = new GenerationWizard(wrapper);
 		while (true) {
-			CloseType close = FlexibleApplication.getInstance().showAndWait(wizard);
+			ButtonType close = FlexibleApplication.getInstance().showAndWait(wizard);
 			logger.log(Level.WARNING, "Wizard closed via "+close);
 			//		controller.refresh();
-			if (close==CloseType.FINISH) {
+			if (close==ButtonType.FINISH) {
 				refreshPages();
 					return;
 			}
-			if (close==CloseType.CANCEL) {
+			if (close==ButtonType.CANCEL) {
 				//			getApplication().closeAppLayout();
 				logger.log(Level.INFO, "call historyBack()");
 				dontShowConfirmationDialog = true;
@@ -467,7 +467,7 @@ public class SR6CharacterViewLayout extends CharacterViewLayout<ShadowrunAttribu
 	private void openWizard() {
 		logger.log(Level.DEBUG, "reopen wizard");
 		GenerationWizard wizard = new GenerationWizard((GeneratorWrapper) control);
-		CloseType close = FlexibleApplication.getInstance().showAndWait(wizard);
+		ButtonType close = FlexibleApplication.getInstance().showAndWait(wizard);
 		logger.log(Level.WARNING, "Wizard closed via {0}",close);
 		refreshPages();
 	}

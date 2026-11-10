@@ -8,7 +8,6 @@ import java.util.ResourceBundle;
 import java.util.function.Function;
 
 import org.prelle.javafx.AlertType;
-import org.prelle.javafx.CloseType;
 import org.prelle.javafx.FlexibleApplication;
 import org.prelle.javafx.Wizard;
 import org.prelle.javafx.WizardPage;
@@ -41,6 +40,8 @@ import de.rpgframework.shadowrun6.chargen.gen.CommonSR6CharacterGenerator;
 import de.rpgframework.shadowrun6.chargen.gen.GeneratorWrapper;
 import de.rpgframework.shadowrun6.chargen.gen.pointbuy.SR6PointBuySettings;
 import de.rpgframework.shadowrun6.chargen.gen.priority.SR6PrioritySettings;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
 import javafx.util.Callback;
 
 /**
@@ -54,6 +55,9 @@ public class GenerationWizard extends Wizard implements ControllerListener {
 	private final static Logger logger = System.getLogger(GenerationWizard.class.getName());
 
 	private GeneratorWrapper wrapper;
+
+	/** Replaces FINISH - leaves the wizard and continues in the character sheet */
+	public final static ButtonType FINETUNE = new ButtonType(ResourceI18N.get(RES,"buttontype.finetune"), ButtonData.FINISH);
 
 	private SR6WizardPageGenerator chargen;
 	private WizardPageDatasets datasets;
@@ -88,14 +92,12 @@ public class GenerationWizard extends Wizard implements ControllerListener {
 
 	//-------------------------------------------------------------------
 	public GenerationWizard(GeneratorWrapper charGen) {
-		super(CloseType.CANCEL, CloseType.PREVIOUS, CloseType.RANDOMIZE, CloseType.NEXT, CloseType.FINISH);
+		super(ButtonType.CANCEL, ButtonType.PREVIOUS, ButtonType.NEXT, FINETUNE);
 		setTitle("Unreplaced Wizard Title");
-		setPlain(false);
 		this.wrapper = charGen;
 
 		initPages();
 		initInteractivtiy();
-		setShowProgress(false);
 		refresh();
 	}
 
@@ -192,22 +194,16 @@ public class GenerationWizard extends Wizard implements ControllerListener {
 			public Boolean call(Wizard param) {
 				logger.log(Level.WARNING, "ToDo: ask user to confirm cancellation");
 
-				CloseType type = FlexibleApplication.getInstance().showAlertAndCall(AlertType.CONFIRMATION, ResourceI18N.get(RES, "confirm.cancel.title"), ResourceI18N.get(RES, "confirm.cancel.mess"));
+				ButtonType type = FlexibleApplication.getInstance().showAlertAndCall(AlertType.CONFIRMATION, ResourceI18N.get(RES, "confirm.cancel.title"), ResourceI18N.get(RES, "confirm.cancel.mess"));
 				logger.log(Level.WARNING, "User confirmed cancellation: "+type);
-				if (type==CloseType.OK || type==CloseType.YES) {
+				if (type==ButtonType.OK || type==ButtonType.YES) {
 					return Boolean.TRUE;
 				}
 				return Boolean.FALSE;
 			}
 		});
 
-		addExtraButton(CloseType.RANDOMIZE, ev -> {
-			if (getCurrentPage().getOnExtraActionHandler()!=null) {
-				getCurrentPage().getOnExtraActionHandler().accept(CloseType.RANDOMIZE);
-			} else {
-				logger.log(Level.WARNING, "No handler for RANDOMIZE on page {0}",getCurrentPage());
-			}
-			});
+		// RANDOMIZE is no longer a wizard button - pages add it via getExtraButtons() and handle it in onExtraAction()
 	}
 
 	//-------------------------------------------------------------------

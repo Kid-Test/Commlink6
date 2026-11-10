@@ -10,7 +10,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-import org.prelle.javafx.CloseType;
+import javafx.scene.control.ButtonType;
 import org.prelle.javafx.JavaFXConstants;
 import org.prelle.javafx.NodeWithTitle;
 import org.prelle.javafx.ResponsiveControlManager;
@@ -74,7 +74,8 @@ public class SR6WizardPageMetatype extends WizardPage implements ControllerListe
 
 	//-------------------------------------------------------------------
 	public SR6WizardPageMetatype(Wizard wizard, GeneratorWrapper charGen) {
-		super(wizard);
+		super();
+		setWizard(wizard);
 		this.charGen = charGen;
 		setTitle(ResourceI18N.get(RES, "page.title"));
 		initComponents();
@@ -241,7 +242,7 @@ public class SR6WizardPageMetatype extends WizardPage implements ControllerListe
 		});
 
 		btnRoll.setOnAction(ev -> roll());
-		setOnExtraActionHandler( button -> onExtraAction(button));
+		getExtraButtons().add(JavaFXConstants.RANDOMIZE);
 
 		cbGender.getSelectionModel().selectedItemProperty().addListener( (ov,o,n) -> charGen.getModel().setGender(n));
 		cbSpecialBody.getSelectionModel().selectedItemProperty().addListener( (ov,o,n) -> {
@@ -374,13 +375,15 @@ public class SR6WizardPageMetatype extends WizardPage implements ControllerListe
 	}
 
 	//-------------------------------------------------------------------
-	private void onExtraAction(CloseType button) {
-		switch (button) {
-		case RANDOMIZE:
+	/**
+	 * @see org.prelle.javafx.WizardPage#onExtraAction(javafx.scene.control.ButtonType)
+	 */
+	@Override
+	public void onExtraAction(ButtonType button) {
+		if (button==JavaFXConstants.RANDOMIZE) {
 			IMetatypeController<SR6MetaType> ctrl = charGen.getMetatypeController();
 			ctrl.roll();
-			break;
-		default:
+		} else {
 			logger.log(Level.WARNING, "ToDo: handle "+button);
 		}
 	}

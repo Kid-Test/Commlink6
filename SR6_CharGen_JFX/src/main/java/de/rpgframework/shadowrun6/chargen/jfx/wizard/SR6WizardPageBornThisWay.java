@@ -9,7 +9,7 @@ import java.util.ResourceBundle;
 
 import org.prelle.javafx.AlertManager;
 import org.prelle.javafx.AlertType;
-import org.prelle.javafx.CloseType;
+import javafx.scene.control.ButtonType;
 import org.prelle.javafx.FlexibleApplication;
 import org.prelle.javafx.ManagedDialog;
 import org.prelle.javafx.OptionalNodePane;
@@ -83,7 +83,8 @@ public class SR6WizardPageBornThisWay extends WizardPage implements ControllerLi
 
 	//-------------------------------------------------------------------
 	public SR6WizardPageBornThisWay(Wizard wizard, GeneratorWrapper charGen) {
-		super(wizard);
+		super();
+		setWizard(wizard);
 		this.charGen = charGen;
 		setTitle(ResourceI18N.get(RES, "page.born_this_way.title"));
 		initComponents();
@@ -174,11 +175,11 @@ public class SR6WizardPageBornThisWay extends WizardPage implements ControllerLi
 				Shadowrun6Tools.requirementResolver(Locale.getDefault()),
 				Shadowrun6Tools.modificationResolver(Locale.getDefault())
 				);
-		ManagedDialog dialog = new ManagedDialog(ResourceI18N.get(RES,"section.quality.selector.title"), selector, CloseType.OK, CloseType.CANCEL);
+		ManagedDialog dialog = new ManagedDialog(ResourceI18N.get(RES,"section.quality.selector.title"), selector, ButtonType.OK, ButtonType.CANCEL);
 
-		CloseType close = (CloseType) FlexibleApplication.getInstance().showAndWait(dialog);
+		ButtonType close = (ButtonType) FlexibleApplication.getInstance().showAndWait(dialog);
 		logger.log(Level.ERROR,"Closed with "+close);
-		if (close==CloseType.OK) {
+		if (close==ButtonType.OK) {
 			Quality toSelect = selector.getSelected();
 			Possible possible = ctrl.canBeSelected(toSelect);
 			logger.log(Level.ERROR, "possible = "+possible);

@@ -7,7 +7,7 @@ import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
 import org.controlsfx.control.ToggleSwitch;
-import org.prelle.javafx.CloseType;
+import javafx.scene.control.ButtonType;
 import org.prelle.javafx.FlexibleApplication;
 import org.prelle.javafx.ManagedDialog;
 import org.prelle.javafx.Mode;
@@ -101,10 +101,10 @@ public class MartialArtsSection extends ListSection<MartialArtsValue> {
 		MartialArtsSelector selector = new MartialArtsSelector(control.getMartialArtsController(), null);
 //		if (templateFilter!=null)
 //			selector.setBaseFilter(templateFilter);
-		ManagedDialog dialog = new ManagedDialog(ResourceI18N.get(RES, "section.martialarts.selector.title"), selector, CloseType.OK, CloseType.CANCEL);
-		CloseType closed = FlexibleApplication.getInstance().showAndWait(dialog);
+		ManagedDialog dialog = new ManagedDialog(ResourceI18N.get(RES, "section.martialarts.selector.title"), selector, ButtonType.OK, ButtonType.CANCEL);
+		ButtonType closed = FlexibleApplication.getInstance().showAndWait(dialog);
 		logger.log(Level.WARNING, "closed "+closed);
-		if (closed==CloseType.OK) {
+		if (closed==ButtonType.OK) {
 			logger.log(Level.INFO, "Trying to select {0}", selector.getSelected());
 			OperationResult<MartialArtsValue> ret =  control.getMartialArtsController().select(selector.getSelected());
 			if (ret.wasSuccessful()) {
