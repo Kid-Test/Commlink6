@@ -13,8 +13,8 @@ import de.rpgframework.shadowrun.Tradition;
 import de.rpgframework.shadowrun6.proc.CalculateEssence;
 
 /**
- * The disciplines of SR7 (core rules, chapter 5 "Disciplines" and chapter 6
- * "Skill Mastery")
+ * The disciplines of SR6 - the values of the <code>type</code> attribute of
+ * <code>&lt;metaecho&gt;</code> in the data XML
  */
 public enum SR6Discipline implements IDiscipline {
 
@@ -24,7 +24,6 @@ public enum SR6Discipline implements IDiscipline {
 	TRANSHUMANISM (false, null,     m -> isMundane(m) && augmentationLevel(m)>=1, m -> augmentationLevel(m)),
 	DRACOGENESIS_POWER(true,  null, m -> false,        x -> SR6Discipline.MAX_RATING),
 	ANIMALISM     (false, null, m -> false, x -> SR6Discipline.MAX_RATING),
-	METAMAGIC_ADEPT(false, null,     m -> usesMagic(m),                            m -> traditionAttribute(m)),
 	NEUROMORPHISM(false, null,     m -> !usesMagic(m) && !usesResonance(m), m -> traditionAttribute(m)),
 	;
 
@@ -119,7 +118,8 @@ public enum SR6Discipline implements IDiscipline {
 	 */
 	@Override
 	public boolean hasOwnGrade() {
-		return mastery;
+		// Animalism and dracogenesis count their own grade, the others share the initiate/submersion grade
+		return this==ANIMALISM || this==DRACOGENESIS_POWER;
 	}
 
 	//-------------------------------------------------------------------

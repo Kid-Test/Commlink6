@@ -17,7 +17,7 @@ import de.rpgframework.genericrpg.modification.ValueModification;
 import de.rpgframework.genericrpg.requirements.Requirement;
 import de.rpgframework.shadowrun.MagicOrResonanceType;
 import de.rpgframework.shadowrun.DisciplineTechnique;
-import de.rpgframework.shadowrun.DisciplineTechnique.Type;
+import de.rpgframework.shadowrun6.SR6Discipline;
 import de.rpgframework.shadowrun.DisciplineTechniqueValue;
 import de.rpgframework.shadowrun.chargen.charctrl.IRejectReasons;
 import de.rpgframework.shadowrun6.Shadowrun6Character;
@@ -52,19 +52,19 @@ public class SR6FreeMetamagicOrEchoController extends SR6MetamagicOrEchoControll
 			return Shadowrun6Core.getItemList(DisciplineTechnique.class).stream()
 					.filter(p -> parent.showDataItem(p))
 					.filter(p -> !getModel().hasMetamagicOrEcho(p.getId()) || p.hasLevel())
-					.filter(m -> m.getType()==Type.METAMAGIC||m.getType()==Type.METAMAGIC_ADEPT)
+					.filter(m -> m.getDiscipline()==SR6Discipline.METAMAGIC)
 					.collect(Collectors.toList());
 		} else if (type!=null && type.usesResonance()) {
 			return Shadowrun6Core.getItemList(DisciplineTechnique.class).stream()
 					.filter(p -> parent.showDataItem(p))
 					.filter(p -> !getModel().hasMetamagicOrEcho(p.getId()) || p.hasLevel())
-					.filter(m -> m.getType()==Type.ECHO)
+					.filter(m -> m.getDiscipline()==SR6Discipline.ECHO)
 					.collect(Collectors.toList());
 		} else {
 			return Shadowrun6Core.getItemList(DisciplineTechnique.class).stream()
 					.filter(p -> parent.showDataItem(p))
 					.filter(p -> !getModel().hasMetamagicOrEcho(p.getId()) || p.hasLevel())
-					.filter(m -> m.getType()==Type.TRANSHUMANISM)
+					.filter(m -> m.getDiscipline()==SR6Discipline.TRANSHUMANISM)
 					.collect(Collectors.toList());
 		}
 	}
@@ -330,7 +330,7 @@ public class SR6FreeMetamagicOrEchoController extends SR6MetamagicOrEchoControll
 			// Pay karma and apply modifications
 			int grade = 0;
 			for (DisciplineTechniqueValue val : model.getMetamagicOrEchoes()) {
-				if (val.getModifyable().getType()==Type.DRACOGENESIS_POWER) continue;
+				if (val.getModifyable().getDiscipline()==SR6Discipline.DRACOGENESIS_POWER) continue;
 				if (val.getModifyable().hasLevel()) {
 					for (int i=0; i<val.getDistributed(); i++) {
 						grade++;

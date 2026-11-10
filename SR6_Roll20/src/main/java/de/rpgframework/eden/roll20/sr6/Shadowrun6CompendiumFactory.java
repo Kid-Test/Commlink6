@@ -33,7 +33,7 @@ import de.rpgframework.shadowrun.AdeptPower;
 import de.rpgframework.shadowrun.ComplexForm;
 import de.rpgframework.shadowrun.CritterPower;
 import de.rpgframework.shadowrun.DisciplineTechnique;
-import de.rpgframework.shadowrun.DisciplineTechnique.Type;
+import de.rpgframework.shadowrun6.SR6Discipline;
 import de.rpgframework.shadowrun.NPCType;
 import de.rpgframework.shadowrun.Quality;
 import de.rpgframework.shadowrun.Ritual;
@@ -433,7 +433,7 @@ public class Shadowrun6CompendiumFactory {
 		head.createCell(5+blobOffset, CellType.STRING).setCellValue("data-rating");
 
 		List<DisciplineTechnique> list = Shadowrun6Core.getItemList(DisciplineTechnique.class);
-		list = list.stream().filter(moe -> moe.getType()==Type.METAMAGIC || moe.getType()==Type.METAMAGIC_ADEPT)
+		list = list.stream().filter(moe -> moe.getDiscipline()==SR6Discipline.METAMAGIC)
 				.sorted(new Comparator<DisciplineTechnique>() {
 			public int compare(DisciplineTechnique o1, DisciplineTechnique o2) {
 				return o1.getName().compareTo(o2.getName());
@@ -530,7 +530,7 @@ public class Shadowrun6CompendiumFactory {
 		head.createCell(5, CellType.STRING).setCellValue("data-rating");
 
 		List<DisciplineTechnique> list = Shadowrun6Core.getItemList(DisciplineTechnique.class);
-		list = list.stream().filter(moe -> moe.getType()==Type.ECHO)
+		list = list.stream().filter(moe -> moe.getDiscipline()==SR6Discipline.ECHO)
 				.sorted(new Comparator<DisciplineTechnique>() {
 			public int compare(DisciplineTechnique o1, DisciplineTechnique o2) {
 				return o1.getName().compareTo(o2.getName());

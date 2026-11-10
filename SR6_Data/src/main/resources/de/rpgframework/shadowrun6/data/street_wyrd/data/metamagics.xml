@@ -1,46 +1,74 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <metaechoes>
 	<!-- Adept metamagic -->
-	<metaecho id="animal_attunement" type="METAMAGIC_ADEPT">
+	<metaecho id="animal_attunement" type="METAMAGIC">
 		<requires>
 			<datareq type="ADEPT_POWER" ref="animal_empathy"/>
+			<selreq>
+				<datareq type="MAGIC_RESO" ref="adept" apply="CHARACTER" />
+				<datareq type="MAGIC_RESO" ref="mysticadept" apply="CHARACTER" />
+			</selreq>
 		</requires>
 		<modifications>
 			<relevancemod topic="MAGICAL" />
 		</modifications>
 	</metaecho>
-	<metaecho id="astral_projection" type="METAMAGIC_ADEPT">
+	<metaecho id="astral_projection" type="METAMAGIC">
 		<requires>
 			<datareq type="ADEPT_POWER" ref="astral_perception"/>
+			<selreq>
+				<datareq type="MAGIC_RESO" ref="adept" apply="CHARACTER" />
+				<datareq type="MAGIC_RESO" ref="mysticadept" apply="CHARACTER" />
+			</selreq>
 		</requires>
 		<modifications>
 			<relevancemod topic="MAGICAL" />
 		</modifications>
 	</metaecho>
-	<metaecho id="finding_your_way" type="METAMAGIC_ADEPT" multi="yes">
+	<metaecho id="finding_your_way" type="METAMAGIC" multi="yes">
 		<choices>
 			<choice uuid="296c80c3-af41-4b88-ab94-791a729683df" type="QUALITY" options="artisans_way,artists_way,athletes_ways,beasts_way,burnouts_way,invisible_way,magicians_way,speakers_way,warriors_way" />
 		</choices>
 		<modifications>
 			<itemmod type="QUALITY" ref="CHOICE" choice="296c80c3-af41-4b88-ab94-791a729683df"/>
 		</modifications>
-	</metaecho>
-	<metaecho id="infusion" type="METAMAGIC_ADEPT">
 		<requires>
-			<datareq type="METAECHO" ref="adept_centering"/>
+			<selreq>
+				<datareq type="MAGIC_RESO" ref="adept" apply="CHARACTER" />
+				<datareq type="MAGIC_RESO" ref="mysticadept" apply="CHARACTER" />
+			</selreq>
 		</requires>
 	</metaecho>
-	<metaecho id="item_attunement" type="METAMAGIC_ADEPT" multi="yes">
+	<metaecho id="infusion" type="METAMAGIC">
+		<requires>
+			<datareq type="METAECHO" ref="adept_centering"/>
+			<selreq>
+				<datareq type="MAGIC_RESO" ref="adept" apply="CHARACTER" />
+				<datareq type="MAGIC_RESO" ref="mysticadept" apply="CHARACTER" />
+			</selreq>
+		</requires>
+	</metaecho>
+	<metaecho id="item_attunement" type="METAMAGIC" multi="yes">
 		<choices>
 			<choice uuid="c58eacde-8f30-4984-b711-7a7575462974" type="CARRIED" />
 		</choices>
 		<modifications>
 			<checkmod type="SKILL" ref="ITEM" value="&amp;INITIATION_RANK" what="DICE" />
 		</modifications>
+		<requires>
+			<selreq>
+				<datareq type="MAGIC_RESO" ref="adept" apply="CHARACTER" />
+				<datareq type="MAGIC_RESO" ref="mysticadept" apply="CHARACTER" />
+			</selreq>
+		</requires>
 	</metaecho>
-	<metaecho id="virtuoso" type="METAMAGIC_ADEPT" multi="yes">
+	<metaecho id="virtuoso" type="METAMAGIC" multi="yes">
 		<requires>
 			<datareq type="ADEPT_POWER" ref="enthralling_performance"/>
+			<selreq>
+				<datareq type="MAGIC_RESO" ref="adept" apply="CHARACTER" />
+				<datareq type="MAGIC_RESO" ref="mysticadept" apply="CHARACTER" />
+			</selreq>
 		</requires>
 	</metaecho>
 

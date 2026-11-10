@@ -31,6 +31,7 @@ import de.rpgframework.shadowrun.chargen.jfx.section.FocusSection;
 import de.rpgframework.shadowrun.chargen.jfx.section.MetamagicOrEchoSection;
 import de.rpgframework.shadowrun.chargen.jfx.section.RitualSection;
 import de.rpgframework.shadowrun.chargen.jfx.section.SpellSection;
+import de.rpgframework.shadowrun6.SR6Discipline;
 import de.rpgframework.shadowrun6.SR6Spell;
 import de.rpgframework.shadowrun6.Shadowrun6Core;
 import de.rpgframework.shadowrun6.Shadowrun6Tools;
@@ -121,7 +122,7 @@ public class MagicPage extends Page {
 				ResourceI18N.get(RES, "page.magic.section.metamagic"),
 				Shadowrun6Tools.requirementResolver(Locale.getDefault()),
 				Shadowrun6Tools.modificationResolver(Locale.getDefault()),
-				DisciplineTechnique.Type.METAMAGIC
+				SR6Discipline.METAMAGIC
 				);
 		secMeta.setMaxHeight(Double.MAX_VALUE);
 		FlexGridPane.setMinWidth(secMeta, 4);

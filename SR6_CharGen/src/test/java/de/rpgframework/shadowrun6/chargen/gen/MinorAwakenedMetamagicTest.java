@@ -13,7 +13,7 @@ import org.junit.Test;
 import de.rpgframework.genericrpg.chargen.BasicControllerEvents;
 import de.rpgframework.genericrpg.chargen.OperationResult;
 import de.rpgframework.shadowrun.DisciplineTechnique;
-import de.rpgframework.shadowrun.DisciplineTechnique.Type;
+import de.rpgframework.shadowrun6.SR6Discipline;
 import de.rpgframework.shadowrun.MagicOrResonanceType;
 import de.rpgframework.shadowrun.Priority;
 import de.rpgframework.shadowrun.PriorityType;
@@ -48,8 +48,8 @@ public class MinorAwakenedMetamagicTest {
 	private static void assertInitiationOffered(String when, SR6CharacterGenerator charGen) {
 		assertEquals(when, "minor_awakened", charGen.getModel().getMagicOrResonanceType().getId());
 		List<DisciplineTechnique> avail = charGen.getDisciplineController().getAvailable();
-		assertTrue(when+": metamagic should be offered", avail.stream().anyMatch(m -> m.getType()==Type.METAMAGIC));
-		assertFalse(when+": transhumanism should not be offered", avail.stream().anyMatch(m -> m.getType()==Type.TRANSHUMANISM));
+		assertTrue(when+": metamagic should be offered", avail.stream().anyMatch(m -> m.getDiscipline()==SR6Discipline.METAMAGIC));
+		assertFalse(when+": transhumanism should not be offered", avail.stream().anyMatch(m -> m.getDiscipline()==SR6Discipline.TRANSHUMANISM));
 	}
 
 	//-------------------------------------------------------------------

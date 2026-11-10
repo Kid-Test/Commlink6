@@ -1,5 +1,7 @@
 package de.rpgframework.shadowrun6.export.fvtt;
 
+import de.rpgframework.shadowrun.DisciplineTechnique;
+import de.rpgframework.genericrpg.requirements.AnyRequirement;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
 import java.util.ArrayList;
@@ -740,16 +742,35 @@ public class FoundryExportService {
 	}
 
 	//-------------------------------------------------------------------
+	/**
+	 * Adept-only metamagics are no longer a discipline of their own, but
+	 * require the magic type "adept" or "mysticadept"
+	 */
+	private static boolean isAdeptOnly(DisciplineTechnique tech) {
+		for (Requirement req : tech.getRequirements()) {
+			List<Requirement> options = (req instanceof AnyRequirement any) ? any.getOptionList() : List.of(req);
+			boolean allAdept = !options.isEmpty();
+			for (Requirement opt : options) {
+				if (opt.getType()!=ShadowrunReference.MAGIC_RESO || !("adept".equals(opt.getKey()) || "mysticadept".equals(opt.getKey())))
+					allAdept = false;
+			}
+			if (allAdept)
+				return true;
+		}
+		return false;
+	}
+
+	//-------------------------------------------------------------------
 	private void addMetamagics(ActorData<Shadowrun6FoundryCharacter> actor, Shadowrun6Character model) {
 		for (DisciplineTechniqueValue val : model.getMetamagicOrEchoes()) {
-			if (val.getModifyable().getType()==SR6Discipline.ECHO)
+			if (val.getModifyable().getDiscipline()==SR6Discipline.ECHO)
 				continue;
 
 			FVTTMetamagic fVal = new FVTTMetamagic();
 			// Definition fields
 			fVal.genesisID = val.getModifyable().getId();
 			fVal.level     = val.getModifyable().hasLevel();
-			fVal.adepts    = (val.getModifyable().getType()==SR6Discipline.METAMAGIC_ADEPT);
+			fVal.adepts    = isAdeptOnly(val.getModifyable());
 			fVal.mages     = true;
 			
 			for (PageReference pr : val.getModifyable().getPageReferences()) {
@@ -806,7 +827,7 @@ public class FoundryExportService {
 	//-------------------------------------------------------------------
 	private void addEchoes(ActorData<Shadowrun6FoundryCharacter> actor, Shadowrun6Character model) {
 		for (DisciplineTechniqueValue val : model.getMetamagicOrEchoes()) {
-			if (val.getModifyable().getType()==SR6Discipline.METAMAGIC)
+			if (val.getModifyable().getDiscipline()!=SR6Discipline.ECHO)
 				continue;
 
 			FVTTEcho fVal = new FVTTEcho();

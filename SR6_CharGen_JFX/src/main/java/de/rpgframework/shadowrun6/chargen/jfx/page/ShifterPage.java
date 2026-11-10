@@ -27,6 +27,7 @@ import de.rpgframework.shadowrun.DisciplineTechnique;
 import de.rpgframework.shadowrun.SIN;
 import de.rpgframework.shadowrun.SIN.FakeRating;
 import de.rpgframework.shadowrun.chargen.jfx.section.MetamagicOrEchoSection;
+import de.rpgframework.shadowrun6.SR6Discipline;
 import de.rpgframework.shadowrun6.Shadowrun6Tools;
 import de.rpgframework.shadowrun6.chargen.charctrl.SR6CharacterController;
 import de.rpgframework.shadowrun6.chargen.jfx.SR6CharacterViewLayout;
@@ -96,7 +97,7 @@ public class ShifterPage extends Page {
 				ResourceI18N.get(RES, "page.shifter.section.animalism"),
 				Shadowrun6Tools.requirementResolver(Locale.getDefault()),
 				Shadowrun6Tools.modificationResolver(Locale.getDefault()),
-				DisciplineTechnique.Type.ANIMALISM
+				SR6Discipline.ANIMALISM
 				);
 		secMeta.setControlSupplier( () -> ctrl.getAnimalismController());
 		secMeta.setMaxHeight(Double.MAX_VALUE);

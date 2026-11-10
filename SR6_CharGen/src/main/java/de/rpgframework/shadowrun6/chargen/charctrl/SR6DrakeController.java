@@ -25,7 +25,7 @@ import de.rpgframework.genericrpg.modification.ValueModification;
 import de.rpgframework.genericrpg.requirements.Requirement;
 import de.rpgframework.shadowrun.BodyType;
 import de.rpgframework.shadowrun.DisciplineTechnique;
-import de.rpgframework.shadowrun.DisciplineTechnique.Type;
+import de.rpgframework.shadowrun6.SR6Discipline;
 import de.rpgframework.shadowrun.DisciplineTechniqueValue;
 import de.rpgframework.shadowrun.ShadowrunAttribute;
 import de.rpgframework.shadowrun.chargen.charctrl.IDisciplineController;
@@ -110,7 +110,7 @@ public class SR6DrakeController extends ControllerImpl<DisciplineTechnique>
 		return Shadowrun6Core.getItemList(DisciplineTechnique.class).stream()
 				.filter(p -> parent.showDataItem(p))
 				.filter(p -> !getModel().hasMetamagicOrEcho(p.getId()) || p.hasLevel() || p.isMulti())
-				.filter(m -> m.getType()==Type.DRACOGENESIS_POWER)
+				.filter(m -> m.getDiscipline()==SR6Discipline.DRACOGENESIS_POWER)
 				.collect(Collectors.toList());
 	}
 
@@ -121,7 +121,7 @@ public class SR6DrakeController extends ControllerImpl<DisciplineTechnique>
 	@Override
 	public List<DisciplineTechniqueValue> getSelected() {
 //		System.err.println("SR6DrakeController.getSelected: "+getModel().getDisciplineTechniquees().size()+" items");
-		return getModel().getMetamagicOrEchoes().stream().filter(v -> v.getResolved().getType()==Type.DRACOGENESIS_POWER).collect(Collectors.toList());
+		return getModel().getMetamagicOrEchoes().stream().filter(v -> v.getResolved().getDiscipline()==SR6Discipline.DRACOGENESIS_POWER).collect(Collectors.toList());
 	}
 
 	//-------------------------------------------------------------------
@@ -496,7 +496,7 @@ public class SR6DrakeController extends ControllerImpl<DisciplineTechnique>
 			int payNext = 6;
 			int grade = 0;
 			for (DisciplineTechniqueValue val : model.getMetamagicOrEchoes()) {
-				if (val.getModifyable().getType()!=Type.DRACOGENESIS_POWER) continue;
+				if (val.getModifyable().getDiscipline()!=SR6Discipline.DRACOGENESIS_POWER) continue;
 				logger.log(Level.DEBUG, "Metaecho {0} is auto={1}", val.getKey(), val.isAutoAdded());
 				if (val.isAutoAdded()) {
 					logger.log(Level.DEBUG, "Ignore auto-added drake power {0}", val.getKey());

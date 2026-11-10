@@ -91,7 +91,7 @@ public class SR6AnimalismController extends ControllerImpl<DisciplineTechnique>
 		List<DisciplineTechnique> ret = Shadowrun6Core.getItemList(DisciplineTechnique.class).stream()
 				.filter(p -> parent.showDataItem(p))
 				.filter(p -> !getModel().hasMetamagicOrEcho(p.getId()) || p.hasLevel())
-				.filter(m -> m.getType()==SR6Discipline.ANIMALISM)
+				.filter(m -> m.getDiscipline()==SR6Discipline.ANIMALISM)
 				.collect(Collectors.toList());
 		return ret;
 	}
@@ -102,7 +102,7 @@ public class SR6AnimalismController extends ControllerImpl<DisciplineTechnique>
 	 */
 	@Override
 	public List<DisciplineTechniqueValue> getSelected() {
-		return getModel().getMetamagicOrEchoes().stream().filter(m -> m.getResolved().getType()==SR6Discipline.ANIMALISM).toList();
+		return getModel().getMetamagicOrEchoes().stream().filter(m -> m.getResolved().getDiscipline()==SR6Discipline.ANIMALISM).toList();
 	}
 
 	//-------------------------------------------------------------------
@@ -133,7 +133,7 @@ public class SR6AnimalismController extends ControllerImpl<DisciplineTechnique>
 		if (meta==null) return 0;
 		List<DisciplineTechniqueValue> list = getSelected().stream()
 				.filter(m -> m.getModifyable()!=null)
-				.filter(m -> m.getModifyable().getType() == SR6Discipline.ANIMALISM)
+				.filter(m -> m.getModifyable().getDiscipline() == SR6Discipline.ANIMALISM)
 				.filter(m -> !m.isAutoAdded())
 				.collect(Collectors.toList());
 		// Determine the grade
@@ -182,7 +182,7 @@ public class SR6AnimalismController extends ControllerImpl<DisciplineTechnique>
 
 		// Check if initiation/immersion/transhumanism is allowed (for chargen)
 		if (isCharGen) {
-			if (value.getType()==SR6Discipline.ANIMALISM && !parent.getRuleController().getRuleValueAsBoolean(Shadowrun6Rules.ALLOW_ANIMALISM)) {
+			if (value.getDiscipline()==SR6Discipline.ANIMALISM && !parent.getRuleController().getRuleValueAsBoolean(Shadowrun6Rules.ALLOW_ANIMALISM)) {
 				return new Possible(Severity.STOPPER, IRejectReasons.RES, IRejectReasons.IMPOSS_NOT_AVAILABLE);
 			}
 		}
@@ -493,7 +493,7 @@ public class SR6AnimalismController extends ControllerImpl<DisciplineTechnique>
 				if (tmp.getReferenceType()==ShadowrunReference.METAECHO) {
 					DataItemModification mod = (DataItemModification)tmp;
 					DisciplineTechnique item = mod.getResolvedKey();
-					if (item.getType()==SR6Discipline.ANIMALISM) {
+					if (item.getDiscipline()==SR6Discipline.ANIMALISM) {
 						DisciplineTechniqueValue val = model.getMetamagicOrEcho(mod.getKey());
 						if (val==null || !item.hasLevel()) {
 							val = new DisciplineTechniqueValue(item);
@@ -518,7 +518,7 @@ public class SR6AnimalismController extends ControllerImpl<DisciplineTechnique>
 			int payNext = 11;
 			int grade = 0;
 			for (DisciplineTechniqueValue val : model.getMetamagicOrEchoes()) {
-				if (val.getModifyable().getType()!=SR6Discipline.ANIMALISM) continue;
+				if (val.getModifyable().getDiscipline()!=SR6Discipline.ANIMALISM) continue;
 				if (val.getModifyable().hasLevel()) {
 					for (int i=0; i<val.getDistributed(); i++) {
 						if (isCharGen) {

@@ -21,7 +21,7 @@ import de.rpgframework.genericrpg.modification.ValueModification;
 import de.rpgframework.genericrpg.requirements.Requirement;
 import de.rpgframework.shadowrun.BodyType;
 import de.rpgframework.shadowrun.DisciplineTechnique;
-import de.rpgframework.shadowrun.DisciplineTechnique.Type;
+import de.rpgframework.shadowrun6.SR6Discipline;
 import de.rpgframework.shadowrun.DisciplineTechniqueValue;
 import de.rpgframework.shadowrun.IDiscipline;
 import de.rpgframework.shadowrun.MagicOrResonanceType;
@@ -73,13 +73,13 @@ public class SR6MetamagicOrEchoController extends ControllerImpl<DisciplineTechn
 			return Shadowrun6Core.getItemList(DisciplineTechnique.class).stream()
 					.filter(p -> parent.showDataItem(p))
 					.filter(p -> !getModel().hasMetamagicOrEcho(p.getId()) || p.hasLevel())
-					.filter(m -> m.getType()==Type.METAMAGIC||m.getType()==Type.METAMAGIC_ADEPT)
+					.filter(m -> m.getDiscipline()==SR6Discipline.METAMAGIC)
 					.collect(Collectors.toList());
 		} else if (type!=null && type.usesResonance()) {
 			return Shadowrun6Core.getItemList(DisciplineTechnique.class).stream()
 					.filter(p -> parent.showDataItem(p))
 					.filter(p -> !getModel().hasMetamagicOrEcho(p.getId()) || p.hasLevel())
-					.filter(m -> m.getType()==Type.ECHO)
+					.filter(m -> m.getDiscipline()==SR6Discipline.ECHO)
 					.collect(Collectors.toList());
 		}
 		return new ArrayList<>();
@@ -104,13 +104,13 @@ public class SR6MetamagicOrEchoController extends ControllerImpl<DisciplineTechn
 				ret.addAll( Shadowrun6Core.getItemList(DisciplineTechnique.class).stream()
 					.filter(p -> parent.showDataItem(p))
 					.filter(p -> !getModel().hasMetamagicOrEcho(p.getId()) || p.hasLevel())
-					.filter(m -> m.getType()==Type.NEUROMORPHISM)
+					.filter(m -> m.getDiscipline()==SR6Discipline.NEUROMORPHISM)
 					.collect(Collectors.toList()) );
 			} else if ( rules.getRuleValueAsBoolean(Shadowrun6Rules.ALLOW_TRANSHUMANISM)) {
 				ret.addAll( Shadowrun6Core.getItemList(DisciplineTechnique.class).stream()
 					.filter(p -> parent.showDataItem(p))
 					.filter(p -> !getModel().hasMetamagicOrEcho(p.getId()) || p.hasLevel())
-					.filter(m -> m.getType()==Type.TRANSHUMANISM)
+					.filter(m -> m.getDiscipline()==SR6Discipline.TRANSHUMANISM)
 					.collect(Collectors.toList()) );
 			}
 		}
@@ -119,7 +119,7 @@ public class SR6MetamagicOrEchoController extends ControllerImpl<DisciplineTechn
 			ret.addAll( Shadowrun6Core.getItemList(DisciplineTechnique.class).stream()
 					.filter(p -> parent.showDataItem(p))
 					.filter(p -> !getModel().hasMetamagicOrEcho(p.getId()) || p.hasLevel() || p.isMulti())
-					.filter(m -> m.getType()==Type.DRACOGENESIS_POWER)
+					.filter(m -> m.getDiscipline()==SR6Discipline.DRACOGENESIS_POWER)
 					.collect(Collectors.toList()) );
 		}
 		return ret;
@@ -159,7 +159,8 @@ public class SR6MetamagicOrEchoController extends ControllerImpl<DisciplineTechn
 	@Override
 	public int getGrade(IDiscipline type) {
 		List<DisciplineTechniqueValue> list = getSelected().stream()
-				.filter(m -> m.getModifyable().getType() == type)
+				// Compare by ID, the discipline may come from another IDiscipline implementation
+				.filter(m -> IDiscipline.isSame(m.getModifyable().getDiscipline(), type))
 				.filter(m -> !m.isAutoAdded())
 				.collect(Collectors.toList());
 		// Determine the grade
@@ -186,22 +187,22 @@ public class SR6MetamagicOrEchoController extends ControllerImpl<DisciplineTechn
 		if (type != null && type.usesMagic()) {
 			list = getSelected().stream()
 					.filter(m -> m.getModifyable()!=null)
-					.filter(m -> m.getModifyable().getType() == Type.METAMAGIC || m.getModifyable().getType() == Type.METAMAGIC_ADEPT)
+					.filter(m -> m.getModifyable().getDiscipline() == SR6Discipline.METAMAGIC)
 					.filter(m -> !m.isAutoAdded())
 					.collect(Collectors.toList());
 		} else if (type != null && type.usesResonance()) {
 			list = getSelected().stream()
-					.filter(m -> m.getModifyable().getType() == Type.ECHO)
+					.filter(m -> m.getModifyable().getDiscipline() == SR6Discipline.ECHO)
 					.filter(m -> !m.isAutoAdded())
 					.collect(Collectors.toList());
 		} else {
 			if (meta.isAI()) {
 				list = getSelected().stream()
-						.filter(m -> m.getModifyable().getType() == Type.NEUROMORPHISM)
+						.filter(m -> m.getModifyable().getDiscipline() == SR6Discipline.NEUROMORPHISM)
 						.collect(Collectors.toList());
 			} else {
 				list = getSelected().stream()
-					.filter(m -> m.getModifyable().getType() == Type.TRANSHUMANISM)
+					.filter(m -> m.getModifyable().getDiscipline() == SR6Discipline.TRANSHUMANISM)
 					.collect(Collectors.toList());
 			}
 		}
@@ -251,13 +252,13 @@ public class SR6MetamagicOrEchoController extends ControllerImpl<DisciplineTechn
 
 		// Check if initiation/immersion/transhumanism is allowed (for chargen)
 		if (isCharGen) {
-			if (value.getType()==Type.TRANSHUMANISM && !parent.getRuleController().getRuleValueAsBoolean(Shadowrun6Rules.ALLOW_TRANSHUMANISM)) {
+			if (value.getDiscipline()==SR6Discipline.TRANSHUMANISM && !parent.getRuleController().getRuleValueAsBoolean(Shadowrun6Rules.ALLOW_TRANSHUMANISM)) {
 				return new Possible(false, IRejectReasons.IMPOSS_NOT_AVAILABLE);
 			}
-			if (value.getType()==Type.NEUROMORPHISM && !parent.getRuleController().getRuleValueAsBoolean(Shadowrun6Rules.ALLOW_NEUROMORPHISM)) {
+			if (value.getDiscipline()==SR6Discipline.NEUROMORPHISM && !parent.getRuleController().getRuleValueAsBoolean(Shadowrun6Rules.ALLOW_NEUROMORPHISM)) {
 				return new Possible(false, IRejectReasons.IMPOSS_NOT_AVAILABLE);
 			}
-			if (value.getType()!=Type.METAMAGIC && !parent.getRuleController().getRuleValueAsBoolean(ShadowrunRules.CHARGEN_ALLOW_INITIATION)) {
+			if (value.getDiscipline()!=SR6Discipline.METAMAGIC && !parent.getRuleController().getRuleValueAsBoolean(ShadowrunRules.CHARGEN_ALLOW_INITIATION)) {
 				return new Possible(false, IRejectReasons.IMPOSS_NOT_AVAILABLE);
 			}
 		}
@@ -597,7 +598,7 @@ public class SR6MetamagicOrEchoController extends ControllerImpl<DisciplineTechn
 			int payNext = 11;
 			int grade = 0;
 			for (DisciplineTechniqueValue val : model.getMetamagicOrEchoes()) {
-				if (val.getModifyable().getType()==Type.DRACOGENESIS_POWER) continue;
+				if (val.getModifyable().getDiscipline()==SR6Discipline.DRACOGENESIS_POWER) continue;
 				if (val.getModifyable().hasLevel()) {
 					for (int i=0; i<val.getDistributed(); i++) {
 						if (isCharGen) {
