@@ -61,7 +61,7 @@ public class SR6FreeRitualGenerator extends CommonRitualController implements IR
 	@Override
 	public Possible canBeSelected(Ritual value, Decision... decisions) {
 		// Ensure spell has not been selected yet
-		for (RitualValue tmp : getSelected()) {
+		for (RitualValue<Ritual> tmp : getSelected()) {
 			if (tmp.getResolved()==value)
 				return new Possible(IRejectReasons.IMPOSS_ALREADY_PRESENT);
 		}
@@ -74,7 +74,7 @@ public class SR6FreeRitualGenerator extends CommonRitualController implements IR
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#canBeDeselected(de.rpgframework.genericrpg.data.DataItemValue)
 	 */
 	@Override
-	public Possible canBeDeselected(RitualValue value) {
+	public Possible canBeDeselected(RitualValue<Ritual> value) {
 		if (!getSelected().contains(value)) {
 			return new Possible(IRejectReasons.IMPOSS_NOT_PRESENT);
 		}
@@ -109,7 +109,7 @@ public class SR6FreeRitualGenerator extends CommonRitualController implements IR
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#select(de.rpgframework.genericrpg.data.DataItem, de.rpgframework.genericrpg.data.Decision[])
 	 */
 	@Override
-	public OperationResult<RitualValue> select(Ritual value, Decision... decisions) {
+	public OperationResult<RitualValue<Ritual>> select(Ritual value, Decision... decisions) {
 		logger.log(Level.TRACE, "ENTER select({0}, {1})", value, Arrays.toString(decisions));
 		try {
 			Possible poss = canBeSelected(value, decisions);
@@ -118,7 +118,7 @@ public class SR6FreeRitualGenerator extends CommonRitualController implements IR
 				return new OperationResult<>(poss);
 			}
 
-			RitualValue toAdd = new RitualValue(value);
+			RitualValue<Ritual> toAdd = new RitualValue<Ritual>(value);
 			for (Decision dec : decisions) {
 				toAdd.addDecision(dec);
 			}

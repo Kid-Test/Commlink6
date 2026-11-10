@@ -31,7 +31,7 @@ public abstract class CommonRitualController extends ControllerImpl<Ritual> impl
 	@Override
 	public List<Ritual> getAvailable() {
 		List<Ritual> ret = new ArrayList<>(Shadowrun6Core.getItemList(Ritual.class));
-		for (RitualValue tmp : getModel().getRituals()) {
+		for (RitualValue<Ritual> tmp : getModel().getRituals()) {
 			ret.remove(tmp.getModifyable());
 		}
 		logger.log(Level.WARNING, "Return "+ret.size()+" available");
@@ -49,8 +49,8 @@ public abstract class CommonRitualController extends ControllerImpl<Ritual> impl
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#getSelected()
 	 */
 	@Override
-	public List<RitualValue> getSelected() {
-		List<RitualValue> ret = new ArrayList<>();
+	public List<RitualValue<Ritual>> getSelected() {
+		List<RitualValue<Ritual>> ret = new ArrayList<>();
 		getModel().getRituals().forEach( sp -> ret.add((SR6RitualValue) sp));
 		return ret;
 	}
@@ -69,7 +69,7 @@ public abstract class CommonRitualController extends ControllerImpl<Ritual> impl
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#getRecommendationState(de.rpgframework.genericrpg.data.DataItemValue)
 	 */
 	@Override
-	public RecommendationState getRecommendationState(RitualValue value) {
+	public RecommendationState getRecommendationState(RitualValue<Ritual> value) {
 		return RecommendationState.NEUTRAL;
 	}
 
@@ -87,7 +87,7 @@ public abstract class CommonRitualController extends ControllerImpl<Ritual> impl
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#select(de.rpgframework.genericrpg.data.DataItem, de.rpgframework.genericrpg.data.Decision[])
 	 */
 	@Override
-	public OperationResult<RitualValue> select(Ritual value, Decision... decisions) {
+	public OperationResult<RitualValue<Ritual>> select(Ritual value, Decision... decisions) {
 		logger.log(Level.TRACE, "ENTER select({0}, {1})", value, Arrays.toString(decisions));
 		try {
 			Possible poss = canBeSelected(value, decisions);
@@ -96,7 +96,7 @@ public abstract class CommonRitualController extends ControllerImpl<Ritual> impl
 				return new OperationResult<>(poss);
 			}
 
-			RitualValue toAdd = new RitualValue(value);
+			RitualValue<Ritual> toAdd = new RitualValue<Ritual>(value);
 			for (Decision dec : decisions) {
 				toAdd.addDecision(dec);
 			}
@@ -115,7 +115,7 @@ public abstract class CommonRitualController extends ControllerImpl<Ritual> impl
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#deselect(de.rpgframework.genericrpg.data.DataItemValue)
 	 */
 	@Override
-	public boolean deselect(RitualValue value) {
+	public boolean deselect(RitualValue<Ritual> value) {
 		logger.log(Level.TRACE, "ENTER deselect({0})", value);
 		try {
 			Possible poss = canBeDeselected(value);

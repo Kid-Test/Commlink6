@@ -67,7 +67,7 @@ public class SR6PriorityRitualGenerator extends CommonRitualController implement
 	@Override
 	public Possible canBeSelected(Ritual value, Decision... decisions) {
 		// Ensure spell has not been selected yet
-		for (RitualValue tmp : getSelected()) {
+		for (RitualValue<Ritual> tmp : getSelected()) {
 			if (tmp.getResolved()==value)
 				return new Possible(Severity.STOPPER, IRejectReasons.RES ,IRejectReasons.IMPOSS_ALREADY_PRESENT);
 		}
@@ -89,7 +89,7 @@ public class SR6PriorityRitualGenerator extends CommonRitualController implement
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#canBeDeselected(de.rpgframework.genericrpg.data.DataItemValue)
 	 */
 	@Override
-	public Possible canBeDeselected(RitualValue value) {
+	public Possible canBeDeselected(RitualValue<Ritual> value) {
 		if (!getSelected().contains(value)) {
 			return new Possible(Severity.STOPPER, IRejectReasons.RES ,IRejectReasons.IMPOSS_NOT_PRESENT);
 		}
@@ -124,8 +124,8 @@ public class SR6PriorityRitualGenerator extends CommonRitualController implement
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#select(de.rpgframework.genericrpg.data.DataItem, de.rpgframework.genericrpg.data.Decision[])
 	 */
 	@Override
-	public OperationResult<RitualValue> select(Ritual value, Decision... decisions) {
-		OperationResult<RitualValue> ret = super.select(value, decisions);
+	public OperationResult<RitualValue<Ritual>> select(Ritual value, Decision... decisions) {
+		OperationResult<RitualValue<Ritual>> ret = super.select(value, decisions);
 		parent.runProcessors();
 		return ret;
 	}

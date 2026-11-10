@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import de.rpgframework.MultiLanguageResourceBundle;
 import de.rpgframework.genericrpg.Possible;
 import de.rpgframework.genericrpg.ToDoElement;
 import de.rpgframework.genericrpg.ToDoElement.Severity;
@@ -20,7 +19,6 @@ import de.rpgframework.shadowrun.chargen.charctrl.IRitualController;
 import de.rpgframework.shadowrun6.Shadowrun6Character;
 import de.rpgframework.shadowrun6.chargen.charctrl.CommonRitualController;
 import de.rpgframework.shadowrun6.chargen.charctrl.SR6CharacterController;
-import de.rpgframework.shadowrun6.chargen.charctrl.SR6CharacterGenerator;
 import de.rpgframework.shadowrun6.chargen.charctrl.SR6RejectReasons;
 
 /**
@@ -28,8 +26,6 @@ import de.rpgframework.shadowrun6.chargen.charctrl.SR6RejectReasons;
  *
  */
 public class SR6KarmaRitualGenerator extends CommonRitualController implements IRitualController {
-
-	private static MultiLanguageResourceBundle RES = SR6CharacterGenerator.RES;
 
 	private int maxSpellsAndRituals;
 
@@ -72,7 +68,7 @@ public class SR6KarmaRitualGenerator extends CommonRitualController implements I
 	@Override
 	public Possible canBeSelected(Ritual value, Decision... decisions) {
 		// Ensure spell has not been selected yet
-		for (RitualValue tmp : getSelected()) {
+		for (RitualValue<Ritual> tmp : getSelected()) {
 			if (tmp.getResolved()==value)
 				return new Possible(IRejectReasons.IMPOSS_ALREADY_PRESENT);
 		}
@@ -89,7 +85,7 @@ public class SR6KarmaRitualGenerator extends CommonRitualController implements I
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#canBeDeselected(de.rpgframework.genericrpg.data.DataItemValue)
 	 */
 	@Override
-	public Possible canBeDeselected(RitualValue value) {
+	public Possible canBeDeselected(RitualValue<Ritual> value) {
 		if (!getSelected().contains(value)) {
 			return new Possible(IRejectReasons.IMPOSS_NOT_PRESENT);
 		}
@@ -124,7 +120,7 @@ public class SR6KarmaRitualGenerator extends CommonRitualController implements I
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#select(de.rpgframework.genericrpg.data.DataItem, de.rpgframework.genericrpg.data.Decision[])
 	 */
 	@Override
-	public OperationResult<RitualValue> select(Ritual value, Decision... decisions) {
+	public OperationResult<RitualValue<Ritual>> select(Ritual value, Decision... decisions) {
 		logger.log(Level.TRACE, "ENTER select({0}, {1})", value, Arrays.toString(decisions));
 		try {
 			Possible poss = canBeSelected(value, decisions);
@@ -133,7 +129,7 @@ public class SR6KarmaRitualGenerator extends CommonRitualController implements I
 				return new OperationResult<>(poss);
 			}
 
-			RitualValue toAdd = new RitualValue(value);
+			RitualValue<Ritual> toAdd = new RitualValue<Ritual>(value);
 			for (Decision dec : decisions) {
 				toAdd.addDecision(dec);
 			}

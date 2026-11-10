@@ -12,7 +12,6 @@ import de.rpgframework.genericrpg.chargen.RecommendationState;
 import de.rpgframework.genericrpg.data.Choice;
 import de.rpgframework.genericrpg.data.Decision;
 import de.rpgframework.genericrpg.modification.Modification;
-import de.rpgframework.shadowrun.Quality;
 import de.rpgframework.shadowrun.Ritual;
 import de.rpgframework.shadowrun.RitualValue;
 import de.rpgframework.shadowrun.chargen.charctrl.IRejectReasons;
@@ -40,7 +39,7 @@ public class SR6RitualLeveller extends ControllerImpl<Ritual> implements IRitual
 	@Override
 	public List<Ritual> getAvailable() {
 		List<Ritual> ret = new ArrayList<>(Shadowrun6Core.getItemList(Ritual.class));
-		for (RitualValue tmp : getModel().getRituals()) {
+		for (RitualValue<Ritual> tmp : getModel().getRituals()) {
 			ret.remove(tmp.getModifyable());
 		}
 		logger.log(Level.WARNING, "Return "+ret.size()+" available");
@@ -51,11 +50,10 @@ public class SR6RitualLeveller extends ControllerImpl<Ritual> implements IRitual
 	/**
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#getSelected()
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
-	public List<RitualValue> getSelected() {
-		List<RitualValue> ret = new ArrayList<>();
-		getModel().getRituals().forEach( sp -> ret.add((RitualValue) sp));
+	public List<RitualValue<Ritual>> getSelected() {
+		List<RitualValue<Ritual>> ret = new ArrayList<>();
+		getModel().getRituals().forEach( sp -> ret.add((RitualValue<Ritual>) sp));
 		return ret;
 	}
 
@@ -73,7 +71,7 @@ public class SR6RitualLeveller extends ControllerImpl<Ritual> implements IRitual
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#getRecommendationState(de.rpgframework.genericrpg.data.DataItemValue)
 	 */
 	@Override
-	public RecommendationState getRecommendationState(RitualValue value) {
+	public RecommendationState getRecommendationState(RitualValue<Ritual> value) {
 		return RecommendationState.NEUTRAL;
 	}
 
@@ -99,7 +97,7 @@ public class SR6RitualLeveller extends ControllerImpl<Ritual> implements IRitual
 	@Override
 	public Possible canBeSelected(Ritual value, Decision... decisions) {
 		// Ensure spell has not been selected yet
-		for (RitualValue tmp : getSelected()) {
+		for (RitualValue<Ritual> tmp : getSelected()) {
 			if (tmp.getResolved()==value)
 				return new Possible(IRejectReasons.IMPOSS_ALREADY_PRESENT);
 		}
@@ -115,7 +113,7 @@ public class SR6RitualLeveller extends ControllerImpl<Ritual> implements IRitual
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#select(de.rpgframework.genericrpg.data.DataItem, de.rpgframework.genericrpg.data.Decision[])
 	 */
 	@Override
-	public OperationResult<RitualValue> select(Ritual value, Decision... decisions) {
+	public OperationResult<RitualValue<Ritual>> select(Ritual value, Decision... decisions) {
 		logger.log(Level.TRACE, "ENTER select({0}, {1})", value, Arrays.toString(decisions));
 		try {
 			Possible poss = canBeSelected(value, decisions);
@@ -124,7 +122,7 @@ public class SR6RitualLeveller extends ControllerImpl<Ritual> implements IRitual
 				return new OperationResult<>(poss);
 			}
 			
-			RitualValue toAdd = new RitualValue(value);
+			RitualValue<Ritual> toAdd = new RitualValue<Ritual>(value);
 			for (Decision dec : decisions) {
 				toAdd.addDecision(dec);
 			}
@@ -145,7 +143,7 @@ public class SR6RitualLeveller extends ControllerImpl<Ritual> implements IRitual
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#canBeDeselected(de.rpgframework.genericrpg.data.DataItemValue)
 	 */
 	@Override
-	public Possible canBeDeselected(RitualValue value) {
+	public Possible canBeDeselected(RitualValue<Ritual> value) {
 		if (!getSelected().contains(value)) {
 			return new Possible(IRejectReasons.IMPOSS_NOT_PRESENT);
 		}
@@ -162,7 +160,7 @@ public class SR6RitualLeveller extends ControllerImpl<Ritual> implements IRitual
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#deselect(de.rpgframework.genericrpg.data.DataItemValue)
 	 */
 	@Override
-	public boolean deselect(RitualValue value) {
+	public boolean deselect(RitualValue<Ritual> value) {
 		logger.log(Level.TRACE, "ENTER deselect({0})", value);
 		try {
 			Possible poss = canBeDeselected(value);

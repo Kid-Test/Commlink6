@@ -63,7 +63,7 @@ public class SR6PointBuyRitualGenerator extends CommonRitualController implement
 	//-------------------------------------------------------------------
 	public Possible canBeSelectedCP(Ritual value, Decision... decisions) {
 		// Ensure spell has not been selected yet
-		for (RitualValue tmp : getSelected()) {
+		for (RitualValue<Ritual> tmp : getSelected()) {
 			if (tmp.getResolved()==value)
 				return new Possible(Severity.STOPPER, IRejectReasons.RES ,IRejectReasons.IMPOSS_ALREADY_PRESENT);
 		}
@@ -86,7 +86,7 @@ public class SR6PointBuyRitualGenerator extends CommonRitualController implement
 	//-------------------------------------------------------------------
 	public Possible canBeSelectedKarma(Ritual value, Decision... decisions) {
 		// Ensure spell has not been selected yet
-		for (RitualValue tmp : getSelected()) {
+		for (RitualValue<Ritual> tmp : getSelected()) {
 			if (tmp.getResolved()==value)
 				return new Possible(Severity.STOPPER, IRejectReasons.RES ,IRejectReasons.IMPOSS_ALREADY_PRESENT);
 		}
@@ -113,7 +113,7 @@ public class SR6PointBuyRitualGenerator extends CommonRitualController implement
 	@Override
 	public Possible canBeSelected(Ritual value, Decision... decisions) {
 		// Ensure spell has not been selected yet
-		for (RitualValue tmp : getSelected()) {
+		for (RitualValue<Ritual> tmp : getSelected()) {
 			if (tmp.getResolved()==value)
 				return new Possible(Severity.STOPPER, IRejectReasons.RES ,IRejectReasons.IMPOSS_ALREADY_PRESENT);
 		}
@@ -130,7 +130,7 @@ public class SR6PointBuyRitualGenerator extends CommonRitualController implement
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#canBeDeselected(de.rpgframework.genericrpg.data.DataItemValue)
 	 */
 	@Override
-	public Possible canBeDeselected(RitualValue value) {
+	public Possible canBeDeselected(RitualValue<Ritual> value) {
 		if (!getSelected().contains(value)) {
 			return new Possible(Severity.STOPPER, IRejectReasons.RES ,IRejectReasons.IMPOSS_NOT_PRESENT);
 		}
@@ -165,10 +165,10 @@ public class SR6PointBuyRitualGenerator extends CommonRitualController implement
 	 * @see de.rpgframework.genericrpg.chargen.ComplexDataItemController#select(de.rpgframework.genericrpg.data.DataItem, de.rpgframework.genericrpg.data.Decision[])
 	 */
 	@Override
-	public OperationResult<RitualValue> select(Ritual value, Decision... decisions) {
+	public OperationResult<RitualValue<Ritual>> select(Ritual value, Decision... decisions) {
 		boolean payWithCP = canBeSelectedCP(value, decisions).get();
 
-		OperationResult<RitualValue> result = super.select(value, decisions);
+		OperationResult<RitualValue<Ritual>> result = super.select(value, decisions);
 		logger.log(Level.INFO, "Pay {0} with CP = {1}", value.getId(), payWithCP);
 		SR6PointBuySettings settings = getModel().getCharGenSettings(SR6PointBuySettings.class);
 		logger.log(Level.INFO, "Put "+result.get()+" = "+payWithCP);
@@ -199,7 +199,7 @@ public class SR6PointBuyRitualGenerator extends CommonRitualController implement
 			logger.log(Level.INFO, "Can pick up to {0} spells and rituals", maxSpellsAndRituals);
 
 			SR6PointBuySettings settings = model.getCharGenSettings(SR6PointBuySettings.class);
-			for (RitualValue val : model.getRituals()) {
+			for (RitualValue<Ritual> val : model.getRituals()) {
 				settings.sumSpellsRituals++;
 				Boolean payedWithCP = settings.perRitualPayedWithCP.get(val);
 				logger.log(Level.INFO, "perRitualPayedWithCP = "+settings.perRitualPayedWithCP);
