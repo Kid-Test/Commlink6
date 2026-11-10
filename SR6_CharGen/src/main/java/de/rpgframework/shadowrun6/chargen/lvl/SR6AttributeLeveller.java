@@ -281,14 +281,14 @@ public class SR6AttributeLeveller extends ControllerImpl<ShadowrunAttribute> imp
 		if (mrType.usesMagic()) {
 			int rank = getModel().getAttribute(ShadowrunAttribute.INITIATION_RANK).getModifiedValue();
 			if (rank>0) {
-				getModel().getAttribute(ShadowrunAttribute.MAGIC).addIncomingModification(new ValueModification(ShadowrunReference.ATTRIBUTE, "MAGIC", rank, SR6Discipline.INITIATION, ValueType.MAX));
+				getModel().getAttribute(ShadowrunAttribute.MAGIC).addIncomingModification(new ValueModification(ShadowrunReference.ATTRIBUTE, "MAGIC", rank, SR6Discipline.METAMAGIC, ValueType.MAX));
 				logger.log(Level.ERROR, "Through initiation the maximum of MAGIC is {0} ", getModel().getAttribute(ShadowrunAttribute.MAGIC).getMaximum(6));
 			}
 		}
 		if (mrType.usesResonance()) {
 			int rank = getModel().getAttribute(ShadowrunAttribute.SUBMERSION_RANK).getModifiedValue();
 			if (rank>0) {
-				getModel().getAttribute(ShadowrunAttribute.RESONANCE).addIncomingModification(new ValueModification(ShadowrunReference.ATTRIBUTE, "RESONANCE", rank, SR6Discipline.SUBMERSION, ValueType.MAX));
+				getModel().getAttribute(ShadowrunAttribute.RESONANCE).addIncomingModification(new ValueModification(ShadowrunReference.ATTRIBUTE, "RESONANCE", rank, SR6Discipline.ECHO, ValueType.MAX));
 				logger.log(Level.ERROR, "Through initiation the maximum of RESONANCE is {0} ", getModel().getAttribute(ShadowrunAttribute.RESONANCE).getMaximum(6));
 			}
 		}

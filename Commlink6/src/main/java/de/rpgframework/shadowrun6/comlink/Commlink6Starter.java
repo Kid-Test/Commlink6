@@ -7,7 +7,7 @@ import de.rpgframework.eden.client.jfx.EdenSettings;
 import de.rpgframework.eden.client.jfx.EdenSettingsPage;
 import de.rpgframework.eden.client.jfx.UISettingsSection;
 
-public class ComLinkStarter {
+public class Commlink6Starter {
 
 	public static void main(String[] args) {
 		LogManager.getLogManager().reset();

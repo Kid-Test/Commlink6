@@ -24,12 +24,12 @@ import de.rpgframework.shadowrun.AdeptPowerValue;
 import de.rpgframework.shadowrun.ComplexFormValue;
 import de.rpgframework.shadowrun.Contact;
 import de.rpgframework.shadowrun.DamageType;
+import de.rpgframework.shadowrun.DisciplineTechniqueValue;
 import de.rpgframework.shadowrun.FocusValue;
 import de.rpgframework.shadowrun.Lifestyle;
 import de.rpgframework.shadowrun.MagicOrResonanceType;
-import de.rpgframework.shadowrun.MetamagicOrEcho;
-import de.rpgframework.shadowrun.MetamagicOrEchoValue;
 import de.rpgframework.shadowrun.QualityValue;
+import de.rpgframework.shadowrun.Ritual;
 import de.rpgframework.shadowrun.RitualFeatureReference;
 import de.rpgframework.shadowrun.RitualValue;
 import de.rpgframework.shadowrun.SIN;
@@ -40,6 +40,7 @@ import de.rpgframework.shadowrun.items.AugmentationQuality;
 import de.rpgframework.shadowrun.items.Availability;
 import de.rpgframework.shadowrun.items.FireMode;
 import de.rpgframework.shadowrun6.MartialArtsValue;
+import de.rpgframework.shadowrun6.SR6Discipline;
 import de.rpgframework.shadowrun6.SR6Skill;
 import de.rpgframework.shadowrun6.SR6SkillValue;
 import de.rpgframework.shadowrun6.SR6Spell;
@@ -713,7 +714,7 @@ public class FoundryExportService {
 
 	//-------------------------------------------------------------------
 	private void addRituals(ActorData<Shadowrun6FoundryCharacter> actor, Shadowrun6Character character) {
-		for (RitualValue item : character.getRituals()) {
+		for (RitualValue<Ritual> item : character.getRituals()) {
 			FVTTRitual spell = new FVTTRitual();
 
 			spell.genesisID = item.getModifyable().getId();
@@ -740,15 +741,15 @@ public class FoundryExportService {
 
 	//-------------------------------------------------------------------
 	private void addMetamagics(ActorData<Shadowrun6FoundryCharacter> actor, Shadowrun6Character model) {
-		for (MetamagicOrEchoValue val : model.getMetamagicOrEchoes()) {
-			if (val.getModifyable().getType()==MetamagicOrEcho.Type.ECHO)
+		for (DisciplineTechniqueValue val : model.getMetamagicOrEchoes()) {
+			if (val.getModifyable().getType()==SR6Discipline.ECHO)
 				continue;
 
 			FVTTMetamagic fVal = new FVTTMetamagic();
 			// Definition fields
 			fVal.genesisID = val.getModifyable().getId();
 			fVal.level     = val.getModifyable().hasLevel();
-			fVal.adepts    = (val.getModifyable().getType()==MetamagicOrEcho.Type.METAMAGIC_ADEPT);
+			fVal.adepts    = (val.getModifyable().getType()==SR6Discipline.METAMAGIC_ADEPT);
 			fVal.mages     = true;
 			
 			for (PageReference pr : val.getModifyable().getPageReferences()) {
@@ -804,8 +805,8 @@ public class FoundryExportService {
 
 	//-------------------------------------------------------------------
 	private void addEchoes(ActorData<Shadowrun6FoundryCharacter> actor, Shadowrun6Character model) {
-		for (MetamagicOrEchoValue val : model.getMetamagicOrEchoes()) {
-			if (val.getModifyable().getType()==MetamagicOrEcho.Type.METAMAGIC)
+		for (DisciplineTechniqueValue val : model.getMetamagicOrEchoes()) {
+			if (val.getModifyable().getType()==SR6Discipline.METAMAGIC)
 				continue;
 
 			FVTTEcho fVal = new FVTTEcho();

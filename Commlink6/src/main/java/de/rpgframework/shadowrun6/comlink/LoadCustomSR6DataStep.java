@@ -28,6 +28,7 @@ import de.rpgframework.shadowrun.ContactType;
 import de.rpgframework.shadowrun.ContactTypeList;
 import de.rpgframework.shadowrun.CritterPower;
 import de.rpgframework.shadowrun.CritterPowerList;
+import de.rpgframework.shadowrun.DisciplineTechnique;
 import de.rpgframework.shadowrun.Focus;
 import de.rpgframework.shadowrun.FocusList;
 import de.rpgframework.shadowrun.LifestyleQuality;
@@ -36,7 +37,6 @@ import de.rpgframework.shadowrun.MagicOrResonanceType;
 import de.rpgframework.shadowrun.MagicOrResonanceTypeList;
 import de.rpgframework.shadowrun.MentorSpirit;
 import de.rpgframework.shadowrun.MentorSpiritList;
-import de.rpgframework.shadowrun.MetamagicOrEcho;
 import de.rpgframework.shadowrun.MetamagicOrEchoList;
 import de.rpgframework.shadowrun.PriorityTableEntryList;
 import de.rpgframework.shadowrun.Ritual;
@@ -123,7 +123,7 @@ public class LoadCustomSR6DataStep implements StartupStep {
 		if (name.startsWith("critterpower")|| name.startsWith("spritepower"))
 			return CritterPower.class;
 		if (name.startsWith("echoes")|| name.startsWith("metamagic")|| name.startsWith("neuromorphism")|| name.startsWith("transhumanism")|| name.startsWith("dracogenesis"))
-			return MetamagicOrEcho.class;
+			return DisciplineTechnique.class;
 		if (name.startsWith("foci"))
 			return Focus.class;
 		if (name.contains("enhancement")|| name.contains("modification"))

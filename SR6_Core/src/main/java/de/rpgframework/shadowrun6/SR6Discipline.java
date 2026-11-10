@@ -19,11 +19,13 @@ import de.rpgframework.shadowrun6.proc.CalculateEssence;
 public enum SR6Discipline implements IDiscipline {
 
 	//            Mastery Skill group       Requirement                                   Maximum rating
-	INITIATION    (false, null,     m -> usesMagic(m),                            m -> traditionAttribute(m)),
-	SUBMERSION    (false, null,     m -> usesResonance(m),                        m -> attribute(m, ShadowrunAttribute.RESONANCE)),
+	METAMAGIC    (false, null,     m -> usesMagic(m),                            m -> traditionAttribute(m)),
+	ECHO    (false, null,     m -> usesResonance(m),                        m -> attribute(m, ShadowrunAttribute.RESONANCE)),
 	TRANSHUMANISM (false, null,     m -> isMundane(m) && augmentationLevel(m)>=1, m -> augmentationLevel(m)),
 	DRACOGENESIS_POWER(true,  null, m -> false,        x -> SR6Discipline.MAX_RATING),
-	ANIMALISM     (false, null, m -> false, x -> SR6Discipline.MAX_RATING)
+	ANIMALISM     (false, null, m -> false, x -> SR6Discipline.MAX_RATING),
+	METAMAGIC_ADEPT(false, null,     m -> usesMagic(m),                            m -> traditionAttribute(m)),
+	NEUROMORPHISM(false, null,     m -> !usesMagic(m) && !usesResonance(m), m -> traditionAttribute(m)),
 	;
 
 	/** No discipline can be rated higher */
