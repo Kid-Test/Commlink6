@@ -707,7 +707,10 @@ public class FoundryExportService {
 			spell.genesisID = item.getModifyable().getId();
 			spell.cost      = (float)item.getCost();
 			spell.activation= item.getModifyable().getActivation().name().toLowerCase();
-			
+			spell.hasLevel  = item.getModifyable().hasLevel();
+			if (spell.hasLevel)
+				spell.level = item.getModifiedValue();
+
 			for (PageReference pr : item.getModifyable().getPageReferences()) {
 				spell.product = pr.getProduct().getID().toLowerCase();
 				spell.page    = pr.getPage();
