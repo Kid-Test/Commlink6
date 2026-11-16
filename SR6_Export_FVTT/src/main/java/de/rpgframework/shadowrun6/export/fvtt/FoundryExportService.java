@@ -416,6 +416,7 @@ public class FoundryExportService {
 			fVal.genesisID = val.getModifyable().getId();
 			fVal.category  = val.getModifyable().getType().name();
 			fVal.level     = val.getModifyable().getMax()>0;
+			fVal.positive  = val.getModifyable().isPositive();
 			// Value fields
 			fVal.value = val.getDistributed();
 			fVal.explain = val.getDescription();
