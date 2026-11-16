@@ -213,7 +213,7 @@ public class SR6LifestyleLeveller extends ControllerImpl<LifestyleQuality> imple
 	private static int getNuyenForLP(int lp) {
 		logger.log(Level.DEBUG, "Get for "+lp);
 		if (lp<=1) return 0;
-		if (lp<=6) return lp*100;
+		if (lp<=6) return (lp-1)*100;
 		if (lp<=12) return 500 + (lp-6)*250;
 		if (lp<=19) return 2000 + (lp-12)*500;
 		if (lp<=27) return 5000 + (lp-19)*1000;
