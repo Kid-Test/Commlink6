@@ -79,6 +79,7 @@ import de.rpgframework.shadowrun6.items.ItemTemplate;
 import de.rpgframework.shadowrun6.items.ItemType;
 import de.rpgframework.shadowrun6.items.OnRoadOffRoadValue;
 import de.rpgframework.shadowrun6.items.SR6ItemAttribute;
+import de.rpgframework.shadowrun6.items.SR6ItemFlag;
 import de.rpgframework.shadowrun6.items.VehicleData.VehicleType;
 import de.rpgframework.shadowrun6.modifications.ShadowrunReference;
 import de.rpgframework.shadowrun6.persist.WeaponDamageConverter;
@@ -614,6 +615,9 @@ public class FoundryExportService {
 					((FVTTArmor)gear).defense = item.getAsValue(SR6ItemAttribute.DEFENSE_PHYSICAL).getModifiedValue();
 				if (item.hasAttribute(SR6ItemAttribute.DEFENSE_SOCIAL) && gear instanceof FVTTArmor)
 					((FVTTArmor)gear).social = item.getAsValue(SR6ItemAttribute.DEFENSE_SOCIAL).getModifiedValue();
+				// Armor that Commlink uses for the defense rating is in use in Foundry too
+				if (gear instanceof FVTTArmor)
+					gear.usedForPool = !item.hasFlag(SR6ItemFlag.IGNORE_FOR_CALCULATIONS);
 
 				if (gear instanceof FVTTBodyware) {
 					if (item.hasAttribute(SR6ItemAttribute.ESSENCECOST))
