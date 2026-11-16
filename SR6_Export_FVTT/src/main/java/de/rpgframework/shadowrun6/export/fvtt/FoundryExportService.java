@@ -418,7 +418,7 @@ public class FoundryExportService {
 			fVal.level     = val.getModifyable().getMax()>0;
 			fVal.positive  = val.getModifyable().isPositive();
 			// Value fields
-			fVal.value = val.getDistributed();
+			fVal.value = val.getModifiedValue();
 			fVal.explain = val.getDescription();
 			if ((fVal.explain==null || fVal.explain.isBlank()) && !val.getDecisions().isEmpty()) {
 				fVal.explain = val.getDecisionString(Locale.getDefault());
