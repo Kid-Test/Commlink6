@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+  Downtime options of the Sixth World Companion (p. 153, 173, 193).
+  Commlink does not track how long an action takes.
+  cost / karma     : nuyen and Karma the action costs
+  scale            : cost is multiplied with the new REPUTATION or the CONNECTION of the chosen contact
+  gain / karmagain : nuyen and Karma earned
+  favors           : Favor Points earned with the chosen contact
+-->
+<downtimeactions>
+	<downtimeaction id="work_for_the_man" karma="1" gain="2000"/>
+	<downtimeaction id="work_for_the_people" cost="2000" karmagain="1"/>
+	<downtimeaction id="improve_reputation" cost="1000" scale="REPUTATION" karma="1">
+		<modifications>
+			<valmod type="ATTRIBUTE" ref="REPUTATION" value="1"/>
+		</modifications>
+	</downtimeaction>
+	<downtimeaction id="buy_favor_karma" karma="1" favors="1">
+		<choices>
+			<choice type="CONTACT" uuid="6a1d4d2f-63d1-4c1f-8b60-1e2c6b4e9f31"/>
+		</choices>
+	</downtimeaction>
+	<downtimeaction id="buy_favor_nuyen" cost="1000" scale="CONNECTION" favors="1">
+		<choices>
+			<choice type="CONTACT" uuid="6a1d4d2f-63d1-4c1f-8b60-1e2c6b4e9f32"/>
+		</choices>
+	</downtimeaction>
+</downtimeactions>

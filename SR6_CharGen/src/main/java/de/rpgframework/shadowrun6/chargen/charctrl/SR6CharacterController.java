@@ -1,5 +1,6 @@
 package de.rpgframework.shadowrun6.chargen.charctrl;
 
+import de.rpgframework.shadowrun.chargen.charctrl.IDowntimeController;
 import de.rpgframework.shadowrun.chargen.charctrl.IShadowrunCharacterController;
 import de.rpgframework.shadowrun6.SR6Skill;
 import de.rpgframework.shadowrun6.SR6SkillValue;
@@ -27,5 +28,8 @@ public interface SR6CharacterController extends IShadowrunCharacterController<SR
 	public SR6AnimalismController getAnimalismController();
 
 	public IDataStructureController getDataStructureController();
+
+	// ---
+	public IDowntimeController getDowntimeController();
 
 }

@@ -461,6 +461,12 @@ public class SR6TestGenerator implements SR6CharacterGenerator {
 		return null;
 	}
 
+	// ---
+	@Override
+	public de.rpgframework.shadowrun.chargen.charctrl.IDowntimeController getDowntimeController() {
+		return null;
+	}
+
 	@Override
 	public LevellingProfileController getProfileController() {
 		// TODO Auto-generated method stub

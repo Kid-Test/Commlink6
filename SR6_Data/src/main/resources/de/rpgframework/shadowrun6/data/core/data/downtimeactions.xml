@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+  Lowering Heat (SR6 Core p. 236). Without the yearly limit for lying low
+  and the minimum for a fall guy.
+  valmod ATTRIBUTE/HEAT  : change Heat; with choice="..." the player chooses an amount
+                           up to the current Heat, value is the change per point
+  valmod CONTACT/CHOICE  : change Loyalty of the chosen contact
+  cost    : usual price in nuyen
+  monthly : takes a month - uses a prepaid month of each lifestyle, those without one cost their monthly price
+-->
+<downtimeactions>
+	<downtimeaction id="work_contact">
+		<choices>
+			<choice type="CONTACT" uuid="6a1d4d2f-63d1-4c1f-8b60-1e2c6b4e9f21"/>
+		</choices>
+		<modifications>
+			<valmod type="CONTACT" ref="CHOICE" choice="6a1d4d2f-63d1-4c1f-8b60-1e2c6b4e9f21" value="-1"/>
+			<valmod type="ATTRIBUTE" ref="HEAT" value="-2"/>
+		</modifications>
+	</downtimeaction>
+	<downtimeaction id="pay_bribe" cost="1000">
+		<modifications>
+			<valmod type="ATTRIBUTE" ref="HEAT" value="-1"/>
+		</modifications>
+	</downtimeaction>
+	<downtimeaction id="lie_low" monthly="true">
+		<modifications>
+			<valmod type="ATTRIBUTE" ref="HEAT" value="-1"/>
+		</modifications>
+	</downtimeaction>
+	<downtimeaction id="fall_guy">
+		<choices>
+			<choice type="ATTRIBUTE" ref="HEAT" uuid="6a1d4d2f-63d1-4c1f-8b60-1e2c6b4e9f22"/>
+		</choices>
+		<modifications>
+			<valmod type="ATTRIBUTE" ref="HEAT" choice="6a1d4d2f-63d1-4c1f-8b60-1e2c6b4e9f22" value="-1"/>
+		</modifications>
+	</downtimeaction>
+</downtimeactions>

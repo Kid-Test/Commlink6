@@ -21,6 +21,7 @@ import de.rpgframework.shadowrun.ASpell;
 import de.rpgframework.shadowrun.AdeptPower;
 import de.rpgframework.shadowrun.ComplexForm;
 import de.rpgframework.shadowrun.ContactType;
+import de.rpgframework.shadowrun.DowntimeAction;
 import de.rpgframework.shadowrun.CritterPower;
 import de.rpgframework.shadowrun.DamageElement;
 import de.rpgframework.shadowrun.DisciplineTechnique;
@@ -88,6 +89,7 @@ public enum ShadowrunReference implements ModifiedObjectType {
 	CONSTRUCTION(Construction.class,0),
 	CREATION_POINTS(CreatePoints.class,0),
 	CRITTER_POWER(CritterPower.class),
+	DOWNTIME_ACTION(DowntimeAction.class),
 	DAMAGE_ELEMENT(DamageElement.class,0),
 	DATA_STRUCTURE(DataStructure.class),
 	DRAIN_MAGE(new AttributeConverter()),

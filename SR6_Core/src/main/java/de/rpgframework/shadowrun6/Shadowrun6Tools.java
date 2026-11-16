@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import de.rpgframework.shadowrun.Contact;
+import java.util.Objects;
 import java.util.Map;
 import java.util.Optional;
 import java.util.TreeMap;
@@ -2551,34 +2553,58 @@ public class Shadowrun6Tools {
 	}
 
 	//---------------------------------------------------------
+	/** Key of a reward modification that points to a contact met during the run */
+	public final static String REWARD_NEW_CONTACT = "NEW";
+
+	//---------------------------------------------------------
+	private static void changeByReward(Shadowrun6Character model, Reward reward, ShadowrunAttribute key, int factor) {
+		ValueModification mod = reward.getModification(ShadowrunReference.ATTRIBUTE, key.name());
+		if (mod==null)
+			return;
+		AttributeValue<ShadowrunAttribute> val = model.getAttribute(key);
+		if (val==null) {
+			val = new AttributeValue<ShadowrunAttribute>(key);
+			model.setAttribute(val);
+		}
+		val.setDistributed( val.getDistributed() + factor*mod.getValue());
+	}
+
+	//---------------------------------------------------------
+	/**
+	 * @return IDs of the contacts that have been met in that run
+	 */
+	public static List<UUID> getContactsOfReward(Reward reward) {
+		return reward.getIncomingModifications().stream()
+				.filter(mod -> mod.getReferenceType()==ShadowrunReference.CONTACT)
+				.map(mod -> ((DataItemModification)mod).getId())
+				.filter(Objects::nonNull)
+				.toList();
+	}
+
+	//---------------------------------------------------------
 	public static void applyReward(Shadowrun6Character model, Reward reward) {
+		applyReward(model, reward, List.of());
+	}
+
+	//---------------------------------------------------------
+	/**
+	 * @param newContacts Contacts met during the run. The reward remembers
+	 *   them, so they leave with the reward when it is removed.
+	 */
+	public static void applyReward(Shadowrun6Character model, Reward reward, Collection<Contact> newContacts) {
 		logger.log(Level.INFO, "Apply reward ''{0}'' to character", reward);
 		model.addReward(reward);
 
-		if (reward.getExperiencePoints()!=0) {
-			model.setKarmaFree( model.getKarmaFree() + reward.getExperiencePoints() );
-		}
-		if (reward.getMoney()!=0) {
-			model.setNuyen( model.getNuyen() + reward.getMoney() );
-		}
-		ValueModification modHeat = reward.getModification(ShadowrunReference.ATTRIBUTE, ShadowrunAttribute.HEAT.name());
-		if (modHeat!=null) {
-			AttributeValue<ShadowrunAttribute> val = model.getAttribute(ShadowrunAttribute.HEAT);
-			if (val==null) {
-				val = new AttributeValue<ShadowrunAttribute>(ShadowrunAttribute.HEAT);
-				model.setAttribute(val);
-			}
-			val.setDistributed( val.getDistributed() + modHeat.getValue());
-		}
-		ValueModification modRep = reward.getModification(ShadowrunReference.ATTRIBUTE, ShadowrunAttribute.REPUTATION.name());
-		if (modRep!=null) {
-			AttributeValue<ShadowrunAttribute> val = model.getAttribute(ShadowrunAttribute.REPUTATION);
-			if (val==null) {
-				val = new AttributeValue<ShadowrunAttribute>(ShadowrunAttribute.REPUTATION);
-				model.setAttribute(val);
-			}
-			val.setDistributed( val.getDistributed() + modHeat.getValue());
-		}
+		model.setKarmaFree( model.getKarmaFree() + reward.getExperiencePoints() );
+		model.setNuyen( model.getNuyen() + reward.getMoney() );
+		changeByReward(model, reward, ShadowrunAttribute.HEAT, 1);
+		changeByReward(model, reward, ShadowrunAttribute.REPUTATION, 1);
+		newContacts.forEach(contact -> {
+			DataItemModification met = new DataItemModification(ShadowrunReference.CONTACT, REWARD_NEW_CONTACT);
+			met.setId(contact.getId());
+			reward.addIncomingModification(met);
+			model.addContact(contact);
+		});
 	}
 
 	//---------------------------------------------------------
@@ -2590,16 +2616,12 @@ public class Shadowrun6Tools {
 		}
 		model.setKarmaFree( model.getKarmaFree() - reward.getExperiencePoints() );
 		model.setNuyen( model.getNuyen() - reward.getMoney() );
-		ValueModification modHeat = reward.getModification(ShadowrunReference.ATTRIBUTE, ShadowrunAttribute.HEAT.name());
-		if (modHeat!=null) {
-			AttributeValue<ShadowrunAttribute> val = model.getAttribute(ShadowrunAttribute.HEAT);
-			val.setDistributed( val.getDistributed() - modHeat.getValue());
-		}
-		ValueModification modRep = reward.getModification(ShadowrunReference.ATTRIBUTE, ShadowrunAttribute.REPUTATION.name());
-		if (modRep!=null) {
-			AttributeValue<ShadowrunAttribute> val = model.getAttribute(ShadowrunAttribute.REPUTATION);
-			val.setDistributed( val.getDistributed() - modHeat.getValue());
-		}
+		changeByReward(model, reward, ShadowrunAttribute.HEAT, -1);
+		changeByReward(model, reward, ShadowrunAttribute.REPUTATION, -1);
+		getContactsOfReward(reward).stream()
+			.map(model::getContact)
+			.filter(Objects::nonNull)
+			.forEach(model::removeContact);
 	}
 
 

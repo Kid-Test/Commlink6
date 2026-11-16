@@ -504,6 +504,15 @@ public class GeneratorWrapper implements SR6CharacterGenerator, IGeneratorWrappe
 
 	//-------------------------------------------------------------------
 	/**
+	 * @see de.rpgframework.shadowrun6.chargen.charctrl.SR6CharacterController#getDowntimeController()
+	 */
+	@Override
+	public de.rpgframework.shadowrun.chargen.charctrl.IDowntimeController getDowntimeController() {
+		return wrapped.getDowntimeController();
+	}
+
+	//-------------------------------------------------------------------
+	/**
 	 * @see de.rpgframework.genericrpg.chargen.CharacterController#getRecommender()
 	 */
 	@Override

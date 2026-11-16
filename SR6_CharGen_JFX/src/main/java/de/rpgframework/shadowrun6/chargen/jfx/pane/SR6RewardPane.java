@@ -1,5 +1,7 @@
 package de.rpgframework.shadowrun6.chargen.jfx.pane;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
@@ -9,10 +11,12 @@ import de.rpgframework.ResourceI18N;
 import de.rpgframework.genericrpg.Reward;
 import de.rpgframework.genericrpg.modification.ValueModification;
 import de.rpgframework.jfx.pane.RewardPane;
+import de.rpgframework.shadowrun.Contact;
 import de.rpgframework.shadowrun.ShadowrunAttribute;
 import de.rpgframework.shadowrun6.modifications.ShadowrunReference;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Separator;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 
@@ -28,6 +32,8 @@ public class SR6RewardPane extends RewardPane {
 	private TextField tfNuyen;
 	private TextField tfHeat;
 	private TextField tfRep;
+	private TextField tfContacts;
+	private TextArea taNote;
 
 	//-------------------------------------------------------------------
 	public SR6RewardPane(Reward data) {
@@ -45,6 +51,12 @@ public class SR6RewardPane extends RewardPane {
 		tfNuyen = new TextField(); tfNuyen.setPrefColumnCount(6);
 		tfHeat  = new TextField(); tfHeat .setPrefColumnCount(2);
 		tfRep   = new TextField(); tfRep  .setPrefColumnCount(2);
+		tfContacts = new TextField();
+		tfContacts.setPrefColumnCount(30);
+		tfContacts.setPromptText(ResourceI18N.get(RES, "pane.reward.contacts.prompt"));
+		taNote = new TextArea();
+		taNote.setPrefRowCount(3);
+		taNote.setWrapText(true);
 	}
 	
 	//-------------------------------------------------------------------
@@ -64,12 +76,18 @@ public class SR6RewardPane extends RewardPane {
 		flow.setVgap(5);
 		flow.setHgap(10);
 		getChildren().add(flow);
+
+		TitledComponent tcContacts = new TitledComponent(ResourceI18N.get(RES, "pane.reward.contacts"), tfContacts).setTitleMinWidth(110d);
+		TitledComponent tcNote     = new TitledComponent(ResourceI18N.get(RES, "pane.reward.note"), taNote).setTitleMinWidth(110d);
+		getChildren().addAll(tcContacts, tcNote);
 	}
 
 	//-------------------------------------------------------------------
 	protected void initInteractivity() {
 		super.initInteractivity();
-		
+
+		taNote.textProperty().addListener( (ov,o,n) -> reward.setNote( (n==null || n.isBlank()) ? null : n.trim()));
+
 		tfKarma.textProperty().addListener( (ov,o,n) -> {
 			if (n==null || n.isBlank()) { super.reward.setExperiencePoints(0); return; }
 			try {
@@ -105,6 +123,26 @@ public class SR6RewardPane extends RewardPane {
 			} catch (NumberFormatException e) {
 			}
 		});
+	}
+
+	//-------------------------------------------------------------------
+	private static Contact contactNamed(String name) {
+		Contact ret = new Contact();
+		ret.setName(name);
+		return ret;
+	}
+
+	//-------------------------------------------------------------------
+	/**
+	 * @return Contacts met during the run - one per name, to be detailed
+	 *   on the contacts page
+	 */
+	public List<Contact> getNewContacts() {
+		return Arrays.stream(tfContacts.getText().split(","))
+				.map(String::trim)
+				.filter(name -> !name.isEmpty())
+				.map(SR6RewardPane::contactNamed)
+				.toList();
 	}
 
 }

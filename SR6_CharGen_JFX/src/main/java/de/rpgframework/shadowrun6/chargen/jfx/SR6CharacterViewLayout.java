@@ -173,6 +173,7 @@ public class SR6CharacterViewLayout extends CharacterViewLayout<ShadowrunAttribu
 		pgGear   = new GearPage();
 		pgLife   = new LifePage();
 		pgCareer = new CareerPage();
+		pgCareer.setOnChange( () -> { pgLife.refresh(); refreshSidebar(); });
 		pgBody   = new BodyPage();
 		pgShifter= new ShifterPage();
 		pgDrake  = new DrakePage();

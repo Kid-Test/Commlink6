@@ -46,6 +46,7 @@ public abstract class SR6CharacterControllerImpl extends CharacterControllerImpl
 	protected SR6AnimalismController animalism;
 	protected IDataStructureController dataStructures;
 	protected ISummonableController summonables;
+	protected de.rpgframework.shadowrun.chargen.charctrl.IDowntimeController downtime;
 
 	//-------------------------------------------------------------------
 	public SR6CharacterControllerImpl() {
@@ -232,6 +233,19 @@ public abstract class SR6CharacterControllerImpl extends CharacterControllerImpl
 	@Override
 	public IDataStructureController getDataStructureController() {
 		return dataStructures;
+	}
+
+	//-------------------------------------------------------------------
+	/**
+	 * Downtime actions are only possible after character creation - the
+	 * leveller provides its own controller.
+	 * @see de.rpgframework.shadowrun6.chargen.charctrl.SR6CharacterController#getDowntimeController()
+	 */
+	@Override
+	public de.rpgframework.shadowrun.chargen.charctrl.IDowntimeController getDowntimeController() {
+		if (downtime==null)
+			downtime = new SR6DowntimeController(this, true);
+		return downtime;
 	}
 	
 	//-------------------------------------------------------------------

@@ -47,6 +47,8 @@ import de.rpgframework.shadowrun.DisciplineTechnique;
 import de.rpgframework.shadowrun.Focus;
 import de.rpgframework.shadowrun.FocusList;
 import de.rpgframework.shadowrun.IDiscipline;
+import de.rpgframework.shadowrun.DowntimeAction;
+import de.rpgframework.shadowrun.DowntimeActionList;
 import de.rpgframework.shadowrun.LifestyleQuality;
 import de.rpgframework.shadowrun.LifestyleQualityList;
 import de.rpgframework.shadowrun.MagicOrResonanceType;
@@ -363,6 +365,8 @@ public class Shadowrun6DataPlugin  {
 		logger.log(Level.DEBUG, "Loaded "+list.size()+" echoes");
 		list = Shadowrun6Core.loadDataItems(LifestyleQualityList.class, LifestyleQuality.class, core, clazz,"core/data/lifestyles.xml");
 		logger.log(Level.DEBUG, "Loaded "+list.size()+" lifestyle qualities");
+		list = Shadowrun6Core.loadDataItems(DowntimeActionList.class, DowntimeAction.class, core, clazz,"core/data/downtimeactions.xml");
+		logger.log(Level.DEBUG, "Loaded "+list.size()+" heat reduction actions");
 		list = Shadowrun6Core.loadDataItems(MagicOrResonanceTypeList.class, MagicOrResonanceType.class, core, clazz,"core/data/magicOrResonance.xml");
 		logger.log(Level.DEBUG, "Loaded "+list.size()+" magic or resonance entries");
 		Shadowrun6Core.loadPriorityTableEntries(core, clazz.getResourceAsStream("core/data/priorities.xml"));
@@ -595,6 +599,8 @@ public class Shadowrun6DataPlugin  {
 		DataSet set = new DataSet(this, RoleplayingSystem.SHADOWRUN6, "COMPANION", "companion.i18n", Locale.ENGLISH, Locale.GERMAN);
 		set.setType(DataSetType.RULES);
 		set.setReleased(202205);
+		list = Shadowrun6Core.loadDataItems(DowntimeActionList.class, DowntimeAction.class, set, clazz,"companion/data/downtimeactions.xml");
+		logger.log(Level.DEBUG, "Loaded "+list.size()+" downtime actions");
 		list = Shadowrun6Core.loadDataItems(QualityList.class, SR6Quality.class, set, clazz, "companion/data/qualities-metagenetic.xml");
 		logger.log(Level.DEBUG, "Loaded "+list.size()+" metagenic qualities");
 		list = Shadowrun6Core.loadDataItems(QualityList.class, SR6Quality.class, set, clazz, "companion/data/qualities-infected.xml");
