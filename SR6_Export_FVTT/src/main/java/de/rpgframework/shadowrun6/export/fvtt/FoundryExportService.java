@@ -419,6 +419,9 @@ public class FoundryExportService {
 			// Value fields
 			fVal.value = val.getDistributed();
 			fVal.explain = val.getDescription();
+			if ((fVal.explain==null || fVal.explain.isBlank()) && !val.getDecisions().isEmpty()) {
+				fVal.explain = val.getDecisionString(Locale.getDefault());
+			}
 			val.getModifyable().getPageReferences().forEach(pr -> {
 				fVal.product = pr.getProduct().getID().toLowerCase();
 				fVal.page    = pr.getPage();
