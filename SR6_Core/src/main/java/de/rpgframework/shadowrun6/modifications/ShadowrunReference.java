@@ -329,4 +329,15 @@ public enum ShadowrunReference implements ModifiedObjectType {
 		return Shadowrun6Tools.instantiateModification(tmp, value, multiplier, (Shadowrun6Character) model );
 	}
 
+	//-------------------------------------------------------------------
+	/**
+	 * A choice of skill specializations may reference the skill whose
+	 * specializations are selectable (e.g. ref="engineering").
+	 * @see de.rpgframework.genericrpg.modification.ModifiedObjectType#getChoiceReferenceType()
+	 */
+	@Override
+	public ModifiedObjectType getChoiceReferenceType() {
+		return (this==SKILLSPECIALIZATION) ? SKILL : this;
+	}
+
 }
