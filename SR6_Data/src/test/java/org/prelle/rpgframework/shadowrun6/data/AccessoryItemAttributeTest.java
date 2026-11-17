@@ -18,6 +18,8 @@ import de.rpgframework.shadowrun6.Shadowrun6Core;
 import de.rpgframework.shadowrun6.data.Shadowrun6DataPlugin;
 import de.rpgframework.shadowrun6.items.ItemHook;
 import de.rpgframework.shadowrun6.items.ItemTemplate;
+import de.rpgframework.shadowrun6.items.OnRoadOffRoadValue;
+import de.rpgframework.shadowrun6.items.SR6PieceOfGearVariant;
 import de.rpgframework.shadowrun6.items.SR6GearTool;
 import de.rpgframework.shadowrun6.items.SR6ItemAttribute;
 
@@ -70,6 +72,79 @@ public class AccessoryItemAttributeTest {
 		// Recalculating again must not add it a second time
 		SR6GearTool.recalculate("", null, vehicle);
 		assertEquals(19, body(vehicle));
+	}
+
+	//-------------------------------------------------------------------
+	private static OnRoadOffRoadValue onOff(CarriedItem<ItemTemplate> vehicle, SR6ItemAttribute attr) {
+		return vehicle.getAsObject(attr).getModifiedValue();
+	}
+
+	//-------------------------------------------------------------------
+	/**
+	 * COM6-1052: GMC Bulldog Handling 5/7, Acceleration 10, Speed Interval 10
+	 * + Improved Handling 1 (Double Clutch p.125: -1 on- and off-road)
+	 * + Smart Tires (Double Clutch p.133: +5 Acceleration, +10 Speed Interval)
+	 */
+	@Test
+	public void testOnRoadOffRoadModifications() {
+		CarriedItem<ItemTemplate> vehicle = create("gmc_bulldog", CarryMode.CARRIED);
+		assertEquals("5/7", onOff(vehicle, SR6ItemAttribute.HANDLING).toString());
+
+		CarriedItem<ItemTemplate> handling = create("improved_handling", CarryMode.EMBEDDED);
+		handling.addDecision(new Decision(UUID_RATING, "1"));
+		vehicle.addAccessory(handling, ItemHook.VEHICLE_CHASSIS);
+		ItemTemplate tires = Shadowrun6Core.getItem(ItemTemplate.class, "tires_large");
+		CarriedItem<ItemTemplate> smart = new CarriedItem<ItemTemplate>(tires, (SR6PieceOfGearVariant)tires.getVariant("smart"), CarryMode.EMBEDDED);
+		SR6GearTool.recalculate("", null, smart);
+		vehicle.addAccessory(smart, ItemHook.VEHICLE_TIRES);
+		SR6GearTool.recalculate("", null, vehicle);
+		SR6GearTool.recalculate("", null, vehicle);
+
+		assertEquals("4/6", onOff(vehicle, SR6ItemAttribute.HANDLING).toString());
+		assertEquals("15" , onOff(vehicle, SR6ItemAttribute.ACCELERATION).toString());
+		assertEquals("20" , onOff(vehicle, SR6ItemAttribute.SPEED_INTERVAL).toString());
+	}
+
+	//-------------------------------------------------------------------
+	/**
+	 * COM6-1052: Double Clutch p.126 - the final modified Handling may never
+	 * drop below one. GMC Bulldog 5/7 with Improved Handling 2 (= 3/5) and
+	 * a second one (= 1/3) and a third (would be -1/1)
+	 */
+	@Test
+	public void testHandlingNotBelowOne() {
+		CarriedItem<ItemTemplate> vehicle = create("gmc_bulldog", CarryMode.CARRIED);
+		for (int i=0; i<3; i++) {
+			CarriedItem<ItemTemplate> handling = create("improved_handling", CarryMode.EMBEDDED);
+			handling.addDecision(new Decision(UUID_RATING, "2"));
+			vehicle.addAccessory(handling, ItemHook.VEHICLE_CHASSIS);
+		}
+		SR6GearTool.recalculate("", null, vehicle);
+		assertEquals("1", onOff(vehicle, SR6ItemAttribute.HANDLING).toString());
+	}
+
+	//-------------------------------------------------------------------
+	/**
+	 * The stat blocks of vehicles and drones already contain their standard
+	 * equipment - stock accessories must not change them again (Double Clutch):
+	 * Dassault Peregrine (enhanced sensors 1, improved handling 1): HAND 2, SENS 5;
+	 * Saeder-Krupp Blitz Mk II (increased top speed 3): TOP SPD 310;
+	 * Vulcan Hollenfaust (milspec plate 3): SPD INT 15
+	 */
+	@Test
+	public void testVehicleStatBlocksIncludeStockAccessories() {
+		CarriedItem<ItemTemplate> peregrine = create("dassault_peregrine", CarryMode.CARRIED);
+		SR6GearTool.recalculate("", null, peregrine);
+		assertEquals("2", onOff(peregrine, SR6ItemAttribute.HANDLING).toString());
+		assertEquals(5, (int)peregrine.getAsValue(SR6ItemAttribute.SENSORS).getModifiedValue());
+
+		CarriedItem<ItemTemplate> blitz = create("saeder_blitz", CarryMode.CARRIED);
+		SR6GearTool.recalculate("", null, blitz);
+		assertEquals(310, (int)blitz.getAsValue(SR6ItemAttribute.TOPSPEED).getModifiedValue());
+
+		CarriedItem<ItemTemplate> hollenfaust = create("vulcan_hollenfaust", CarryMode.CARRIED);
+		SR6GearTool.recalculate("", null, hollenfaust);
+		assertEquals("15", onOff(hollenfaust, SR6ItemAttribute.SPEED_INTERVAL).toString());
 	}
 
 	//-------------------------------------------------------------------

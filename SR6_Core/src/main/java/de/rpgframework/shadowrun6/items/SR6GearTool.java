@@ -117,6 +117,37 @@ public class SR6GearTool extends GearTool {
 	}
 
 	//-------------------------------------------------------------------
+	/**
+	 * Add modifications to an on-road/off-road value (HANDLING, ACCELERATION,
+	 * SPEED_INTERVAL). A modification value is either a single number for
+	 * both ("-1", "+5", "-0.5") or "onRoad/offRoad" ("0/-1", "+5/-5").
+	 * @see <a href="https://rpgframework.atlassian.net/browse/COM6-1052">COM6-1052</a>
+	 */
+	public static OnRoadOffRoadValue calculateModifiedValue(OnRoadOffRoadValue base, List<Modification> mods) {
+		float on  = base.getOnRoadFloat();
+		float off = base.getOffRoadFloat();
+		for (Modification tmp : mods) {
+			if (!(tmp instanceof ValueModification mod) || mod.getRawValue()==null)
+				continue;
+			String raw = mod.getRawValue().trim();
+			try {
+				if (raw.contains("/")) {
+					String[] parts = raw.split("/");
+					on  += Float.parseFloat(parts[0].trim());
+					off += Float.parseFloat(parts[1].trim());
+				} else {
+					float val = Float.parseFloat(raw);
+					on  += val;
+					off += val;
+				}
+			} catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+				logger.log(Level.ERROR, "Cannot add modification ''{0}'' from {1} to on/off-road value {2}", raw, mod.getSource(), base);
+			}
+		}
+		return new OnRoadOffRoadValue(on, off);
+	}
+
+	//-------------------------------------------------------------------
 	public static AugmentationQuality calculateModifiedValue(AugmentationQuality base, List<Modification> mods) {
 		AugmentationQuality ret = base;
 		for (Modification tmp : mods) {

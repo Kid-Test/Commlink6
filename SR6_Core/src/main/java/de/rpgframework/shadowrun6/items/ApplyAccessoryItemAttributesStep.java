@@ -76,9 +76,9 @@ public class ApplyAccessoryItemAttributesStep implements CarriedItemProcessor {
 
 	//-------------------------------------------------------------------
 	/**
-	 * Does the item (or its variant) define an &lt;embed included="true"&gt;
-	 * for the accessory's template? If yes, the accessory's effects are
-	 * already included in the item's stats (COM6-462). This matches what
+	 * Does the item (or its variant) define an &lt;embed&gt; for the accessory's
+	 * template whose effects are already included in the item's stats (see
+	 * {@link ApplyStockModificationsStep#isIncludedInStats}, COM6-462)? This matches what
 	 * {@link ApplyStockModificationsStep} does for such accessories (COM6-971:
 	 * a stored accessory of the same template replaces the stock one).
 	 */
@@ -87,8 +87,8 @@ public class ApplyAccessoryItemAttributesStep implements CarriedItemProcessor {
 		if (model.getVariant()!=null)
 			stock.addAll(model.getVariant().getOutgoingModifications());
 		for (Modification mod : stock) {
-			if (mod instanceof EmbedModification embed && embed.isIncludedInStats()
-					&& accessory.getKey().equals(embed.getKey()))
+			if (mod instanceof EmbedModification embed && accessory.getKey().equals(embed.getKey())
+					&& ApplyStockModificationsStep.isIncludedInStats(model, embed))
 				return true;
 		}
 		return false;

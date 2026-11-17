@@ -103,7 +103,10 @@ public class ItemUtil {
 			return;
 		case ACCELERATION:
 			try {
-				objVal = new ItemAttributeObjectValue<>(attr, SR6ItemAttribute.ACCELERATION.getConverter().read(mod.getRawValue()));
+				// COM6-1052: Start with 0 and add the modification - otherwise the
+				// modification is counted twice when the item is recalculated
+				objVal = new ItemAttributeObjectValue<>(attr, new OnRoadOffRoadValue(0));
+				objVal.addIncomingModification(mod);
 				ref.setAttribute(attr, objVal);
 			} catch (Exception e) {
 				logger.log(Level.ERROR, "Error converting {0} to ACCELERATION int[] (from {1})", mod.getRawValue(), mod);

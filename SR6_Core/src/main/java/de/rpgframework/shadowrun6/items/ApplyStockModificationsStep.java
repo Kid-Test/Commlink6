@@ -203,6 +203,19 @@ public class ApplyStockModificationsStep implements CarriedItemProcessor {
 	}
 
 	// -------------------------------------------------------------------
+	/**
+	 * Are the effects of a stock accessory already part of the stats of the
+	 * item it is embedded in? Yes, if the &lt;embed&gt; says so (included="true")
+	 * - and always for vehicles and drones, whose stat blocks already contain
+	 * their standard equipment (COM6-462, COM6-1052).
+	 */
+	static boolean isIncludedInStats(CarriedItem<?> model, EmbedModification embed) {
+		if (embed.isIncludedInStats())
+			return true;
+		return (model.getResolved() instanceof ItemTemplate templ) && ItemType.isVehicle(templ.getItemType());
+	}
+
+	// -------------------------------------------------------------------
 	@SuppressWarnings({ "rawtypes", "incomplete-switch", "unchecked" })
 	private boolean embedModification(boolean strict, Lifeform charac, CarriedItem<ItemTemplate> model, EmbedModification mod) {
 		logger.log(Level.DEBUG, "Before processing "+mod+" Decisions are "+model.getDecisions());
@@ -278,7 +291,7 @@ public class ApplyStockModificationsStep implements CarriedItemProcessor {
 			// Now apply modifications that the new accessory provides
 			for (Modification mod2 : accessory.getIncomingModifications()) {
 				// COM6-462: Effects of included accessories are already part of the item's stats
-				if (mod.isIncludedInStats() && mod2.getReferenceType()==ShadowrunReference.ITEM_ATTRIBUTE) {
+				if (isIncludedInStats(model, mod) && mod2.getReferenceType()==ShadowrunReference.ITEM_ATTRIBUTE) {
 					logger.log(Level.DEBUG, "Don't apply {0} of included {1} to {2}", mod2, accessory.getKey(), model.getKey());
 					continue;
 				}

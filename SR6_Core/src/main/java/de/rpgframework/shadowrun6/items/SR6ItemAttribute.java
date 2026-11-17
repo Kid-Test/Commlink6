@@ -137,6 +137,13 @@ public enum SR6ItemAttribute implements IItemAttribute {
 			return (T) SR6GearTool.calculateModifiedValue((Damage) base, mods);
 		if (this==QUALITY)
 			return (T) SR6GearTool.calculateModifiedValue((AugmentationQuality) base, mods);
+		if (base instanceof OnRoadOffRoadValue onOff) {
+			OnRoadOffRoadValue ret = SR6GearTool.calculateModifiedValue(onOff, mods);
+			// Double Clutch p.126: The final modified Handling may never drop below one
+			if (this==HANDLING)
+				ret.set(Math.max(1, ret.getOnRoadFloat()), Math.max(1, ret.getOffRoadFloat()));
+			return (T) ret;
+		}
 		if (this!=ITEMSUBTYPE && this!=ITEMTYPE)
 			System.err.println("SR6ItemAttribute: Don't know how to calculate modified value for "+this+" /"+this.getClass());
 		return (T)base;
