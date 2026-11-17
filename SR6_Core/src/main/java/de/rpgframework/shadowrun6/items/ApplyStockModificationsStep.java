@@ -258,7 +258,6 @@ public class ApplyStockModificationsStep implements CarriedItemProcessor {
 			}
 			
 			SR6GearTool.recalculate("", charac, accessory);
-			//if (mod.isIncludedInStats())
 			// Check if AvailableSlot already exists - if not, create one
 			AvailableSlot slot = (AvailableSlot) model.getSlot(hook);
 			if (slot==null) {
@@ -274,6 +273,11 @@ public class ApplyStockModificationsStep implements CarriedItemProcessor {
 
 			// Now apply modifications that the new accessory provides
 			for (Modification mod2 : accessory.getIncomingModifications()) {
+				// COM6-462: Effects of included accessories are already part of the item's stats
+				if (mod.isIncludedInStats() && mod2.getReferenceType()==ShadowrunReference.ITEM_ATTRIBUTE) {
+					logger.log(Level.DEBUG, "Don't apply {0} of included {1} to {2}", mod2, accessory.getKey(), model.getKey());
+					continue;
+				}
 				if (mod2 instanceof DataItemModification) {
 					applyModification(false, charac, (CarriedItem<ItemTemplate>) model, (DataItemModification)mod2);
 				}

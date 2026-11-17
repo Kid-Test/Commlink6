@@ -10,6 +10,7 @@ import de.rpgframework.genericrpg.data.ApplyTo;
 import de.rpgframework.genericrpg.data.Lifeform;
 import de.rpgframework.genericrpg.items.CarriedItem;
 import de.rpgframework.genericrpg.items.CarriedItemProcessor;
+import de.rpgframework.genericrpg.modification.EmbedModification;
 import de.rpgframework.genericrpg.modification.Modification;
 import de.rpgframework.genericrpg.modification.ModifiedObjectType;
 import de.rpgframework.genericrpg.modification.ValueModification;
@@ -47,6 +48,11 @@ public class ApplyAccessoryItemAttributesStep implements CarriedItemProcessor {
 		CarriedItem<ItemTemplate> parent = (CarriedItem<ItemTemplate>) model;
 
 		for (CarriedItem<?> accessory : model.getAccessories()) {
+			// COM6-462: A stored accessory may be the counterpart of an included stock accessory
+			if (isIncludedStockAccessory(model, accessory)) {
+				logger.log(Level.DEBUG, "Don't apply modifications of included stock accessory {0} to {1}", accessory.getKey(), model.getKey());
+				continue;
+			}
 			// Modifications of active operation modes (e.g. a switched on laser sight) are
 			// already collected by the parent itself (GetModificationsStep) - don't apply twice
 			List<Modification> fromModes = new ArrayList<>();
@@ -68,5 +74,24 @@ public class ApplyAccessoryItemAttributesStep implements CarriedItemProcessor {
 		return new OperationResult<List<Modification>>(unprocessed);
 	}
 
+	//-------------------------------------------------------------------
+	/**
+	 * Does the item (or its variant) define an &lt;embed included="true"&gt;
+	 * for the accessory's template? If yes, the accessory's effects are
+	 * already included in the item's stats (COM6-462). This matches what
+	 * {@link ApplyStockModificationsStep} does for such accessories (COM6-971:
+	 * a stored accessory of the same template replaces the stock one).
+	 */
+	private static boolean isIncludedStockAccessory(CarriedItem<?> model, CarriedItem<?> accessory) {
+		List<Modification> stock = new ArrayList<>(model.getModifyable().getOutgoingModifications());
+		if (model.getVariant()!=null)
+			stock.addAll(model.getVariant().getOutgoingModifications());
+		for (Modification mod : stock) {
+			if (mod instanceof EmbedModification embed && embed.isIncludedInStats()
+					&& accessory.getKey().equals(embed.getKey()))
+				return true;
+		}
+		return false;
+	}
 
 }
