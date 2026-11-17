@@ -81,9 +81,9 @@ public class AvailableSlot extends AAvailableSlot<ItemHook, ItemTemplate>  {
 					else
 						size = accessory.getAsValue(SR6ItemAttribute.SIZE).getModifiedValue();
 				}
-				// Ignore auto-accessories
-//				if ("DEFAULT".equals(accessory.getInjectedBy()))
-				if (accessory.getInjectedBy()!=null)
+				// Ignore auto-accessories - unless a stock accessory explicitly
+				// uses capacity (<embed usecap="true">, COM6-462)
+				if (accessory.getInjectedBy()!=null && !accessory.hasFlag(SR6ItemFlag.USES_CAPACITY))
 					continue;
 				free -= size;
 			}

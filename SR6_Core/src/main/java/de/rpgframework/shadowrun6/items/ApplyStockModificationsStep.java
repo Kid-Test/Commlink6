@@ -258,6 +258,10 @@ public class ApplyStockModificationsStep implements CarriedItemProcessor {
 			}
 			
 			SR6GearTool.recalculate("", charac, accessory);
+			// COM6-462: Stock accessories only use capacity if explicitly requested
+			// Set after recalculating, which resets auto flags
+			if (mod.usesCapacity())
+				accessory.setAutoFlag(SR6ItemFlag.USES_CAPACITY, true);
 			// Check if AvailableSlot already exists - if not, create one
 			AvailableSlot slot = (AvailableSlot) model.getSlot(hook);
 			if (slot==null) {

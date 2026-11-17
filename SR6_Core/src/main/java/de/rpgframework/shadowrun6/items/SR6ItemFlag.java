@@ -43,6 +43,12 @@ public enum SR6ItemFlag implements ItemFlag {
 	ABSORBED,
 	// Additional way (except by modifications) to mark an item as Auto-Added
 	AUTO_ADDED,
+	/*
+	 * Stock accessory (<embed usecap="true">) that uses capacity of the slot
+	 * it is embedded in. Other stock accessories don't (COM6-462).
+	 * AUTO FLAG - not to be used by user
+	 */
+	USES_CAPACITY,
 	CODEMOD,
 	/** Firing Squad p.61: Add alternate usage as melee weapon */
 	MELEE_HARDENING_ALTERNATE,
