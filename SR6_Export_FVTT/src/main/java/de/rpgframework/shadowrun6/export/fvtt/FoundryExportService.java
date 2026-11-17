@@ -5,6 +5,7 @@ import de.rpgframework.genericrpg.requirements.AnyRequirement;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -96,8 +97,33 @@ public class FoundryExportService {
 		actor.exportVersion = "15.0";
 		actor.generatorName="Commlink6";
 		actor.generatorVersion=System.getProperty("project.version");
+		actor.img = toDataURI(character.getImage());
 		addFoundryItems(actor, character);
 		return gson.toJson(actor);
+	}
+
+	//-------------------------------------------------------------------
+	/**
+	 * Convert the portrait into a data URI that Foundry accepts as actor image
+	 * @return Data URI or NULL, if there is no image or its format is unknown
+	 */
+	private static String toDataURI(byte[] data) {
+		if (data==null || data.length<12)
+			return null;
+		String mime = null;
+		if ((data[0]&0xFF)==0x89 && data[1]=='P' && data[2]=='N' && data[3]=='G')
+			mime = "image/png";
+		else if ((data[0]&0xFF)==0xFF && (data[1]&0xFF)==0xD8)
+			mime = "image/jpeg";
+		else if (data[0]=='G' && data[1]=='I' && data[2]=='F')
+			mime = "image/gif";
+		else if (data[0]=='R' && data[1]=='I' && data[2]=='F' && data[3]=='F' && data[8]=='W' && data[9]=='E' && data[10]=='B' && data[11]=='P')
+			mime = "image/webp";
+		if (mime==null) {
+			logger.log(Level.WARNING, "Unknown image format of portrait - not exported");
+			return null;
+		}
+		return "data:"+mime+";base64,"+Base64.getEncoder().encodeToString(data);
 	}
 
 	//-------------------------------------------------------------------
